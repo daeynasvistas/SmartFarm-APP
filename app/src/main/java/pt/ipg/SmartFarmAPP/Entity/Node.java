@@ -3,6 +3,8 @@ package pt.ipg.SmartFarmAPP.Entity;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 
+import java.util.List;
+
 @Entity(tableName = "node_table")
 public class Node {
 
@@ -19,6 +21,9 @@ public class Node {
     private int has_api;
     private String ip;
 
+    public class MyNodes {
+        public List<Node> items; // Lista de values
+    }
 
     public Node(String person, String model, String firm_vers, String mac, float longitude, float latitude, int altitude, int has_api, String ip) {
         this.person = person;

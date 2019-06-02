@@ -12,7 +12,7 @@ public class NodeRepository {
     private LiveData<List<Node>> allNodes;
 
     public NodeRepository(Application application) {
-        NodeDatabase database = NodeDatabase.getInstance(application);
+        AppDatabase database = AppDatabase.getInstance(application);
         nodeDao = database.nodeDao();
         allNodes = nodeDao.getAllNodes();
     }

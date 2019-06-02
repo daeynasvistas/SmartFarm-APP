@@ -2,6 +2,7 @@ package pt.ipg.SmartFarmAPP.API;
 
 import java.util.List;
 
+import pt.ipg.SmartFarmAPP.Entity.Node;
 import pt.ipg.SmartFarmAPP.Model.NodeModel;
 import pt.ipg.SmartFarmAPP.Model.Value;
 import retrofit2.Call;
@@ -13,6 +14,9 @@ public interface JsonOracleAPI {
     Call<List<Value>> getValues();
 
     @GET("nodes")
-    Call<NodeModel.MyNodes> getNodes();
+    Call<NodeModel.MyNodes> getNodesModel();
+
+    @GET("nodes")
+    Call<Node.MyNodes> getNodes();
 }
 

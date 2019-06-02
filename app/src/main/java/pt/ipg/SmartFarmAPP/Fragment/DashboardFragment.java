@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.List;
@@ -55,13 +56,12 @@ public class DashboardFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_dashboard, null);
 
 
-
-
-/*
+        nodeViewModel = ViewModelProviders.of(this).get(NodeViewModel.class);
         TextView text = (TextView) view.findViewById(R.id.text_view_result);//Find textview Id
         progressbar = (ProgressBar) view.findViewById(R.id.progressbar);
+
         API.getOracleAPI(text, progressbar);
-*/
+
         return view;//return view
    }
 

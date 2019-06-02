@@ -6,15 +6,20 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import java.util.List;
 
 import pt.ipg.SmartFarmAPP.Entity.Node;
 import pt.ipg.SmartFarmAPP.R;
+import pt.ipg.SmartFarmAPP.Tools.API;
+import pt.ipg.SmartFarmAPP.ViewModel.NodeAdapter;
 import pt.ipg.SmartFarmAPP.ViewModel.NodeViewModel;
 
 
@@ -24,6 +29,7 @@ import pt.ipg.SmartFarmAPP.ViewModel.NodeViewModel;
 
 public class HomeFragment extends Fragment {
     private NodeViewModel nodeViewModel;
+    private ProgressBar progressbar;
 
     @Nullable
     @Override
@@ -41,14 +47,29 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setHasFixedSize(true);
+
+        final NodeAdapter nodeAdapter = new NodeAdapter();
+        recyclerView.setAdapter(nodeAdapter);
+
+        progressbar = (ProgressBar) view.findViewById(R.id.progressbar);
+
         nodeViewModel = ViewModelProviders.of(this).get(NodeViewModel.class);
+        API.syncOracleAPI(nodeViewModel, progressbar);
+
         nodeViewModel.getAllNodes().observe(this, new Observer<List<Node>>() {
             @Override
             public void onChanged(@Nullable List<Node> nodes) {
                 //update RecyclerView
-                Toast.makeText(getContext(), "onChanged", Toast.LENGTH_SHORT).show();
+                nodeAdapter.setNodes(nodes);
+                //Toast.makeText(getContext(), "onChanged", Toast.LENGTH_SHORT).show();
             }
         });
+
+
+
 
         return view;
     }

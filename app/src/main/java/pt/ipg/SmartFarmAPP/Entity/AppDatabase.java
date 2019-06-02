@@ -9,15 +9,15 @@ import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 
 @Database(entities = {Node.class}, version = 1, exportSchema = false)
-public abstract class NodeDatabase extends RoomDatabase {
+public abstract class AppDatabase extends RoomDatabase {
 
-    private static NodeDatabase instance;
+    private static AppDatabase instance;
     public abstract NodeDao nodeDao();
 
-    public static synchronized NodeDatabase getInstance(Context context) {
+    public static synchronized AppDatabase getInstance(Context context) {
         if (instance == null) {
             instance = Room.databaseBuilder(context.getApplicationContext(),
-                    NodeDatabase.class, "node_database")
+                    AppDatabase.class, "node_database")
                     .addCallback(roomCallback) // populate as cenas no inicio
                     .fallbackToDestructiveMigration()
                     .build();
@@ -36,7 +36,7 @@ public abstract class NodeDatabase extends RoomDatabase {
     private static class PopulateDbAsyncTask extends AsyncTask<Void, Void, Void> {
         private NodeDao nodeDao;
 
-        private PopulateDbAsyncTask(NodeDatabase db) {
+        private PopulateDbAsyncTask(AppDatabase db) {
             nodeDao = db.nodeDao();
         }
 

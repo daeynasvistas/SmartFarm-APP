@@ -1,5 +1,6 @@
 package pt.ipg.SmartFarmAPP.Tools;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -15,7 +16,10 @@ import javax.net.ssl.X509TrustManager;
 
 import okhttp3.OkHttpClient;
 import pt.ipg.SmartFarmAPP.API.JsonOracleAPI;
+import pt.ipg.SmartFarmAPP.Entity.Node;
+import pt.ipg.SmartFarmAPP.Fragment.DashboardFragment;
 import pt.ipg.SmartFarmAPP.Model.NodeModel;
+import pt.ipg.SmartFarmAPP.ViewModel.NodeViewModel;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -26,7 +30,10 @@ import static android.view.View.GONE;
 
 public class API {
 
+    private NodeViewModel nodeViewModel;
+
     public static void getOracleAPI(final TextView text, final ProgressBar progressbar) {
+
 
         // problema con certificado IPG
         // https://futurestud.io/tutorials/retrofit-2-how-to-trust-unsafe-ssl-certificates-self-signed-expired
@@ -41,7 +48,7 @@ public class API {
 
         JsonOracleAPI jsonOracleAPI = retrofit.create(JsonOracleAPI.class);
 
-        Call<NodeModel.MyNodes> call = jsonOracleAPI.getNodes();
+        Call<NodeModel.MyNodes> call = jsonOracleAPI.getNodesModel();
         call.enqueue(new Callback<NodeModel.MyNodes>() {
 
             @Override
@@ -50,8 +57,10 @@ public class API {
                     text.setText("Code: " + response.code());
                     return;
                 }
+
                 //Value.MyValues values = response.body();
-                List<NodeModel> nodes = response.body().items;
+
+               List<NodeModel> nodes = response.body().items;
                 for (NodeModel node : nodes) {
                     String content = "";
                     content += "ID: " + node.getId() + "\n";
@@ -68,12 +77,57 @@ public class API {
 
                     text.append(content);
                 }
+
                 progressbar.setVisibility(GONE);
             }
 
             @Override
             public void onFailure(Call<NodeModel.MyNodes> call, Throwable t) {
                 text.setText(t.getMessage());
+                progressbar.setVisibility(GONE);
+            }
+        });
+
+    }
+
+
+
+
+    public static void syncOracleAPI(final NodeViewModel nodeViewModel, final ProgressBar progressbar) {
+
+
+        // problema con certificado IPG
+        // https://futurestud.io/tutorials/retrofit-2-how-to-trust-unsafe-ssl-certificates-self-signed-expired
+        OkHttpClient okHttpClient = UnsafeOkHttpClient.getUnsafeOkHttpClient();
+        // problema com IPG certificado .. não utilizar produção!!
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://bd.ipg.pt:5500/ords/bda_1007249/APIv3/")
+                .client(okHttpClient)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        JsonOracleAPI jsonOracleAPI = retrofit.create(JsonOracleAPI.class);
+
+        Call<Node.MyNodes> call = jsonOracleAPI.getNodes();
+        call.enqueue(new Callback<Node.MyNodes>() {
+
+            @Override
+            public void onResponse(Call<Node.MyNodes> call, Response<Node.MyNodes> response) {
+                if (!response.isSuccessful()) {
+                    return;
+                }
+
+                List<Node> nodes = response.body().items;
+                nodeViewModel.deleteAllNodes();
+                for (Node node : nodes) {
+                    nodeViewModel.insert(node);
+                }
+                progressbar.setVisibility(GONE);
+            }
+
+            @Override
+            public void onFailure(Call<Node.MyNodes> call, Throwable t) {
                 progressbar.setVisibility(GONE);
             }
         });
@@ -129,5 +183,6 @@ public class API {
     }
 
 }
+
 
 

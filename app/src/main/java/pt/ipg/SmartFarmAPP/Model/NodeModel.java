@@ -2,6 +2,8 @@ package pt.ipg.SmartFarmAPP.Model;
 
 import java.util.List;
 
+import pt.ipg.SmartFarmAPP.Entity.Node;
+
 public class NodeModel {
 
     private int id;
@@ -22,39 +24,30 @@ public class NodeModel {
     public int getId() {
         return id;
     }
-
     public int getIot_person_id() {
         return iot_person_id;
     }
-
     public String getModel() {
         return model;
     }
-
     public String getFirm_vers() {
         return firm_vers;
     }
-
     public String getMac() {
         return mac;
     }
-
     public float getLongitude() {
         return longitude;
     }
-
     public float getLatitude() {
         return latitude;
     }
-
     public int getAltitude() {
         return altitude;
     }
-
     public int getHas_api() {
         return has_api;
     }
-
     public String getIp() {
         return ip;
     }
