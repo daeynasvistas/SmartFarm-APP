@@ -1,6 +1,7 @@
 package pt.ipg.SmartFarmAPP.Fragment;
 
-import android.content.Intent;
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -10,7 +11,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import java.util.List;
+
+import pt.ipg.SmartFarmAPP.Entity.Node;
 import pt.ipg.SmartFarmAPP.R;
+import pt.ipg.SmartFarmAPP.ViewModel.NodeViewModel;
 
 
 /**
@@ -18,6 +23,7 @@ import pt.ipg.SmartFarmAPP.R;
  */
 
 public class HomeFragment extends Fragment {
+    private NodeViewModel nodeViewModel;
 
     @Nullable
     @Override
@@ -32,6 +38,15 @@ public class HomeFragment extends Fragment {
                 // faz cenas
                 Toast.makeText(getActivity(), "Montes de cenas!",
                         Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        nodeViewModel = ViewModelProviders.of(this).get(NodeViewModel.class);
+        nodeViewModel.getAllNodes().observe(this, new Observer<List<Node>>() {
+            @Override
+            public void onChanged(@Nullable List<Node> nodes) {
+                //update RecyclerView
+                Toast.makeText(getContext(), "onChanged", Toast.LENGTH_SHORT).show();
             }
         });
 

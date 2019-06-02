@@ -1,0 +1,63 @@
+package pt.ipg.SmartFarmAPP.Entity;
+
+import android.arch.persistence.db.SupportSQLiteDatabase;
+import android.arch.persistence.room.Database;
+import android.arch.persistence.room.Room;
+import android.arch.persistence.room.RoomDatabase;
+import android.content.Context;
+import android.os.AsyncTask;
+import android.support.annotation.NonNull;
+
+@Database(entities = {Node.class}, version = 1, exportSchema = false)
+public abstract class NodeDatabase extends RoomDatabase {
+
+    private static NodeDatabase instance;
+    public abstract NodeDao nodeDao();
+
+    public static synchronized NodeDatabase getInstance(Context context) {
+        if (instance == null) {
+            instance = Room.databaseBuilder(context.getApplicationContext(),
+                    NodeDatabase.class, "node_database")
+                    .addCallback(roomCallback) // populate as cenas no inicio
+                    .fallbackToDestructiveMigration()
+                    .build();
+        }
+        return instance;
+    }
+
+    private static RoomDatabase.Callback roomCallback = new RoomDatabase.Callback() {
+        @Override
+        public void onCreate(@NonNull SupportSQLiteDatabase db) {
+            super.onCreate(db);
+            new PopulateDbAsyncTask(instance).execute();
+        }
+    };
+
+    private static class PopulateDbAsyncTask extends AsyncTask<Void, Void, Void> {
+        private NodeDao nodeDao;
+
+        private PopulateDbAsyncTask(NodeDatabase db) {
+            nodeDao = db.nodeDao();
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+
+            /// Populate com cenas .. remover e colocar retrofit para receber API
+            nodeDao.insert(new Node(
+                    "Daniel Mendes",
+                    "Lora_a1",
+                    "0.1",
+                    "00000000",
+                    0.0f,
+                    0.0f,
+                    0,
+                    0,
+                    "192.168.0.1"
+                    ));
+
+            return null;
+        }
+    }
+
+}

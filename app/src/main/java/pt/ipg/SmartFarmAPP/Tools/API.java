@@ -15,7 +15,7 @@ import javax.net.ssl.X509TrustManager;
 
 import okhttp3.OkHttpClient;
 import pt.ipg.SmartFarmAPP.API.JsonOracleAPI;
-import pt.ipg.SmartFarmAPP.Model.Node;
+import pt.ipg.SmartFarmAPP.Model.NodeModel;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -41,18 +41,18 @@ public class API {
 
         JsonOracleAPI jsonOracleAPI = retrofit.create(JsonOracleAPI.class);
 
-        Call<Node.MyNodes> call = jsonOracleAPI.getNodes();
-        call.enqueue(new Callback<Node.MyNodes>() {
+        Call<NodeModel.MyNodes> call = jsonOracleAPI.getNodes();
+        call.enqueue(new Callback<NodeModel.MyNodes>() {
 
             @Override
-            public void onResponse(Call<Node.MyNodes> call, Response<Node.MyNodes> response) {
+            public void onResponse(Call<NodeModel.MyNodes> call, Response<NodeModel.MyNodes> response) {
                 if (!response.isSuccessful()) {
                     text.setText("Code: " + response.code());
                     return;
                 }
                 //Value.MyValues values = response.body();
-                List<Node> nodes = response.body().items;
-                for (Node node : nodes) {
+                List<NodeModel> nodes = response.body().items;
+                for (NodeModel node : nodes) {
                     String content = "";
                     content += "ID: " + node.getId() + "\n";
                     content += "iot_person_id: " + node.getIot_person_id() + "\n";
@@ -72,7 +72,7 @@ public class API {
             }
 
             @Override
-            public void onFailure(Call<Node.MyNodes> call, Throwable t) {
+            public void onFailure(Call<NodeModel.MyNodes> call, Throwable t) {
                 text.setText(t.getMessage());
                 progressbar.setVisibility(GONE);
             }

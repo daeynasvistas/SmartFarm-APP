@@ -2,7 +2,7 @@ package pt.ipg.SmartFarmAPP.Model;
 
 import java.util.List;
 
-public class Node {
+public class NodeModel {
 
     private int id;
     private int iot_person_id;
@@ -16,7 +16,7 @@ public class Node {
     private String ip;
 
     public class MyNodes {
-        public List<Node> items; // Lista de values
+        public List<NodeModel> items; // Lista de values
     }
 
     public int getId() {
