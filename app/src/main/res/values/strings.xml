@@ -1,0 +1,10 @@
+<resources>
+
+    <string name="app_name">SmartFarm IPG</string>
+
+    <string name="title_home">Página inicial</string>
+    <string name="title_dashboard">Valores</string>
+    <string name="title_notifications">Configurações</string>
+    <string name="title_profile">Perfil</string>
+
+</resources>

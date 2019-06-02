@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#FCFDFD</color>
+    <color name="colorPrimaryDark">#B0B3B3</color>
+    <color name="colorAccent">#8BC34A</color>
+    <color name="colorNavIcon">#4CAF50</color>
+    <color name="colorNavText">#01294b</color>
+
+    <color name="grey_very_hard">#7D7D7D</color>
+    <color name="grey_hard">#96989A</color>
+    <color name="grey_medium">#BDBFC1</color>
+    <color name="grey_soft">#F5F5F5</color>
+    <color name="grey_dark">#262626</color>
+
+
+</resources>
