@@ -26,7 +26,7 @@ import pt.ipg.SmartFarmAPP.ViewModel.NodeViewModel;
 /**
  * Created by Daey
  */
-
+import static android.view.View.GONE;
 public class HomeFragment extends Fragment {
     private NodeViewModel nodeViewModel;
     private ProgressBar progressbar;
@@ -70,8 +70,8 @@ public class HomeFragment extends Fragment {
 
 
         // Jobintent <-- mover para sync database
-        API.syncOracleAPI(nodeViewModel, progressbar);
-
+ //       API.syncOracleAPI(nodeViewModel, progressbar);
+        progressbar.setVisibility(GONE);
         return view;
     }
 }

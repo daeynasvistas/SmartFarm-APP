@@ -1,5 +1,6 @@
 package pt.ipg.SmartFarmAPP.Service.API.Tools;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -14,6 +15,10 @@ import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
 import okhttp3.OkHttpClient;
+import pt.ipg.SmartFarmAPP.Database.AppDatabase;
+import pt.ipg.SmartFarmAPP.Entity.NodeDao;
+import pt.ipg.SmartFarmAPP.Entity.NodeRepository;
+import pt.ipg.SmartFarmAPP.MainActivity;
 import pt.ipg.SmartFarmAPP.Service.API.JsonOracleAPI;
 import pt.ipg.SmartFarmAPP.Entity.Node;
 import pt.ipg.SmartFarmAPP.Model.NodeModel;
@@ -25,6 +30,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 import static android.view.View.GONE;
+import static android.view.View.generateViewId;
 
 public class API {
 
@@ -92,8 +98,6 @@ public class API {
 
 
     public static void syncOracleAPI(final NodeViewModel nodeViewModel, final ProgressBar progressbar) {
-
-
         // problema con certificado IPG
         // https://futurestud.io/tutorials/retrofit-2-how-to-trust-unsafe-ssl-certificates-self-signed-expired
         OkHttpClient okHttpClient = UnsafeOkHttpClient.getUnsafeOkHttpClient();
@@ -127,6 +131,45 @@ public class API {
             @Override
             public void onFailure(Call<Node.MyNodes> call, Throwable t) {
                 progressbar.setVisibility(GONE);
+            }
+        });
+
+    }
+
+    public static void syncJobOracleAPI(final NodeViewModel nodeViewModel) {
+        // problema con certificado IPG
+        // https://futurestud.io/tutorials/retrofit-2-how-to-trust-unsafe-ssl-certificates-self-signed-expired
+        OkHttpClient okHttpClient = UnsafeOkHttpClient.getUnsafeOkHttpClient();
+        // problema com IPG certificado .. não utilizar produção!!
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://bd.ipg.pt:5500/ords/bda_1007249/APIv3/")
+                .client(okHttpClient)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        JsonOracleAPI jsonOracleAPI = retrofit.create(JsonOracleAPI.class);
+
+        Call<Node.MyNodes> call = jsonOracleAPI.getNodes();
+        call.enqueue(new Callback<Node.MyNodes>() {
+
+            @Override
+            public void onResponse(Call<Node.MyNodes> call, Response<Node.MyNodes> response) {
+                if (!response.isSuccessful()) {
+                    return;
+                }
+
+                List<Node> nodes = response.body().items;
+                nodeViewModel.deleteAllNodes();
+                for (Node node : nodes) {
+                    nodeViewModel.insert(node);
+                }
+              //  progressbar.setVisibility(GONE);
+            }
+
+            @Override
+            public void onFailure(Call<Node.MyNodes> call, Throwable t) {
+              //  progressbar.setVisibility(GONE);
             }
         });
 

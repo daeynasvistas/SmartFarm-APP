@@ -1,6 +1,12 @@
 package pt.ipg.SmartFarmAPP;
 
+import android.app.job.JobInfo;
+import android.app.job.JobScheduler;
+import android.arch.lifecycle.ViewModelProviders;
+import android.content.ComponentName;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
@@ -18,6 +24,7 @@ import pt.ipg.SmartFarmAPP.ViewModel.NodeViewModel;
 
 //implement the interface OnNavigationItemSelectedListener in your activity class
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
+    private static final String TAG = "MainActivity";
     private NodeViewModel nodeViewModel;
 
     private TextView textViewResult;
@@ -27,15 +34,62 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         //loading the default fragment
         loadFragment(new HomeFragment());
-
         //getting bottom navigation view and attaching the listener
         BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(this);
 
+        scheduleJob();
     }
+
+
+
+    private void scheduleJob(){
+        SharedPreferences preferences = PreferenceManager.
+                getDefaultSharedPreferences(this);
+        nodeViewModel = ViewModelProviders.of(this).get(NodeViewModel.class);
+
+        if(!preferences.getBoolean("firstRunComplete", false)){
+            //schedule the job only once.
+            scheduleJobOracleToRoomDataUpdate();
+
+            //update shared preference
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putBoolean("firstRunComplete", true);
+            editor.commit();
+        }
+    }
+    private void scheduleJobOracleToRoomDataUpdate(){
+        JobScheduler jobScheduler = (JobScheduler)getApplicationContext()
+                .getSystemService(JOB_SCHEDULER_SERVICE);
+
+        ComponentName componentName = new ComponentName(this, SyncJobService.class);
+
+        JobInfo info = new JobInfo.Builder(1000, componentName)
+                .setRequiresCharging(true)
+                .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
+                .setPersisted(true)
+                .setPeriodic(60 * 1000)
+                //.setPeriodic(15 * 60 * 1000)
+                .build();
+
+        jobScheduler.schedule(info);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     @Override
