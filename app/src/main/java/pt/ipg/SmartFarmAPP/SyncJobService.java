@@ -35,7 +35,7 @@ public class SyncJobService extends JobService {
                     dbUpdateTask.getNodesFromOracleUpdateLocalDb(context);
                 } finally {
                     Log.d(TAG, "Job finished");
-                    jobFinished(params, false);
+                    jobFinished(params, true);
                 }
 
             }
