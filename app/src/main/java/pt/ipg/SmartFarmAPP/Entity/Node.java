@@ -9,8 +9,9 @@ import java.util.List;
 public class Node {
 
     @PrimaryKey(autoGenerate = true)
-    private int _id;
-
+    private int local_ID;
+    // -------------------- WEB API cenas
+    private int id;
     private String person;
     private String model;
     private String firm_vers;
@@ -22,10 +23,17 @@ public class Node {
     private String ip;
 
     public class MyNodes {
-        public List<Node> items; // Lista de values
+        public List<Node> items;
     }
 
-    public Node(String person, String model, String firm_vers, String mac, float longitude, float latitude, int altitude, int has_api, String ip) {
+
+
+
+
+
+    // construtor
+    public Node(int id, String person, String model, String firm_vers, String mac, float longitude, float latitude, int altitude, int has_api, String ip) {
+        this.id = id;
         this.person = person;
         this.model = model;
         this.firm_vers = firm_vers;
@@ -37,13 +45,16 @@ public class Node {
         this.ip = ip;
     }
 // ------ SETTER -----------
-    public void set_id(int _id) {
-        this._id = _id;
+    public void setLocal_ID(int local_ID) {
+        this.local_ID = local_ID;
     }
 // ----------- GET --
 
-    public int get_id() {
-        return _id;
+
+    public int getId() {  return id; }
+
+    public int getLocal_ID() {
+        return local_ID;
     }
 
     public String getPerson() {

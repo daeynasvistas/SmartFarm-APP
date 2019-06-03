@@ -1,4 +1,4 @@
-package pt.ipg.SmartFarmAPP.Entity;
+package pt.ipg.SmartFarmAPP.Database;
 
 import android.arch.persistence.db.SupportSQLiteDatabase;
 import android.arch.persistence.room.Database;
@@ -7,6 +7,9 @@ import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
+
+import pt.ipg.SmartFarmAPP.Entity.Node;
+import pt.ipg.SmartFarmAPP.Entity.NodeDao;
 
 @Database(entities = {Node.class}, version = 1, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
@@ -44,7 +47,7 @@ public abstract class AppDatabase extends RoomDatabase {
         protected Void doInBackground(Void... voids) {
 
             /// Populate com cenas .. remover e colocar retrofit para receber API
-            nodeDao.insert(new Node(
+       /*     nodeDao.insert(new Node(
                     "Daniel Mendes",
                     "Lora_a1",
                     "0.1",
@@ -55,7 +58,7 @@ public abstract class AppDatabase extends RoomDatabase {
                     0,
                     "192.168.0.1"
                     ));
-
+*/
             return null;
         }
     }

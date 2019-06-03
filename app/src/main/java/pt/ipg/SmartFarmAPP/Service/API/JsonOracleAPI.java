@@ -1,4 +1,4 @@
-package pt.ipg.SmartFarmAPP.API;
+package pt.ipg.SmartFarmAPP.Service.API;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package pt.ipg.SmartFarmAPP.Tools;
+package pt.ipg.SmartFarmAPP.Service.API.Tools;
 
 import android.util.Base64;
 import javax.crypto.Mac;

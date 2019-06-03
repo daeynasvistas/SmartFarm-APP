@@ -1,4 +1,4 @@
-package pt.ipg.SmartFarmAPP.Fragment;
+package pt.ipg.SmartFarmAPP.UI.Fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

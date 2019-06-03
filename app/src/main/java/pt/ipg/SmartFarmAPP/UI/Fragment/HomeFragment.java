@@ -1,4 +1,4 @@
-package pt.ipg.SmartFarmAPP.Fragment;
+package pt.ipg.SmartFarmAPP.UI.Fragment;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
@@ -18,8 +18,8 @@ import java.util.List;
 
 import pt.ipg.SmartFarmAPP.Entity.Node;
 import pt.ipg.SmartFarmAPP.R;
-import pt.ipg.SmartFarmAPP.Tools.API;
-import pt.ipg.SmartFarmAPP.ViewModel.NodeAdapter;
+import pt.ipg.SmartFarmAPP.Service.API.Tools.API;
+import pt.ipg.SmartFarmAPP.UI.Fragment.Adapter.NodeAdapter;
 import pt.ipg.SmartFarmAPP.ViewModel.NodeViewModel;
 
 
@@ -47,6 +47,8 @@ public class HomeFragment extends Fragment {
             }
         });
 
+
+        // Content in view
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setHasFixedSize(true);
@@ -57,19 +59,18 @@ public class HomeFragment extends Fragment {
         progressbar = (ProgressBar) view.findViewById(R.id.progressbar);
 
         nodeViewModel = ViewModelProviders.of(this).get(NodeViewModel.class);
-        API.syncOracleAPI(nodeViewModel, progressbar);
-
         nodeViewModel.getAllNodes().observe(this, new Observer<List<Node>>() {
             @Override
             public void onChanged(@Nullable List<Node> nodes) {
-                //update RecyclerView
                 nodeAdapter.setNodes(nodes);
-                //Toast.makeText(getContext(), "onChanged", Toast.LENGTH_SHORT).show();
             }
         });
 
+        // FIM --- Content in view
 
 
+        // Jobintent <-- mover para sync database
+        API.syncOracleAPI(nodeViewModel, progressbar);
 
         return view;
     }

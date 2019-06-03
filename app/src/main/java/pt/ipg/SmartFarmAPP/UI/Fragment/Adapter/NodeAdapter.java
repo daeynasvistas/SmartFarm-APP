@@ -1,4 +1,4 @@
-package pt.ipg.SmartFarmAPP.ViewModel;
+package pt.ipg.SmartFarmAPP.UI.Fragment.Adapter;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -29,9 +29,10 @@ public class NodeAdapter extends RecyclerView.Adapter<NodeAdapter.NodeHolder> {
     @Override
     public void onBindViewHolder(@NonNull NodeHolder holder, int position) {
         Node currentNode = nodes.get(position);
-        holder.textViewNodes.setText(currentNode.getPerson());
-        holder.textViewModel.setText(currentNode.getModel());
-        holder.textViewId.setText(String.valueOf(currentNode.get_id()));
+
+        holder.textViewNodes.setText("User: "+currentNode.getPerson());
+        holder.textViewModel.setText(" Modelo: "+currentNode.getModel()+" | MAC: "+currentNode.getMac()+" | Firmware: "+currentNode.getFirm_vers());
+        holder.textViewId.setText(String.valueOf(currentNode.getId()));
     }
 
     @Override

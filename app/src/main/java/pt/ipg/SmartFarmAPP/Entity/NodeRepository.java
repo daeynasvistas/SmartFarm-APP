@@ -6,6 +6,8 @@ import android.os.AsyncTask;
 
 import java.util.List;
 
+import pt.ipg.SmartFarmAPP.Database.AppDatabase;
+
 public class NodeRepository {
 
     private NodeDao nodeDao;

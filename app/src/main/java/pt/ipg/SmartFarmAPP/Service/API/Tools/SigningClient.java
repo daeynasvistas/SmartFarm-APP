@@ -1,4 +1,4 @@
-package pt.ipg.SmartFarmAPP.Tools;
+package pt.ipg.SmartFarmAPP.Service.API.Tools;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;

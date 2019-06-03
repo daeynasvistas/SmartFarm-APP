@@ -1,6 +1,5 @@
-package pt.ipg.SmartFarmAPP.Tools;
+package pt.ipg.SmartFarmAPP.Service.API.Tools;
 
-import android.arch.lifecycle.ViewModelProviders;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -15,9 +14,8 @@ import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
 import okhttp3.OkHttpClient;
-import pt.ipg.SmartFarmAPP.API.JsonOracleAPI;
+import pt.ipg.SmartFarmAPP.Service.API.JsonOracleAPI;
 import pt.ipg.SmartFarmAPP.Entity.Node;
-import pt.ipg.SmartFarmAPP.Fragment.DashboardFragment;
 import pt.ipg.SmartFarmAPP.Model.NodeModel;
 import pt.ipg.SmartFarmAPP.ViewModel.NodeViewModel;
 import retrofit2.Call;
