@@ -2,42 +2,33 @@ package pt.ipg.SmartFarmAPP;
 
 import android.app.job.JobInfo;
 import android.app.job.JobScheduler;
-import android.arch.lifecycle.Observer;
-import android.arch.lifecycle.ViewModelProviders;
 import android.content.ComponentName;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.ProgressBar;
+import android.view.inputmethod.EditorInfo;
+import android.support.v7.widget.SearchView;
 
-import java.util.List;
 
-import pt.ipg.SmartFarmAPP.Entity.Node;
 import pt.ipg.SmartFarmAPP.UI.Fragment.Adapter.NodeAdapter;
 import pt.ipg.SmartFarmAPP.UI.Fragment.DashboardFragment;
 import pt.ipg.SmartFarmAPP.UI.Fragment.HomeFragment;
 import pt.ipg.SmartFarmAPP.UI.Fragment.ConfigurationsFragment;
 import pt.ipg.SmartFarmAPP.UI.Fragment.ProfileFragment;
-import pt.ipg.SmartFarmAPP.ViewModel.NodeViewModel;
+
 
 
 public class MainActivity extends AppCompatActivity  {
     private static final String TAG = "MainActivity";
-
-    private ProgressBar progressbar;
-    private RecyclerView recyclerView;
-    // viewModel persistentes!!!!!
-    private NodeViewModel nodeViewModel;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,11 +37,6 @@ public class MainActivity extends AppCompatActivity  {
 
         BottomNavigationView bottomNav = findViewById(R.id.navigation);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
-
-        // Factory Cenas .... tentativa em Vers0.3
-        // Content in view
-
-    //    nodeViewModel = ViewModelProviders.of(this).get(NodeViewModel.class);
 
 
         //Rotação do dispositivo .. FINALMENTE !!!
@@ -62,11 +48,45 @@ public class MainActivity extends AppCompatActivity  {
 
 
 
-        // job for the biys
+        // Views Nodes
+
+      //  NodeAdapter nodeAdapter = new NodeAdapter();
+
+
+
+        // job for the boys
         scheduleJob();
     }
 
 
+
+
+
+    // --- SEarch cenas no recycleview dos nodes
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.add_nodemenu, menu);
+
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+        SearchView searchView = (SearchView) searchItem.getActionView();
+
+        searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+           //     adapter.getFilter().filter(newText);
+                return false;
+            }
+        });
+        return true;
+    }
 
 
 
@@ -102,26 +122,6 @@ public class MainActivity extends AppCompatActivity  {
                     return true;
                 }
             };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -170,9 +170,7 @@ public class MainActivity extends AppCompatActivity  {
 
 
 
-
-
-
+//-------------------------------- REMOVER ----------------------------------
 
 /*
     @Override

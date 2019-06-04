@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
@@ -18,7 +19,6 @@ import java.util.List;
 
 import pt.ipg.SmartFarmAPP.Entity.Node;
 import pt.ipg.SmartFarmAPP.R;
-import pt.ipg.SmartFarmAPP.Service.API.Tools.API;
 import pt.ipg.SmartFarmAPP.UI.Fragment.Adapter.NodeAdapter;
 import pt.ipg.SmartFarmAPP.ViewModel.NodeViewModel;
 
@@ -30,7 +30,7 @@ import static android.view.View.GONE;
 public class HomeFragment extends Fragment {
     private ProgressBar progressbar;
  //   private NodeViewModel nodeViewModel;
-   // private RecyclerView recyclerView;
+  //  private RecyclerView recyclerView;
 
     public static HomeFragment newInstance(){
         HomeFragment homeFragment = new  HomeFragment();
@@ -44,7 +44,7 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_home, null);
-        FloatingActionButton fab = view.findViewById(R.id.fab);//Find fab Id
+        FloatingActionButton fab = view.findViewById(R.id.fabAddNode);//Find fab Id
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -61,6 +61,7 @@ public class HomeFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         final NodeAdapter nodeAdapter = new NodeAdapter();
         recyclerView.setAdapter(nodeAdapter);
+
         ProgressBar progressbar = (ProgressBar) view.findViewById(R.id.progressbar);
 
         NodeViewModel nodeViewModel = ViewModelProviders.of(getActivity()).get(NodeViewModel.class);
