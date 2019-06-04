@@ -2,53 +2,133 @@ package pt.ipg.SmartFarmAPP;
 
 import android.app.job.JobInfo;
 import android.app.job.JobScheduler;
+import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.ComponentName;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
-import android.widget.TextView;
+import android.widget.ProgressBar;
 
+import java.util.List;
+
+import pt.ipg.SmartFarmAPP.Entity.Node;
+import pt.ipg.SmartFarmAPP.UI.Fragment.Adapter.NodeAdapter;
 import pt.ipg.SmartFarmAPP.UI.Fragment.DashboardFragment;
 import pt.ipg.SmartFarmAPP.UI.Fragment.HomeFragment;
 import pt.ipg.SmartFarmAPP.UI.Fragment.ConfigurationsFragment;
 import pt.ipg.SmartFarmAPP.UI.Fragment.ProfileFragment;
-
 import pt.ipg.SmartFarmAPP.ViewModel.NodeViewModel;
 
-//implement the interface OnNavigationItemSelectedListener in your activity class
-public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
+
+public class MainActivity extends AppCompatActivity  {
     private static final String TAG = "MainActivity";
+
+    private ProgressBar progressbar;
+    private RecyclerView recyclerView;
+    // viewModel persistentes!!!!!
     private NodeViewModel nodeViewModel;
 
-    private TextView textViewResult;
-    private static FragmentManager fragmentManager;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //loading the default fragment
-        loadFragment(new HomeFragment());
-        //getting bottom navigation view and attaching the listener
-        BottomNavigationView navigation = findViewById(R.id.navigation);
-        navigation.setOnNavigationItemSelectedListener(this);
 
+        BottomNavigationView bottomNav = findViewById(R.id.navigation);
+        bottomNav.setOnNavigationItemSelectedListener(navListener);
+
+        // Factory Cenas .... tentativa em Vers0.3
+        // Content in view
+
+    //    nodeViewModel = ViewModelProviders.of(this).get(NodeViewModel.class);
+
+
+        //Rotação do dispositivo .. FINALMENTE !!!
+        if (savedInstanceState == null) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                    new HomeFragment()).commit();
+        }
+
+
+
+
+        // job for the biys
         scheduleJob();
     }
+
+
+
+
+
+
+
+
+
+
+
+
+    private BottomNavigationView.OnNavigationItemSelectedListener navListener =
+            new BottomNavigationView.OnNavigationItemSelectedListener() {
+                @Override
+                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                    Fragment selectedFragment = null;
+
+                    switch (item.getItemId()) {
+                        case R.id.navigation_home:
+                            selectedFragment = HomeFragment.newInstance();
+                            break;
+                        case R.id.navigation_dashboard:
+                            selectedFragment = new DashboardFragment();
+                            break;
+                        case R.id.navigation_notifications:
+                            selectedFragment = new ConfigurationsFragment();
+                            break;
+                        case R.id.navigation_profile:
+                            selectedFragment = new ProfileFragment();
+                            break;
+                    }
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                            selectedFragment).commit();
+                    return true;
+                }
+            };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
     private void scheduleJob(){
         SharedPreferences preferences = PreferenceManager.
                 getDefaultSharedPreferences(this);
-        nodeViewModel = ViewModelProviders.of(this).get(NodeViewModel.class);
+
 
         if(!preferences.getBoolean("firstRunComplete", false)){
             //schedule the job only once.
@@ -60,18 +140,21 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             editor.commit();
         }
     }
+
+
     private void scheduleJobOracleToRoomDataUpdate(){
         JobScheduler jobScheduler = (JobScheduler)getApplicationContext()
                 .getSystemService(JOB_SCHEDULER_SERVICE);
 
         ComponentName componentName = new ComponentName(this, SyncJobService.class);
 
+
         JobInfo info = new JobInfo.Builder(1000, componentName)
-                .setRequiresCharging(true)
+                .setRequiresCharging(true) // DEBUG!!!!!! <-------------------------------- DEBUG CHARGING
                 .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
                 .setPersisted(true)
-                .setPeriodic(60 * 1000)
                 //.setPeriodic(15 * 60 * 1000)
+                .setPeriodic(60 * 1000)
                 .build();
 
         jobScheduler.schedule(info);
@@ -91,7 +174,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
 
 
-
+/*
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         Fragment fragment = null;
@@ -117,8 +200,11 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 break;
         }
 
-        return loadFragment(fragment);
+       // return loadFragment(fragment);
     }
+
+
+
 
     private boolean loadFragment(Fragment fragment) {
         //switching fragment
@@ -131,7 +217,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         }
         return false;
     }
-
+*/
 
 
 

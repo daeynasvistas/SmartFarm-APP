@@ -21,9 +21,7 @@ public class NodeViewModel extends AndroidViewModel {
         allNodes = repository.getAllNodes();
 
     }
-    public void insert(Node node) {
-        repository.insert(node);
-    }
+    public void insert(Node node) { repository.insert(node);  }
 
     public void update(Node node) {
         repository.update(node);
@@ -40,6 +38,7 @@ public class NodeViewModel extends AndroidViewModel {
     public LiveData<List<Node>> getAllNodes() {
         return allNodes;
     }
+
 
 
 }

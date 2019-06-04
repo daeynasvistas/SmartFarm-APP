@@ -7,6 +7,9 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.arch.persistence.room.Room;
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
 import java.text.SimpleDateFormat;
@@ -16,40 +19,24 @@ import java.util.List;
 import java.util.concurrent.Executor;
 
 import okhttp3.OkHttpClient;
-import pt.ipg.SmartFarmAPP.Database.AppDatabase;
 import pt.ipg.SmartFarmAPP.Entity.Node;
+import pt.ipg.SmartFarmAPP.Entity.NodeRepository;
 import pt.ipg.SmartFarmAPP.Service.API.Tools.API;
-import pt.ipg.SmartFarmAPP.ViewModel.NodeViewModel;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class OracleDbToRoomDataUpdateTask extends JobService {
-    private AppDatabase db;
+public class OracleDbToRoomDataUpdateTask  extends Fragment {
     private TaskExecutor taskExecutor;
-    private NodeViewModel nodeViewModel;
-    private Constantes constantes;
 
 
     public OracleDbToRoomDataUpdateTask(){
         taskExecutor = new TaskExecutor();
     }
 
-    @Override
-    public boolean onStartJob(JobParameters params) {
-        return false;
-    }
-
-    @Override
-    public boolean onStopJob(JobParameters params) {
-        return false;
-    }
-
-    public void getNodesFromOracleUpdateLocalDb(final Context ctx) {
-
-
+    public void getNodesFromOracleUpdateLocalDb(final Context ctx)  {
         // cenas
         Log.d("ORACLE", "--- DOWNLOAD JSON ---");
 
@@ -110,19 +97,25 @@ public class OracleDbToRoomDataUpdateTask extends JobService {
 
         private void insertLatestNodesIntoLocalDb(List<Node> nodes, Context ctx){
             // singleton  .. em teoria só há uma instance .. mesmo que com novo builder
+            NodeRepository nodeRepository = NodeRepository.newInstance();
+
+            nodeRepository.deleteAllNodes();
+            for (Node node : nodes) {
+                nodeRepository.insert(node);
+            }
+
+            /* REMOVER método directamente na BD melhor sempre repositório
             db = Room.databaseBuilder(ctx,
                     AppDatabase.class, "node_database").build();
-
             //insert new nodes
+            db.nodeDao().deleteAllNodes();
             db.nodeDao().insertNodes(nodes);
+            */
+            Log.d("ROOM", "local database update complete"+getTodaysDate());
 
-            Log.d("ROOM", "local database update complete");
-            Log.d("ROOM", "number of local nodes " +
-                    db.nodeDao().getNodes().size());
         }
 
     }
-
 
 
     private String getTodaysDate(){

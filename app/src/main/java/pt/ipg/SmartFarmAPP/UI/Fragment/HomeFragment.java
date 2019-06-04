@@ -28,8 +28,16 @@ import pt.ipg.SmartFarmAPP.ViewModel.NodeViewModel;
  */
 import static android.view.View.GONE;
 public class HomeFragment extends Fragment {
-    private NodeViewModel nodeViewModel;
     private ProgressBar progressbar;
+ //   private NodeViewModel nodeViewModel;
+   // private RecyclerView recyclerView;
+
+    public static HomeFragment newInstance(){
+        HomeFragment homeFragment = new  HomeFragment();
+        Bundle args = new Bundle();
+        homeFragment.setArguments(args);
+        return homeFragment;
+    }
 
     @Nullable
     @Override
@@ -37,7 +45,6 @@ public class HomeFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_home, null);
         FloatingActionButton fab = view.findViewById(R.id.fab);//Find fab Id
-
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -52,21 +59,21 @@ public class HomeFragment extends Fragment {
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setHasFixedSize(true);
-
         final NodeAdapter nodeAdapter = new NodeAdapter();
         recyclerView.setAdapter(nodeAdapter);
+        ProgressBar progressbar = (ProgressBar) view.findViewById(R.id.progressbar);
 
-        progressbar = (ProgressBar) view.findViewById(R.id.progressbar);
-
-        nodeViewModel = ViewModelProviders.of(this).get(NodeViewModel.class);
-        nodeViewModel.getAllNodes().observe(this, new Observer<List<Node>>() {
+        NodeViewModel nodeViewModel = ViewModelProviders.of(getActivity()).get(NodeViewModel.class);
+        nodeViewModel.getAllNodes().observe(getActivity(), new Observer<List<Node>>() {
             @Override
             public void onChanged(@Nullable List<Node> nodes) {
                 nodeAdapter.setNodes(nodes);
             }
         });
 
+
         // FIM --- Content in view
+
 
 
         // Jobintent <-- mover para sync database

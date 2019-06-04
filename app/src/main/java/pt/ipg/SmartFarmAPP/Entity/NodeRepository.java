@@ -12,11 +12,17 @@ public class NodeRepository {
 
     private NodeDao nodeDao;
     private LiveData<List<Node>> allNodes;
+    private static Application application;
 
     public NodeRepository(Application application) {
         AppDatabase database = AppDatabase.getInstance(application);
         nodeDao = database.nodeDao();
         allNodes = nodeDao.getAllNodes();
+    }
+
+    public static synchronized NodeRepository newInstance(){
+        NodeRepository nodeRepository = new NodeRepository(application);
+        return nodeRepository;
     }
 
     /// -------------------------------------- CRUD -------------------------------------

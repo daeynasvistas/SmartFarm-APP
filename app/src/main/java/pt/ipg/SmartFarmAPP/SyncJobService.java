@@ -2,19 +2,19 @@ package pt.ipg.SmartFarmAPP;
 
 import android.app.job.JobParameters;
 import android.app.job.JobService;
-import android.arch.lifecycle.ViewModelProviders;
+import android.arch.lifecycle.AndroidViewModel;
 import android.content.Context;
 import android.util.Log;
 
+import pt.ipg.SmartFarmAPP.Entity.NodeRepository;
 import pt.ipg.SmartFarmAPP.Service.API.OracleDbToRoomDataUpdateTask;
-import pt.ipg.SmartFarmAPP.Service.API.Tools.API;
-import pt.ipg.SmartFarmAPP.ViewModel.NodeViewModel;
 
 
 public class SyncJobService extends JobService {
     private static final String TAG = "JobService";
     private boolean jobCancelled = false;
-    private NodeViewModel nodeViewModel;
+
+
 
     @Override
     public boolean onStartJob(JobParameters params) {
@@ -31,6 +31,7 @@ public class SyncJobService extends JobService {
             public void run() {
 
                 try {
+
                     OracleDbToRoomDataUpdateTask dbUpdateTask = new OracleDbToRoomDataUpdateTask();
                     dbUpdateTask.getNodesFromOracleUpdateLocalDb(context);
                 } finally {
