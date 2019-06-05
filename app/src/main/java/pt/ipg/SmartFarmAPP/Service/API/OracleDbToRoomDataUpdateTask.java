@@ -29,14 +29,14 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class OracleDbToRoomDataUpdateTask  extends Fragment {
+    public static final String URL = "https://bd.ipg.pt:5500/ords/bda_1007249/APIv3/";
     private TaskExecutor taskExecutor;
-
 
     public OracleDbToRoomDataUpdateTask(){
         taskExecutor = new TaskExecutor();
     }
 
-    public void getNodesFromOracleUpdateLocalDb(final Context ctx)  {
+    public void getNodesFromOracleUpdateLocalDb()  {
         // cenas
         Log.d("ORACLE", "--- DOWNLOAD JSON ---");
 
@@ -44,7 +44,7 @@ public class OracleDbToRoomDataUpdateTask  extends Fragment {
         // problema com IPG certificado .. não utilizar produção!!
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://bd.ipg.pt:5500/ords/bda_1007249/APIv3/")
+                .baseUrl(URL)
                 .client(okHttpClient)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
@@ -61,7 +61,7 @@ public class OracleDbToRoomDataUpdateTask  extends Fragment {
                 }
                 // já tenho update AQUI !!!
                 List<Node> nodes = response.body().items;
-                taskExecutor.execute(new RoomUpdateTask(nodes, ctx));
+                taskExecutor.execute(new RoomUpdateTask(nodes));
             }
 
             @Override
@@ -86,9 +86,8 @@ public class OracleDbToRoomDataUpdateTask  extends Fragment {
     public class RoomUpdateTask implements Runnable{
         private List<Node> nodes;
         private Context context;
-        public RoomUpdateTask(List<Node> newnodes, Context ctx){
+        public RoomUpdateTask(List<Node> newnodes){
             nodes = newnodes;
-            context = ctx;
         }
         @Override
         public void run() {
@@ -111,7 +110,7 @@ public class OracleDbToRoomDataUpdateTask  extends Fragment {
             db.nodeDao().deleteAllNodes();
             db.nodeDao().insertNodes(nodes);
             */
-            Log.d("ROOM", "local database update complete"+getTodaysDate());
+            Log.d("ROOM", "local database update complete, total Nodes: "+nodes.size()+", "+getTodaysDate());
 
         }
 

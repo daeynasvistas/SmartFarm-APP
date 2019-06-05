@@ -2,6 +2,7 @@ package pt.ipg.SmartFarmAPP;
 
 import android.app.job.JobInfo;
 import android.app.job.JobScheduler;
+import android.app.job.JobService;
 import android.content.ComponentName;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -12,9 +13,11 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.support.v7.widget.SearchView;
 
@@ -46,19 +49,8 @@ public class MainActivity extends AppCompatActivity  {
         }
 
 
-
-
-        // Views Nodes
-
-      //  NodeAdapter nodeAdapter = new NodeAdapter();
-
-
-
-        // job for the boys
         scheduleJob();
     }
-
-
 
 
 
@@ -67,18 +59,14 @@ public class MainActivity extends AppCompatActivity  {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.add_nodemenu, menu);
-
         MenuItem searchItem = menu.findItem(R.id.action_search);
         SearchView searchView = (SearchView) searchItem.getActionView();
-
         searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
-
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 return false;
             }
-
             @Override
             public boolean onQueryTextChange(String newText) {
            //     adapter.getFilter().filter(newText);
@@ -87,10 +75,6 @@ public class MainActivity extends AppCompatActivity  {
         });
         return true;
     }
-
-
-
-
 
 
 
@@ -125,23 +109,53 @@ public class MainActivity extends AppCompatActivity  {
 
 
 
+
+
+
+
+
     private void scheduleJob(){
-        SharedPreferences preferences = PreferenceManager.
-                getDefaultSharedPreferences(this);
 
+        ComponentName componentName = new ComponentName(this, SyncJobService.class);
+        JobInfo info = new JobInfo.Builder(1000, componentName)
+                .setRequiresCharging(true) // DEBUG!!!!!! <-------------------------------- DEBUG CHARGING
+                .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
+                .setPersisted(true)
+                //.setPeriodic(15 * 60 * 1000)
+                .setPeriodic(60 * 1000)
+                .build();
 
-        if(!preferences.getBoolean("firstRunComplete", false)){
-            //schedule the job only once.
-            scheduleJobOracleToRoomDataUpdate();
-
-            //update shared preference
-            SharedPreferences.Editor editor = preferences.edit();
-            editor.putBoolean("firstRunComplete", true);
-            editor.commit();
+        JobScheduler jobScheduler = (JobScheduler)getSystemService(JOB_SCHEDULER_SERVICE);
+        int resultCode = jobScheduler.schedule(info);
+        if (resultCode==JobScheduler.RESULT_SUCCESS){
+            Log.d(TAG, "Job schedule");
+        }else{
+            Log.d(TAG, "Job com montes Problemas");
         }
+
+    }
+
+    public void cancelJob() {
+        JobScheduler scheduler = (JobScheduler) getSystemService(JOB_SCHEDULER_SERVICE);
+        scheduler.cancel(1000);
+        Log.d(TAG, "Job cancelled");
     }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+//-------------------------------- REMOVER ----------------------------------
+/*
     private void scheduleJobOracleToRoomDataUpdate(){
         JobScheduler jobScheduler = (JobScheduler)getApplicationContext()
                 .getSystemService(JOB_SCHEDULER_SERVICE);
@@ -163,16 +177,6 @@ public class MainActivity extends AppCompatActivity  {
 
 
 
-
-
-
-
-
-
-
-//-------------------------------- REMOVER ----------------------------------
-
-/*
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         Fragment fragment = null;

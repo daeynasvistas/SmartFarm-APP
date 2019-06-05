@@ -18,13 +18,11 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
-
-
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/navigation"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@android:color/background_light"
+        android:background="@color/grey_soft"
         app:itemIconTint="@android:color/holo_green_dark"
         app:itemTextColor="@android:color/background_dark"
         app:layout_constraintBottom_toBottomOf="parent"
