@@ -1,15 +1,8 @@
 package pt.ipg.SmartFarmAPP.Service.API;
 
-import android.app.job.JobParameters;
-import android.app.job.JobService;
-import android.arch.core.executor.TaskExecutor;
-import android.arch.lifecycle.ViewModelProviders;
-import android.arch.persistence.room.Room;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
 import java.text.SimpleDateFormat;
@@ -21,7 +14,6 @@ import java.util.concurrent.Executor;
 import okhttp3.OkHttpClient;
 import pt.ipg.SmartFarmAPP.Entity.Node;
 import pt.ipg.SmartFarmAPP.Entity.NodeRepository;
-import pt.ipg.SmartFarmAPP.Service.API.Tools.API;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

@@ -1,4 +1,4 @@
-package pt.ipg.SmartFarmAPP.Service.API.Tools;
+package pt.ipg.SmartFarmAPP.Service.API;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.widget.ProgressBar;
@@ -30,11 +30,25 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 import static android.view.View.GONE;
-import static android.view.View.generateViewId;
 
 public class API {
 
-    private NodeViewModel nodeViewModel;
+    private API() {}
+
+    public static final String BASE_URL = "https://bd.ipg.pt:5500/ords/bda_1007249/APIv3/";
+    public static JsonOracleAPI getAPIService() {
+        return RetrofitClient.getClient(BASE_URL).create(JsonOracleAPI.class);
+    }
+
+
+
+
+
+
+
+
+
+
 
     public static void getOracleAPI(final TextView text, final ProgressBar progressbar) {
 

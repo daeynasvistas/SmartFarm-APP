@@ -43,17 +43,16 @@ public class NodeAdapter extends RecyclerView.Adapter<NodeAdapter.NodeHolder> im
 
         holder.textViewNodes.setText("User: "+currentNode.getPerson());
         holder.textViewModel.setText(" Modelo: "+currentNode.getModel()+" | MAC: "+currentNode.getMac()+" | Firmware: "+currentNode.getFirm_vers());
-        holder.textViewId.setText(String.valueOf(currentNode.getId()));
+        holder.textViewModelMore.setText(" Altitude: "+currentNode.getLatitude()+" | Lat: "+currentNode.getLatitude()+" | Lng: "+currentNode.getLongitude());
+        if(currentNode.getId()!=0){
+          holder.textViewId.setText(String.valueOf(currentNode.getId()));
+        }else{
+          holder.textViewId.setText("sync");
+        }
 
         Node currentItem = nodes.get(position);
 
-        ImageView imageView;
-        TextView textView1;
-        TextView textView2;
 
-      //  holder.imageView.setImageResource(currentItem.getImageResource());
-      //  holder.textView1.setText(currentItem.getText1());
-      //  holder.textView2.setText(currentItem.getText2());
     }
 
     @Override
@@ -70,12 +69,15 @@ public class NodeAdapter extends RecyclerView.Adapter<NodeAdapter.NodeHolder> im
     class NodeHolder extends RecyclerView.ViewHolder{
         private TextView textViewNodes;
         private TextView textViewModel;
+        private TextView textViewModelMore;
         private TextView textViewId;
 
         public NodeHolder(@NonNull View itemView) {
             super(itemView);
             textViewNodes = itemView.findViewById(R.id.text_view_node);
             textViewModel = itemView.findViewById(R.id.text_view_model);
+            textViewModelMore = itemView.findViewById(R.id.text_view_model_more);
+
             textViewId    = itemView.findViewById(R.id.text_view_node_id);
         }
     }

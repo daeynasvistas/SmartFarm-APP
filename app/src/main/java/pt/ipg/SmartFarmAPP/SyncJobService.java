@@ -10,7 +10,7 @@ import okhttp3.OkHttpClient;
 import pt.ipg.SmartFarmAPP.Entity.Node;
 import pt.ipg.SmartFarmAPP.Entity.NodeRepository;
 import pt.ipg.SmartFarmAPP.Service.API.JsonOracleAPI;
-import pt.ipg.SmartFarmAPP.Service.API.Tools.API;
+import pt.ipg.SmartFarmAPP.Service.API.API;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -28,6 +28,7 @@ public class SyncJobService extends JobService {
     @Override
     public boolean onStartJob(JobParameters params) {
         Log.d(TAG, "Job started");
+
         doSyncOracleBackgroundWork(params);
 
         return true;

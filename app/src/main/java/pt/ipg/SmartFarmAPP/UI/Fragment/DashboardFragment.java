@@ -14,7 +14,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import pt.ipg.SmartFarmAPP.R;
-import pt.ipg.SmartFarmAPP.Service.API.Tools.API;
+import pt.ipg.SmartFarmAPP.Service.API.API;
 import pt.ipg.SmartFarmAPP.ViewModel.NodeViewModel;
 
 

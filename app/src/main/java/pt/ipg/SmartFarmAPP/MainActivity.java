@@ -37,8 +37,8 @@ public class MainActivity extends AppCompatActivity  {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        super.onCreate(savedInstanceState);
 
         BottomNavigationView bottomNav = findViewById(R.id.navigation);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
@@ -49,10 +49,7 @@ public class MainActivity extends AppCompatActivity  {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                     new HomeFragment()).commit();
         }
-
-
         scheduleJob();
-
     }
 
 

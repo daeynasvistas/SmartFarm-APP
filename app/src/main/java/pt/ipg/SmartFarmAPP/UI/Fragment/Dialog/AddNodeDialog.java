@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import pt.ipg.SmartFarmAPP.R;
 
@@ -39,6 +40,8 @@ public class AddNodeDialog extends DialogFragment {
                 @Override
                 public void onClick(View v) {
                     Log.d(TAG, "onClick: closing dialog");
+                    Toast.makeText(getActivity(), "Node NÃO inserido", Toast.LENGTH_SHORT).show();
+
                     getDialog().dismiss();
                 }
             });
@@ -51,6 +54,8 @@ public class AddNodeDialog extends DialogFragment {
                     String input = mInput.getText().toString();
                     if(!input.equals("")){
                         mOnInputSelected.sendInput(input);
+                    }else{
+                        Toast.makeText(getActivity(), "Node NÃO inserido", Toast.LENGTH_SHORT).show();
                     }
                     getDialog().dismiss();
                 }

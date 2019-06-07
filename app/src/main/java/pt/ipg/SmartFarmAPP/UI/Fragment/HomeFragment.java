@@ -12,7 +12,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
@@ -21,6 +20,7 @@ import android.widget.Toast;
 import java.util.List;
 
 import pt.ipg.SmartFarmAPP.Entity.Node;
+import pt.ipg.SmartFarmAPP.MainActivity;
 import pt.ipg.SmartFarmAPP.R;
 import pt.ipg.SmartFarmAPP.SimpleJobIntentService;
 import pt.ipg.SmartFarmAPP.SyncJobIntent;
@@ -50,7 +50,7 @@ public class HomeFragment extends Fragment implements AddNodeDialog.OnInputSelec
 
         // Add Local
         NodeViewModel nodeViewModel = ViewModelProviders.of(getActivity()).get(NodeViewModel.class);
-        Node newNode = new Node("Daniel","Lora ESP32","0.1","1A0000022", (float) -7.24545154, 40.25414541f,900,1,"192.168.0.0");
+        Node newNode = new Node("Daniel@ept.pt","Lora ESP32 (Android)","0.1","1A0000022", (float) -7.24545154, 40.25414541f,900,1,"192.168.000.000");
         nodeViewModel.insert(newNode);
         Toast.makeText(getActivity(), "Node inserido LOCALMENTE", Toast.LENGTH_SHORT).show();
         // Job Intent <--- sync DATABASE com WebAPI
@@ -63,12 +63,11 @@ public class HomeFragment extends Fragment implements AddNodeDialog.OnInputSelec
     }
 
     public void startService() {
-        String input = "montes de cenas";
+       String input = "Sync Oracle - POST";
+       Intent serviceIntent = new Intent(getContext(), SyncJobIntent.class);
+       serviceIntent.putExtra("inputExtra", input);
 
-        Intent serviceIntent = new Intent(getContext(), SimpleJobIntentService.class);
-        serviceIntent.putExtra("inputExtra", input);
-
-        ContextCompat.startForegroundService(getContext(), serviceIntent);
+       SyncJobIntent.enqueueWork(getContext(), serviceIntent);
     }
 
 
