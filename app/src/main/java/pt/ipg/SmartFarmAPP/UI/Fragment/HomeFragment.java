@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -21,6 +22,7 @@ import java.util.List;
 
 import pt.ipg.SmartFarmAPP.Entity.Node;
 import pt.ipg.SmartFarmAPP.R;
+import pt.ipg.SmartFarmAPP.SimpleJobIntentService;
 import pt.ipg.SmartFarmAPP.SyncJobIntent;
 import pt.ipg.SmartFarmAPP.UI.Fragment.Adapter.NodeAdapter;
 import pt.ipg.SmartFarmAPP.UI.Fragment.Dialog.AddNodeDialog;
@@ -54,11 +56,20 @@ public class HomeFragment extends Fragment implements AddNodeDialog.OnInputSelec
         // Job Intent <--- sync DATABASE com WebAPI
 
 
-        Intent syncDB = new Intent(getContext(), SyncJobIntent.class);
-        SyncJobIntent.enqueueWork(getContext(),syncDB);
+        //Intent syncDB = new Intent(getContext(), SyncJobIntent.class);
+        //SyncJobIntent.enqueueWork(getContext(),syncDB);
+        startService();
 
     }
 
+    public void startService() {
+        String input = "montes de cenas";
+
+        Intent serviceIntent = new Intent(getContext(), SimpleJobIntentService.class);
+        serviceIntent.putExtra("inputExtra", input);
+
+        ContextCompat.startForegroundService(getContext(), serviceIntent);
+    }
 
 
     @Nullable

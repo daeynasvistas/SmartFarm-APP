@@ -30,6 +30,9 @@
         <service
             android:name=".SyncJobService"
             android:permission="android.permission.BIND_JOB_SERVICE" />
+        <service
+            android:name=".SimpleJobIntentService"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
     </application>
 
 </manifest>

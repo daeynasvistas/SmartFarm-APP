@@ -16,6 +16,7 @@ public interface JsonOracleAPI {
     @GET("nodes")
     Call<NodeModel.MyNodes> getNodesModel();
 
+    // -------  OK ----------------
     @GET("nodes")
     Call<Node.MyNodes> getNodes();
 }

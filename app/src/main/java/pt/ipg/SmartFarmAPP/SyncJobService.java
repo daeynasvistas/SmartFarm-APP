@@ -1,9 +1,7 @@
 package pt.ipg.SmartFarmAPP;
 
 import android.app.job.JobParameters;
-import android.app.job.JobScheduler;
 import android.app.job.JobService;
-import android.content.Context;
 import android.util.Log;
 
 import java.util.List;
@@ -12,7 +10,6 @@ import okhttp3.OkHttpClient;
 import pt.ipg.SmartFarmAPP.Entity.Node;
 import pt.ipg.SmartFarmAPP.Entity.NodeRepository;
 import pt.ipg.SmartFarmAPP.Service.API.JsonOracleAPI;
-import pt.ipg.SmartFarmAPP.Service.API.OracleDbToRoomDataUpdateTask;
 import pt.ipg.SmartFarmAPP.Service.API.Tools.API;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -31,12 +28,12 @@ public class SyncJobService extends JobService {
     @Override
     public boolean onStartJob(JobParameters params) {
         Log.d(TAG, "Job started");
-        doBackgroundWork(params);
+        doSyncOracleBackgroundWork(params);
 
         return true;
     }
 
-    private void doBackgroundWork(final JobParameters params) {
+    private void doSyncOracleBackgroundWork(final JobParameters params) {
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -73,26 +70,17 @@ public class SyncJobService extends JobService {
                                 nodeRepository.insert(node);
                             }
                             // database updated!!!!!
-
                             // cancelar JOB
+                            //todo: rever se quero para o JOB depois de success ou sync para receber notificações
                             // só quero fazer isto uma vez -- se ok cancelar
-                            JobScheduler scheduler = (JobScheduler) getSystemService(JOB_SCHEDULER_SERVICE);
-                            scheduler.cancel(1000);
-                            Log.d("ROOM", "local database update complete, total Nodes: "+nodes.size());
-
-                            /* REMOVER método directamente na BD melhor sempre repositório
-                            db = Room.databaseBuilder(ctx,
-                                    AppDatabase.class, "node_database").build();
-                            //insert new nodes
-                            db.nodeDao().deleteAllNodes();
-                            db.nodeDao().insertNodes(nodes);
-                            */
+                         //   JobScheduler scheduler = (JobScheduler) getSystemService(JOB_SCHEDULER_SERVICE);
+                        //    scheduler.cancel(1000);
+                        //    Log.d("ROOM", "local database update complete, total Nodes: "+nodes.size());
                         }
 
                         @Override
                         public void onFailure(Call<Node.MyNodes> call, Throwable t) {
-                            Log.d("ORACLE", " Montes problemas ",
-                                    t.getCause());
+                            Log.d("ORACLE", " Montes problemas ");
                         }
 
                     });
@@ -115,4 +103,6 @@ public class SyncJobService extends JobService {
         jobCancelled = true;
         return true;
     }
+
+
 }
