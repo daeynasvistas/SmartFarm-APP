@@ -2,16 +2,14 @@ package pt.ipg.SmartFarmAPP;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.support.v4.app.JobIntentService;
 import android.util.Log;
-import android.view.View;
+import android.widget.Switch;
 
 import pt.ipg.SmartFarmAPP.Entity.Node;
 import pt.ipg.SmartFarmAPP.Service.API.API;
 import pt.ipg.SmartFarmAPP.Service.API.JsonOracleAPI;
-import pt.ipg.SmartFarmAPP.Service.API.OracleDbToRoomDataUpdateTask;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -34,27 +32,54 @@ public class SyncJobIntent extends JobIntentService {
     protected void onHandleWork(@NonNull Intent intent) {
         Log.d(TAG, "onHandleWork");
         String input = intent.getStringExtra("inputExtra");
+        int nodeID = intent.getIntExtra("inputnodeID",-1);
 
-        // cenas ..... e mais cenas ... Get API aqui
-        for (int i = 0; i < 2; i++) {
-            Log.d(TAG, input + " - " + i);
-            if (isStopped()) return;
-            SystemClock.sleep(1000);
-        }
         // cenas ..... e mais cenas ...
         mAPIService = API.getAPIService();
-        mAPIService.postNode(1,"ESP32-LORA (Android)","0.1","1AA11110123","192.168.000.000", 40.451245f, -7.1254545, 1000)
-            .enqueue(new Callback<Node>() {
-                public void onResponse(Call<Node> call, Response<Node> response) {
-                    if(response.isSuccessful()) {
-                        showResponse(response.body().toString());
-                        Log.i(TAG, "post submitted to API." + response.body().toString());
-                    }
-                }
-                public void onFailure(Call<Node> call, Throwable t) {
-                    Log.e(TAG, "Unable to submit post to API.");
-                }
-        });
+
+        switch(input) {
+            case "Sync Oracle - POST":
+                //POST
+                mAPIService.postNode(1,"ESP32-LORA (Android)","0.1","1AA11110123","192.168.000.000", 40.451245f, -7.1254545, 1000)
+                        .enqueue(new Callback<Node>() {
+                            public void onResponse(Call<Node> call, Response<Node> response) {
+                                if(response.isSuccessful()) {
+                                    showResponse(response.body().toString());
+                                    Log.i(TAG, "post submitted to API." + response.body().toString());
+                                }
+                            }
+                            public void onFailure(Call<Node> call, Throwable t) {
+                                Log.e(TAG, "Unable to submit post to API.");
+                            }
+                        });
+                break;
+            case "Sync Oracle - PUT":
+                //PUT
+                break;
+            case "Sync Oracle - DELETE":
+                // DELETE
+                mAPIService.deleteNode(nodeID)
+                        .enqueue(new Callback<Void>() {
+                            @Override
+                            public void onResponse(Call<Void> call, Response<Void> response) {
+                            //    if(response.isSuccessful()) {
+                            //        showResponse(response.body().toString());
+                                    Log.i(TAG, "delete submitted to API.");
+                          //     }
+                            }
+
+                            @Override
+                            public void onFailure(Call<Void> call, Throwable t) {
+                                Log.e(TAG, "Unable to submit delete to API.");
+                            }
+
+                        });
+                break;
+            default:
+
+        }
+
+
     }
 
 

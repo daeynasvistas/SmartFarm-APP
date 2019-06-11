@@ -2,14 +2,17 @@ package pt.ipg.SmartFarmAPP.Service.API;
 
 import java.util.List;
 
+import okhttp3.ResponseBody;
 import pt.ipg.SmartFarmAPP.Entity.Node;
 import pt.ipg.SmartFarmAPP.Model.NodeModel;
 import pt.ipg.SmartFarmAPP.Model.Value;
 import retrofit2.Call;
+import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 
 public interface JsonOracleAPI {
 
@@ -34,6 +37,9 @@ public interface JsonOracleAPI {
                         @Field("LONGITUDE") double longitude,
                         @Field("ALTITUDE") int altitude
                         );
+
+    @DELETE("nodes/{nodeID}")
+    Call<Void> deleteNode(@Path("nodeID") int nodeID);
 }
 
 /*

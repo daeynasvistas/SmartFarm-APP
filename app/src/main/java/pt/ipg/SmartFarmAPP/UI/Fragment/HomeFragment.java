@@ -10,6 +10,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -58,14 +59,14 @@ public class HomeFragment extends Fragment implements AddNodeDialog.OnInputSelec
 
         //Intent syncDB = new Intent(getContext(), SyncJobIntent.class);
         //SyncJobIntent.enqueueWork(getContext(),syncDB);
-        startService();
+        startService("Sync Oracle - POST",-1);
 
     }
 
-    public void startService() {
-       String input = "Sync Oracle - POST";
-       Intent serviceIntent = new Intent(getContext(), SyncJobIntent.class);
-       serviceIntent.putExtra("inputExtra", input);
+    public void startService(String input, int nodeID) {
+        Intent serviceIntent = new Intent(getContext(), SyncJobIntent.class);
+        serviceIntent.putExtra("inputExtra", input);
+        serviceIntent.putExtra("inputnodeID", nodeID);
 
        SyncJobIntent.enqueueWork(getContext(), serviceIntent);
     }
@@ -100,13 +101,31 @@ public class HomeFragment extends Fragment implements AddNodeDialog.OnInputSelec
 
         ProgressBar progressbar = (ProgressBar) view.findViewById(R.id.progressbar);
 
-        NodeViewModel nodeViewModel = ViewModelProviders.of(getActivity()).get(NodeViewModel.class);
+        final NodeViewModel nodeViewModel = ViewModelProviders.of(getActivity()).get(NodeViewModel.class);
         nodeViewModel.getAllNodes().observe(getActivity(), new Observer<List<Node>>() {
             @Override
             public void onChanged(@Nullable List<Node> nodes) {
                 nodeAdapter.setNodes(nodes);
             }
         });
+
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,
+                ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+                Node nodeAt = nodeAdapter.getNodeAt(viewHolder.getAdapterPosition());
+                startService("Sync Oracle - DELETE",nodeAt.getId());
+                nodeViewModel.delete(nodeAt); ///  <--- sem nenhuma confirmação!!! todo confirmação delete node
+                Toast.makeText(getContext(), "Node deleted", Toast.LENGTH_SHORT).show();
+                // DELETE em ORACLE
+
+            }
+        }).attachToRecyclerView(recyclerView);
        // FIM --- Content in view
 
         progressbar.setVisibility(GONE);

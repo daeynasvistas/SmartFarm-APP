@@ -65,6 +65,11 @@ public class NodeAdapter extends RecyclerView.Adapter<NodeAdapter.NodeHolder> im
         notifyDataSetChanged();
     }
 
+    // para swipe delete no adapter
+    public Node getNodeAt(int position) {
+        return nodes.get(position);
+    }
+
 
     class NodeHolder extends RecyclerView.ViewHolder{
         private TextView textViewNodes;
