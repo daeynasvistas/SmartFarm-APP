@@ -24,6 +24,18 @@ import android.view.inputmethod.EditorInfo;
 import android.support.v7.widget.SearchView;
 
 
+import java.math.BigInteger;
+import java.security.InvalidKeyException;
+import java.security.Key;
+import java.security.NoSuchAlgorithmException;
+import java.security.SignatureException;
+import java.util.Base64;
+import java.util.Formatter;
+
+import javax.crypto.Cipher;
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
+
 import pt.ipg.SmartFarmAPP.UI.Fragment.Adapter.NodeAdapter;
 import pt.ipg.SmartFarmAPP.UI.Fragment.DashboardFragment;
 import pt.ipg.SmartFarmAPP.UI.Fragment.HomeFragment;
@@ -50,6 +62,57 @@ public class MainActivity extends AppCompatActivity  {
                     new HomeFragment()).commit();
         }
         scheduleJob();
+
+
+        try {
+            String hmac = calculateHMAC("data", "key");
+            System.out.println(hmac);
+
+            String hmac2 =  encrypt("data", "key");
+            System.out.println(hmac2);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static String encrypt(String data, String sessionuser) throws Exception {
+        sessionuser = "HVQKcI6yo425a4d6";
+        data = "HelloWorld!";
+
+        byte[] keyValue = sessionuser.getBytes();
+        Key key = new SecretKeySpec(keyValue, "HmacSHA256");
+
+        System.out.println(key);
+
+        Cipher c = Cipher.getInstance("HmacSHA256");
+        c.init(Cipher.ENCRYPT_MODE, key);
+        byte[] encVal = c.doFinal(data.getBytes());
+
+        //String encryptedValue = Base64.encodeBase64URLSafeString(encVal);
+        String encryptedValue = Base64.getEncoder().encodeToString(encVal);
+        return encryptedValue;
+    }
+
+
+
+    private static final String HMAC_SHA256 = "HmacSHA256";
+
+    private static String toHexString(byte[] bytes) {
+        Formatter formatter = new Formatter();
+        for (byte b : bytes) {
+            formatter.format("%02x", b);
+        }
+        return formatter.toString();
+    }
+
+    public static String calculateHMAC(String data, String key)
+            throws SignatureException, NoSuchAlgorithmException, InvalidKeyException
+    {
+        SecretKeySpec secretKeySpec = new SecretKeySpec(key.getBytes(), HMAC_SHA256);
+        Mac mac = Mac.getInstance(HMAC_SHA256);
+        mac.init(secretKeySpec);
+        return toHexString(mac.doFinal(data.getBytes()));
     }
 
 
