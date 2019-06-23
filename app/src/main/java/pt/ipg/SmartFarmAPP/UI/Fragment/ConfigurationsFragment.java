@@ -6,13 +6,18 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import pt.ipg.SmartFarmAPP.R;
+import pt.ipg.SmartFarmAPP.Service.API.API;
+import pt.ipg.SmartFarmAPP.ViewModel.NodeViewModel;
 import pt.ipg.SmartFarmAPP.ViewModel.SharedViewModel;
 
 
@@ -23,12 +28,17 @@ import pt.ipg.SmartFarmAPP.ViewModel.SharedViewModel;
 public class ConfigurationsFragment extends Fragment {
     private SharedViewModel viewModel;
     private EditText editText;
+    private NodeViewModel nodeViewModel;
+
+    private ProgressBar progressbar;
+    private RecyclerView recyclerView;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_configurations, container, false);
 
+        /*
         editText = v.findViewById(R.id.edit_text);
         Button button = v.findViewById(R.id.button_ok);
         button.setOnClickListener(new View.OnClickListener() {
@@ -37,10 +47,20 @@ public class ConfigurationsFragment extends Fragment {
                 viewModel.setText(editText.getText());
             }
         });
+        */
+        View view = inflater.inflate(R.layout.fragment_dashboard, null);
 
-        return v;
+
+        nodeViewModel = ViewModelProviders.of(this).get(NodeViewModel.class);
+        TextView text = (TextView) view.findViewById(R.id.text_view_result);//Find textview Id
+        progressbar = (ProgressBar) view.findViewById(R.id.progressbar);
+
+        API.getOracleHMAC_API(text, progressbar);
+
+        return view;//return view
+
     }
-
+/*
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -52,4 +72,5 @@ public class ConfigurationsFragment extends Fragment {
             }
         });
     }
+    */
 }

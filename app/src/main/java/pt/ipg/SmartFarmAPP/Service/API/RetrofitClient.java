@@ -7,7 +7,12 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RetrofitClient {
 
     private static Retrofit retrofit = null;
+
+    // --- assinar HMAC ----- add header stuff
+
+
     static OkHttpClient okHttpClient = API.UnsafeOkHttpClient.getUnsafeOkHttpClient(); // não utilizar emprodução, para ultrapassar TLS problema
+
     public static Retrofit getClient(String baseUrl) {
         if (retrofit==null) {
             retrofit = new Retrofit.Builder()

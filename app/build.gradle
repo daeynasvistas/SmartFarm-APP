@@ -4,15 +4,13 @@ android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "pt.IPG.SmartFarmAPP"
-        minSdkVersion 26
+        minSdkVersion 23
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
 
-        //HMAC
-        useLibrary 'org.apache.http.legacy'
 
     }
     buildTypes {
@@ -37,9 +35,6 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-
-    //HMAC com retrofit1
-    implementation 'com.squareup.retrofit:retrofit:1.9.0'
 
     // new retrofit2
     implementation 'com.squareup.retrofit2:retrofit:2.5.0'

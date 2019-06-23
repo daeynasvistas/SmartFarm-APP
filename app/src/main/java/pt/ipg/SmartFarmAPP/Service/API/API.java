@@ -36,6 +36,7 @@ public class API {
     private API() {}
 
     public static final String BASE_URL = "https://bd.ipg.pt:5500/ords/bda_1007249/APIv3/";
+
     public static JsonOracleAPI getAPIService() {
         return RetrofitClient.getClient(BASE_URL).create(JsonOracleAPI.class);
     }
@@ -45,13 +46,68 @@ public class API {
 
 
 
+    public static void getOracleHMAC_API(final TextView text, final ProgressBar progressbar) {
+
+        // problema con certificado IPG
+        // https://futurestud.io/tutorials/retrofit-2-how-to-trust-unsafe-ssl-certificates-self-signed-expired
+        OkHttpClient okHttpClient = UnsafeOkHttpClient.getUnsafeOkHttpClient();
+        // problema com IPG certificado .. não utilizar produção!!
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .client(okHttpClient)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        JsonOracleAPI jsonOracleAPI = retrofit.create(JsonOracleAPI.class);
+
+        Call<NodeModel.MyNodes> call = jsonOracleAPI.getNodesModel();
+        call.enqueue(new Callback<NodeModel.MyNodes>() {
+
+            @Override
+            public void onResponse(Call<NodeModel.MyNodes> call, Response<NodeModel.MyNodes> response) {
+                if (!response.isSuccessful()) {
+                    text.setText("Code: " + response.code());
+                    return;
+                }
+
+                //Value.MyValues values = response.body();
+
+                List<NodeModel> nodes = response.body().items;
+                for (NodeModel node : nodes) {
+                    String content = "";
+                    content += "ID: " + node.getId() + "\n";
+                    content += "iot_person_id: " + node.getIot_person_id() + "\n";
+
+                    content += "Model: " + node.getModel() + "\n";
+                    content += "firm_vers: " + node.getFirm_vers() + "\n";
+                    content += "mac: " + node.getMac() + "\n";
+                    content += "longitude: " + node.getLongitude() + "\n";
+                    content += "latitude: " + node.getLatitude() + "\n";
+                    content += "altitude: " + node.getAltitude() + "\n";
+                    content += "IP: " + node.getIp() + "\n";
+                    content += "\n";
+
+                    text.append(content);
+                }
+
+                progressbar.setVisibility(GONE);
+            }
+
+            @Override
+            public void onFailure(Call<NodeModel.MyNodes> call, Throwable t) {
+                text.setText(t.getMessage());
+                progressbar.setVisibility(GONE);
+            }
+        });
+
+    }
 
 
 
 
 
     public static void getOracleAPI(final TextView text, final ProgressBar progressbar) {
-
 
         // problema con certificado IPG
         // https://futurestud.io/tutorials/retrofit-2-how-to-trust-unsafe-ssl-certificates-self-signed-expired

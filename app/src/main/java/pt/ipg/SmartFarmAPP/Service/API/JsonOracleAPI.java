@@ -2,7 +2,6 @@ package pt.ipg.SmartFarmAPP.Service.API;
 
 import java.util.List;
 
-import okhttp3.ResponseBody;
 import pt.ipg.SmartFarmAPP.Entity.Node;
 import pt.ipg.SmartFarmAPP.Model.NodeModel;
 import pt.ipg.SmartFarmAPP.Model.Value;
@@ -11,16 +10,31 @@ import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 
 public interface JsonOracleAPI {
 
+    // ------------ HMAC aqui vai assinado todas as REQ -----------------------
+    @Headers({
+            "API_key: "+ "RTlCRjMzMjBDQjNFNDc0QjNBNTEzNkVCODIyMTQwM0RBMjVFNzAyNQ==",
+            "API_sign: "+ "z0nVOnp8HknQxDq5fDgX5rWgClbeNCt+OUMfEi1dd1kb9+uOwYgxVppP/VwQV9JQH6JuPU8q8CTHtO0Oy2Ey6g==",
+            "API_nonce: "+ "1561289582855000"
+    })
+    //--------------------------------------------------------------------------
+
     @GET("nodes")
-    Call<List<Value>> getValues();
+    Call<List<Value>> getValues(
+         //   @Header("API_key") String apiKey,
+         //   @Header("API_sign") String apiSign,
+         //   @Field("API_nonce") String nonce
+    );
+
 
     @GET("nodes")
     Call<NodeModel.MyNodes> getNodesModel();
+
 
     // -------  CRUD retrofit  ----------------
     @GET("nodes")
