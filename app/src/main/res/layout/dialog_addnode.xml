@@ -15,20 +15,33 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Addicionar um Node"
+            android:text="Addicionar um novo Node"
             android:textSize="18sp"
             android:textColor="#000"
             android:id="@+id/heading"/>
 
         <EditText
+            android:id="@+id/model"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/heading"
             android:layout_marginTop="20dp"
             android:background="@null"
-            android:textColor="#000"
-            android:hint="Modelo.."
-            android:id="@+id/input"/>
+            android:hint="Modelo: (EX: ESP32 Lora)"
+            android:textColor="#000" />
+
+
+        <EditText
+            android:id="@+id/mac"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/model"
+            android:layout_marginTop="20dp"
+            android:background="@null"
+            android:hint="MAC Address: (EX: 1AA000000)"
+            android:textColor="#000" />
+
+
 
         <TextView
             android:layout_width="wrap_content"

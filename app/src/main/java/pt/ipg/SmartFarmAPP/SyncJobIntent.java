@@ -34,6 +34,9 @@ public class SyncJobIntent extends JobIntentService {
         String input = intent.getStringExtra("inputExtra");
         int nodeID = intent.getIntExtra("inputnodeID",-1);
 
+        String nodeModel = intent.getStringExtra("inputExtraModel");
+        String nodeMac = intent.getStringExtra("inputExtraMac");
+
         // cenas ..... e mais cenas ...
         mAPIService = API.getAPIService();
 
@@ -42,7 +45,7 @@ public class SyncJobIntent extends JobIntentService {
 
             case "Sync Oracle - POST":
                 //POST
-                mAPIService.postNode("ESP32-LORA (Android)","0.1","1ZZ11110123","192.168.000.000", 40.451245f, -7.1254545, 1000)
+                mAPIService.postNode(nodeModel,"0.1",nodeMac,"000.000.000.000", 0.000000f, -0.000000f, 0)
                         .enqueue(new Callback<Node>() {
                             public void onResponse(Call<Node> call, Response<Node> response) {
                                 if(response.isSuccessful()) {

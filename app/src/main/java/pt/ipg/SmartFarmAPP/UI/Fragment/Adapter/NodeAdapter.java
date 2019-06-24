@@ -42,7 +42,7 @@ public class NodeAdapter extends RecyclerView.Adapter<NodeAdapter.NodeHolder> im
         Node currentNode = nodes.get(position);
 
         holder.textViewNodes.setText(currentNode.getModel());
-        holder.textViewModel.setText(" User: "+currentNode.getPerson()+" | MAC: "+currentNode.getMac()+" | Firmware: "+currentNode.getFirm_vers());
+        holder.textViewModel.setText("Sync ID"+currentNode.getLocal_ID()+" | User: "+currentNode.getPerson()+" | MAC: "+currentNode.getMac()+" | Firmware: "+currentNode.getFirm_vers());
         holder.textViewModelMore.setText(" Altitude: "+currentNode.getLatitude()+" | Lat: "+currentNode.getLatitude()+" | Lng: "+currentNode.getLongitude());
         if(currentNode.getId()!=0){
           holder.textViewId.setText(String.valueOf(currentNode.getId()));

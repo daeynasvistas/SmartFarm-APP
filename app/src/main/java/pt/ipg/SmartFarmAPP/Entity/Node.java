@@ -46,7 +46,8 @@ public class Node {
     }
 
     // construtor
-    public Node(int id, String person, String model, String firm_vers, String mac, float longitude, float latitude, int altitude, int has_api, String ip) {
+    public Node(int local_ID,int id, String person, String model, String firm_vers, String mac, float longitude, float latitude, int altitude, int has_api, String ip) {
+        this.local_ID = local_ID;
         this.id = id;
         this.person = person;
         this.model = model;

@@ -20,12 +20,13 @@ public class AddNodeDialog extends DialogFragment {
         private static final String TAG = "AddNodeDialog";
 
         public interface OnInputSelected{
-            void sendInput(String input);
+            void sendInput(String modelo, String mac);
         }
         public OnInputSelected mOnInputSelected;
 
         //widgets
-        private EditText mInput;
+        private EditText mModel;
+        private EditText mMAC;
         private TextView mActionOk, mActionCancel;
 
         @Nullable
@@ -34,7 +35,8 @@ public class AddNodeDialog extends DialogFragment {
             View view = inflater.inflate(R.layout.dialog_addnode, container, false);
             mActionOk = view.findViewById(R.id.action_ok);
             mActionCancel = view.findViewById(R.id.action_cancel);
-            mInput = view.findViewById(R.id.input);
+            mModel = view.findViewById(R.id.model);
+            mMAC = view.findViewById(R.id.mac);
 
             mActionCancel.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -51,12 +53,15 @@ public class AddNodeDialog extends DialogFragment {
                 public void onClick(View v) {
                     Log.d(TAG, "onClick: capturing input.");
 
-                    String input = mInput.getText().toString();
-                    if(!input.equals("")){
-                        mOnInputSelected.sendInput(input);
+                    String modelo = mModel.getText().toString();
+                    String mac = mModel.getText().toString();
+
+                    if(!modelo.equals("")){
+                        mOnInputSelected.sendInput(modelo, mac);
                     }else{
-                        Toast.makeText(getActivity(), "Node NÃO inserido", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "Node NÃO inserido. Deve indicar o modelo", Toast.LENGTH_SHORT).show();
                     }
+
                     getDialog().dismiss();
                 }
             });

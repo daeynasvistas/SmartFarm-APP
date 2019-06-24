@@ -52,28 +52,34 @@ public class HomeFragment extends Fragment implements AddNodeDialog.OnInputSelec
     }
 
     @Override // input da dialog
-    public void sendInput(String input) {
-        Log.d(TAG, "sendInput: " + input);
+    public void sendInput(String modelo, String mac) {
+        Log.d(TAG, "sendModelo: " + modelo);
+        Log.d(TAG, "sendMac: " + mac);
 
         // Add Local
         NodeViewModel nodeViewModel = ViewModelProviders.of(getActivity()).get(NodeViewModel.class);
 
-        Node newNode = new Node("Daniel@ept.pt","Lora ESP32 (Android)","0.1","1A0000022", (float) -7.24545154, 40.25414541f,900,1,"192.168.000.000");
+        Node newNode = new Node("GET@email_do_API_key.com",modelo,"0.1",mac, 0.000000f, 0.000000f,0,0,"000.000.000.000");
         nodeViewModel.insert(newNode);
+
         Toast.makeText(getActivity(), "Node inserido LOCALMENTE", Toast.LENGTH_SHORT).show();
         // Job Intent <--- sync DATABASE com WebAPI
 
 
         //Intent syncDB = new Intent(getContext(), SyncJobIntent.class);
         //SyncJobIntent.enqueueWork(getContext(),syncDB);
-        startService("Sync Oracle - POST",-1);
+
+        // ainda não tenho nodeID aqui!! --async retrofit
+         startService("Sync Oracle - POST", -1, newNode.getModel(), newNode.getMac());
 
     }
 
-    public void startService(String input, int nodeID) {
+    public void startService(String input, int nodeID, String nodeModel, String nodeMac) {
         Intent serviceIntent = new Intent(getContext(), SyncJobIntent.class);
         serviceIntent.putExtra("inputExtra", input);
         serviceIntent.putExtra("inputnodeID", nodeID);
+        serviceIntent.putExtra("inputExtraModel", nodeModel);
+        serviceIntent.putExtra("inputExtraMac", nodeMac);
 
        SyncJobIntent.enqueueWork(getContext(), serviceIntent);
 
@@ -94,6 +100,7 @@ public class HomeFragment extends Fragment implements AddNodeDialog.OnInputSelec
         View view = inflater.inflate(R.layout.fragment_home, null);
         // mais nodes
         FloatingActionButton fab = view.findViewById(R.id.fabAddNode);//Find fab Id
+        // ------------------  MAIS um NODE ---------------------------------------
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -143,7 +150,7 @@ public class HomeFragment extends Fragment implements AddNodeDialog.OnInputSelec
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
                         //Action for "Delete".
-                        startService("Sync Oracle - DELETE",nodeAt.getId());
+                        startService("Sync Oracle - DELETE", nodeAt.getId(), null, null);
                         nodeViewModel.delete(nodeAt); ///  <--- sem nenhuma confirmação!!! todo confirmação delete node
 
                         Snackbar snackbar = Snackbar.make(getView(), "Node removido.", Snackbar.LENGTH_LONG);
