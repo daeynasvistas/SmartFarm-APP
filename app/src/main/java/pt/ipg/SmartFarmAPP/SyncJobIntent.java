@@ -37,10 +37,12 @@ public class SyncJobIntent extends JobIntentService {
         // cenas ..... e mais cenas ...
         mAPIService = API.getAPIService();
 
+        // ------------------------------- CRUD -------------------------
         switch(input) {
+
             case "Sync Oracle - POST":
                 //POST
-                mAPIService.postNode(1,"ESP32-LORA (Android)","0.1","1AA11110123","192.168.000.000", 40.451245f, -7.1254545, 1000)
+                mAPIService.postNode("ESP32-LORA (Android)","0.1","1ZZ11110123","192.168.000.000", 40.451245f, -7.1254545, 1000)
                         .enqueue(new Callback<Node>() {
                             public void onResponse(Call<Node> call, Response<Node> response) {
                                 if(response.isSuccessful()) {
@@ -53,9 +55,11 @@ public class SyncJobIntent extends JobIntentService {
                             }
                         });
                 break;
+
             case "Sync Oracle - PUT":
                 //PUT
                 break;
+
             case "Sync Oracle - DELETE":
                 // DELETE
                 mAPIService.deleteNode(nodeID)

@@ -23,26 +23,45 @@ public interface JsonOracleAPI {
             "API_nonce: "+ "1561289582855000"
     })
     //--------------------------------------------------------------------------
-
-    @GET("nodes")
+    @GET("nodes/")
     Call<List<Value>> getValues(
-         //   @Header("API_key") String apiKey,
-         //   @Header("API_sign") String apiSign,
-         //   @Field("API_nonce") String nonce
     );
 
 
-    @GET("nodes")
+    @Headers({
+            "API_key: "+ "RTlCRjMzMjBDQjNFNDc0QjNBNTEzNkVCODIyMTQwM0RBMjVFNzAyNQ==",
+            "API_sign: "+ "z0nVOnp8HknQxDq5fDgX5rWgClbeNCt+OUMfEi1dd1kb9+uOwYgxVppP/VwQV9JQH6JuPU8q8CTHtO0Oy2Ey6g==",
+            "API_nonce: "+ "1561289582855000"
+    })
+    @GET("nodes/")
     Call<NodeModel.MyNodes> getNodesModel();
 
 
-    // -------  CRUD retrofit  ----------------
-    @GET("nodes")
+
+
+
+
+
+
+    // -------  CRUD retrofit  ------------------------------------------------------------------------
+    // ------------------------------------------------ READ NODES ------------------------------------
+    @Headers({
+            "API_key:RTlCRjMzMjBDQjNFNDc0QjNBNTEzNkVCODIyMTQwM0RBMjVFNzAyNQ==",
+            "API_sign:z0nVOnp8HknQxDq5fDgX5rWgClbeNCt+OUMfEi1dd1kb9+uOwYgxVppP/VwQV9JQH6JuPU8q8CTHtO0Oy2Ey6g==",
+            "API_nonce:1561289582855000"
+    })
+    @GET("nodes/")
     Call<Node.MyNodes> getNodes();
 
-    @POST("nodes")
+    // ------------------------------------------------ CREATE NODE ------------------------------------
+    @Headers({
+            "API_key:RTlCRjMzMjBDQjNFNDc0QjNBNTEzNkVCODIyMTQwM0RBMjVFNzAyNQ==",
+            "API_sign:z0nVOnp8HknQxDq5fDgX5rWgClbeNCt+OUMfEi1dd1kb9+uOwYgxVppP/VwQV9JQH6JuPU8q8CTHtO0Oy2Ey6g==",
+            "API_nonce:1561289582855000"
+    })
+    @POST("nodes/")
     @FormUrlEncoded
-    Call<Node> postNode(@Field("IOT_PERSON_ID") int person_id,
+    Call<Node> postNode(//@Field("IOT_PERSON_ID") int person_id,
                         @Field("MODEL") String model,
                         @Field("FIRM_VERS") String firm_vers,
                         @Field("MAC") String mac,
@@ -52,6 +71,13 @@ public interface JsonOracleAPI {
                         @Field("ALTITUDE") int altitude
                         );
 
+
+    // ------------------------------------------------ DELETE NODE ------------------------------------
+    @Headers({
+            "API_key:RTlCRjMzMjBDQjNFNDc0QjNBNTEzNkVCODIyMTQwM0RBMjVFNzAyNQ==",
+            "API_sign:z0nVOnp8HknQxDq5fDgX5rWgClbeNCt+OUMfEi1dd1kb9+uOwYgxVppP/VwQV9JQH6JuPU8q8CTHtO0Oy2Ey6g==",
+            "API_nonce:1561289582855000"
+    })
     @DELETE("nodes/{nodeID}")
     Call<Void> deleteNode(@Path("nodeID") int nodeID);
 }

@@ -24,17 +24,6 @@ import android.view.inputmethod.EditorInfo;
 import android.support.v7.widget.SearchView;
 
 
-import java.math.BigInteger;
-import java.security.InvalidKeyException;
-import java.security.Key;
-import java.security.NoSuchAlgorithmException;
-import java.security.SignatureException;
-import java.util.Base64;
-import java.util.Formatter;
-
-import javax.crypto.Cipher;
-import javax.crypto.Mac;
-import javax.crypto.spec.SecretKeySpec;
 
 import pt.ipg.SmartFarmAPP.UI.Fragment.Adapter.NodeAdapter;
 import pt.ipg.SmartFarmAPP.UI.Fragment.DashboardFragment;
@@ -49,9 +38,9 @@ public class MainActivity extends AppCompatActivity  {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setContentView(R.layout.activity_main);
-        super.onCreate(savedInstanceState);
 
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
         BottomNavigationView bottomNav = findViewById(R.id.navigation);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
 
@@ -131,7 +120,7 @@ public class MainActivity extends AppCompatActivity  {
                 .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
                 .setPersisted(true)
                 //.setPeriodic(15 * 60 * 1000)
-                .setPeriodic(60 * 1000)
+                .setPeriodic(5 * 1000)
                 .build();
 
         JobScheduler jobScheduler = (JobScheduler)getSystemService(JOB_SCHEDULER_SERVICE);
