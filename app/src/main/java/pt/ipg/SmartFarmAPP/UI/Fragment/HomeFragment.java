@@ -62,7 +62,8 @@ public class HomeFragment extends Fragment implements AddNodeDialog.OnInputSelec
         Node newNode = new Node("GET@email_do_API_key.com",modelo,"0.1",mac, 0.000000f, 0.000000f,0,0,"000.000.000.000");
         nodeViewModel.insert(newNode);
 
-        Toast.makeText(getActivity(), "Node inserido LOCALMENTE", Toast.LENGTH_SHORT).show();
+       // Toast.makeText(getActivity(), "Node inserido LOCALMENTE", Toast.LENGTH_SHORT).show();
+        Snackbar.make(getView(), "Node inserido LOCALMENTE", Snackbar.LENGTH_LONG).show();
         // Job Intent <--- sync DATABASE com WebAPI
 
 

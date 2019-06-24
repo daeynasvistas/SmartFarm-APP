@@ -1,6 +1,9 @@
 package pt.ipg.SmartFarmAPP.UI.Fragment.Adapter;
 
+import android.annotation.SuppressLint;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,17 +40,19 @@ public class NodeAdapter extends RecyclerView.Adapter<NodeAdapter.NodeHolder> im
         return new NodeHolder(itemView);
     }
 
+    @SuppressLint("ResourceAsColor")
     @Override
     public void onBindViewHolder(@NonNull NodeHolder holder, int position) {
         Node currentNode = nodes.get(position);
 
         holder.textViewNodes.setText(currentNode.getModel());
-        holder.textViewModel.setText("Sync ID"+currentNode.getLocal_ID()+" | User: "+currentNode.getPerson()+" | MAC: "+currentNode.getMac()+" | Firmware: "+currentNode.getFirm_vers());
+        holder.textViewModel.setText("Sync ID: "+currentNode.getLocal_ID()+" | User: "+currentNode.getPerson()+" | MAC: "+currentNode.getMac()+" | Firmware: "+currentNode.getFirm_vers());
         holder.textViewModelMore.setText(" Altitude: "+currentNode.getLatitude()+" | Lat: "+currentNode.getLatitude()+" | Lng: "+currentNode.getLongitude());
         if(currentNode.getId()!=0){
           holder.textViewId.setText(String.valueOf(currentNode.getId()));
         }else{
           holder.textViewId.setText("sync");
+          holder.itemView.setBackgroundColor(Color.LTGRAY);
         }
 
         Node currentItem = nodes.get(position);

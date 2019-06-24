@@ -25,7 +25,7 @@ public interface NodeDao {
     @Query("DELETE FROM node_table")
     void deleteAllNodes();
 
-    @Query("SELECT * FROM node_table ORDER BY id DESC")
+    @Query("SELECT * FROM node_table ORDER BY id ASC")
     LiveData<List<Node>> getAllNodes();  // Observe Dados !!! com LiveData
 
     @Query("SELECT * FROM node_table WHERE id=0")
