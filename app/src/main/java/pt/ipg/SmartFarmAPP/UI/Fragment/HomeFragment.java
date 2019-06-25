@@ -5,14 +5,11 @@ import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -21,12 +18,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import java.util.List;
 
+import pt.ipg.SmartFarmAPP.ViewNodeActivity;
 import pt.ipg.SmartFarmAPP.Entity.Node;
-import pt.ipg.SmartFarmAPP.MainActivity;
 import pt.ipg.SmartFarmAPP.R;
 import pt.ipg.SmartFarmAPP.SyncJobIntent;
 import pt.ipg.SmartFarmAPP.UI.Fragment.Adapter.NodeAdapter;
@@ -40,6 +36,8 @@ import pt.ipg.SmartFarmAPP.ViewModel.NodeViewModel;
 import static android.content.ContentValues.TAG;
 import static android.view.View.GONE;
 public class HomeFragment extends Fragment implements AddNodeDialog.OnInputSelected{
+
+    public static final int EDIT_NODE_REQUEST = 2000;
 
     private ProgressBar progressbar;
     Node nodeAt;
@@ -199,6 +197,18 @@ public class HomeFragment extends Fragment implements AddNodeDialog.OnInputSelec
             }
         }).attachToRecyclerView(recyclerView);
        // FIM --- Content in view
+
+        // --- editar item AQUI com anonymous class!!
+        nodeAdapter.setOnItemClickListener(new NodeAdapter.onItemClickListener() {
+            @Override
+            public void onItemClick(Node node) {
+            Intent intent = new Intent(getContext(), ViewNodeActivity.class);
+            //intent.putExtra(ViewNodeActivity.EXTRA_ID, node.getId());
+
+            startActivityForResult(intent, EDIT_NODE_REQUEST);
+
+            }
+        });
 
         progressbar.setVisibility(GONE);
 

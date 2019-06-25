@@ -24,6 +24,11 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".ViewNodeActivity"
+            android:parentActivityName=".MainActivity" />
+
+
         <service
             android:name=".SyncJobIntent"
             android:permission="android.permission.BIND_JOB_SERVICE" />

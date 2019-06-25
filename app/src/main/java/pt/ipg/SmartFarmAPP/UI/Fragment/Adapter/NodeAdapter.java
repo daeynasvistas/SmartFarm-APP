@@ -23,6 +23,7 @@ public class NodeAdapter extends RecyclerView.Adapter<NodeAdapter.NodeHolder> im
 
     private List<Node> nodes = new ArrayList<>();
     private List<Node> fullNodes = new ArrayList<>(nodes);
+    private onItemClickListener listener;
 
     /*
     public NodeAdapter(List<Node> nodes) {
@@ -60,6 +61,16 @@ public class NodeAdapter extends RecyclerView.Adapter<NodeAdapter.NodeHolder> im
 
     }
 
+    // para editar no onclick
+    public interface onItemClickListener{
+        void onItemClick(Node node);
+    }
+    public void setOnItemClickListener(onItemClickListener  listener){
+        this.listener = listener;
+    }
+
+
+
     @Override
     public int getItemCount() {
         return nodes.size();
@@ -87,8 +98,19 @@ public class NodeAdapter extends RecyclerView.Adapter<NodeAdapter.NodeHolder> im
             textViewNodes = itemView.findViewById(R.id.text_view_node);
             textViewModel = itemView.findViewById(R.id.text_view_model);
             textViewModelMore = itemView.findViewById(R.id.text_view_model_more);
-
             textViewId    = itemView.findViewById(R.id.text_view_node_id);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition();
+                    if (listener != null && position != RecyclerView.NO_POSITION) {
+                        listener.onItemClick(nodes.get(position));
+                    }
+                }
+            });
+
+
         }
     }
 
