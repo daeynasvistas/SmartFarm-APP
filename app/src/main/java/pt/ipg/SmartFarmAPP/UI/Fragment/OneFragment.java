@@ -75,7 +75,7 @@ public class OneFragment extends Fragment{
 
 
         set1 = new LineDataSet(values1, "Temperatura");
-        set1.setColor(Color.GREEN);
+        set1.setColor(Color.LTGRAY);
         set1.setDrawCircles(false);
         set1.setLineWidth(3f);
        // set1.setMode(LineDataSet.Mode.CUBIC_BEZIER);
