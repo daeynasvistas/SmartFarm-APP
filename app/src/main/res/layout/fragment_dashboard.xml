@@ -14,9 +14,15 @@
         android:layout_centerInParent="true"
         android:layout_margin="16dp" />
 
+    <com.github.mikephil.charting.charts.LineChart
+        android:id="@+id/chart1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
 
         <TextView
             android:id="@+id/text_view_result"
@@ -24,7 +30,6 @@
             android:layout_height="wrap_content"
             android:textColor="#000"
             tools:text="Cenas" />
-
 
     </android.support.v4.widget.NestedScrollView>
 

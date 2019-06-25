@@ -19,11 +19,13 @@
         android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/text_view_result"
+            android:id="@+id/text_view_result_API"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#000"
             tools:text="Cenas" />
+
+
 
 
     </android.support.v4.widget.NestedScrollView>

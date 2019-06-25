@@ -36,7 +36,7 @@ public class ConfigurationsFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_configurations, container, false);
+        View view = inflater.inflate(R.layout.fragment_configurations, container, false);
 
         /*
         editText = v.findViewById(R.id.edit_text);
@@ -48,12 +48,10 @@ public class ConfigurationsFragment extends Fragment {
             }
         });
         */
-        View view = inflater.inflate(R.layout.fragment_dashboard, null);
-
 
         nodeViewModel = ViewModelProviders.of(this).get(NodeViewModel.class);
-        TextView text = (TextView) view.findViewById(R.id.text_view_result);//Find textview Id
-        progressbar = (ProgressBar) view.findViewById(R.id.progressbar);
+        TextView text = view.findViewById(R.id.text_view_result_API);//Find textview Id
+        progressbar = view.findViewById(R.id.progressbar);
 
         API.getOracleHMAC_API(text, progressbar);
 
