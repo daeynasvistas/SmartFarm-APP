@@ -6,9 +6,10 @@
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/grey_soft"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
-    <!--    <android.support.v7.widget.Toolbar
+        <!--    <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
@@ -16,20 +17,47 @@
             app:layout_scrollFlags="scroll|enterAlways"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light" /> -->
 
-        <TextView
-            android:id="@+id/textView3"
-            android:layout_width="match_parent"
-            android:layout_height="119dp"
 
-            android:backgroundTintMode="add"
-            android:text="TextView" />
+        <TextView
+            android:id="@+id/text_view_node"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_margin="5dp"
+            android:layout_toStartOf="@id/text_view_node_id"
+            android:layout_toLeftOf="@id/text_view_node_id"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="Node"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textColor="@color/colorNavText" />
+
+        <TextView
+            android:id="@+id/text_view_model"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/text_view_node"
+            android:layout_margin="5dp"
+            android:text="Model"
+            android:textColor="@color/colorNavText" />
+
+        <TextView
+            android:id="@+id/text_view_model_more"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/text_view_model"
+            android:layout_margin="5dp"
+            android:text="Model"
+            android:textColor="@color/colorNavText" />
+
 
         <android.support.design.widget.TabLayout
             android:id="@+id/tabs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/grey_soft"
-            android:backgroundTint="@color/grey_medium"
+            android:backgroundTint="@color/colorNavText"
             app:tabIndicator="@color/colorNavText"
             app:tabIndicatorColor="@color/colorNavIcon"
             app:tabIndicatorHeight="5dp"

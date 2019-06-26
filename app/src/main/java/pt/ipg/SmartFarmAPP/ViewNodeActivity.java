@@ -14,35 +14,83 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.NumberPicker;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import pt.ipg.SmartFarmAPP.Entity.Node;
 import pt.ipg.SmartFarmAPP.UI.Fragment.OneFragment;
 
 
 public class ViewNodeActivity  extends AppCompatActivity {
+    public static final String EXTRA_ID ="pt.ipg.SmartFarmAPP.EXTRA_ID";
+
+    // --- todo ---- ENVIAR node em bundle .. ou fazer SELECT aqui do EXTRA_ID VERS. 06
+    public static final String EXTRA_MAC ="pt.ipg.SmartFarmAPP.EXTRA_MAC";
+    public static final String EXTRA_LATITUDE ="pt.ipg.SmartFarmAPP.EXTRA_LATITUDE";
+    public static final String EXTRA_LONGITUDE ="pt.ipg.SmartFarmAPP.EXTRA_LONGITUDE";
+    public static final String EXTRA_ALTITUDE ="pt.ipg.SmartFarmAPP.EXTRA_ALTITUDE";
+    public static final String EXTRA_FIRM_VERS ="pt.ipg.SmartFarmAPP.EXTRA_FIRM_VERS";
+    public static final String EXTRA_HAS_API ="pt.ipg.SmartFarmAPP.EXTRA_HAS_API";
+    public static final String EXTRA_ORACLE_ID ="pt.ipg.SmartFarmAPP.EXTRA_ORACLE_ID";
+    public static final String EXTRA_IP ="pt.ipg.SmartFarmAPP.EXTRA_IP";
+    public static final String EXTRA_MODEL ="pt.ipg.SmartFarmAPP.EXTRA_MODEL";
+
 
     private Toolbar toolbar;
     private TabLayout tabLayout;
     private ViewPager viewPager;
+    private Node currentNode;
+
+    //private TextView textModel;
+    //private TextView textMac;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scrool_tab);
 
-        // REVER tool bar custom!!! ----------------------------------------- todo rever toolbar
+
+        int local_id =      getIntent().getIntExtra(EXTRA_ID, 0);
+
+        String mac =        getIntent().getStringExtra(EXTRA_MAC);
+        double latitude =   getIntent().getIntExtra(EXTRA_LATITUDE, 0);
+        double longitude =  getIntent().getDoubleExtra(EXTRA_LONGITUDE, 0);
+        double altitude =   getIntent().getDoubleExtra(EXTRA_ALTITUDE, 0);
+        String firmVers =   getIntent().getStringExtra(EXTRA_FIRM_VERS);
+        int has_API =       getIntent().getIntExtra(EXTRA_HAS_API, 0);
+        String ip =         getIntent().getStringExtra(EXTRA_IP);
+        String model =      getIntent().getStringExtra(EXTRA_MODEL);
+
+
+
+
+
+        // REVER tool bar custom!!! ----------------------------------------- todo rever toolbar ver 0.6
     //    toolbar = (Toolbar) findViewById(R.id.toolbar);
     //    setSupportActionBar(toolbar);
     //    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        setContentView(R.layout.activity_scrool_tab);
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         setupViewPager(viewPager);
 
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
+
+
+        TextView textNode = findViewById(R.id.text_view_node);
+        TextView textModel = findViewById(R.id.text_view_model);
+        TextView textModelMore = findViewById(R.id.text_view_model_more);
+
+        textNode.setText(model);
+        textModel.setText("User: "+model+" | MAC: "+mac+" | Firmware: "+mac);
+        textModelMore.setText(" Altitude: "+mac+" | Lat: "+mac+" | Lng: "+mac);
+
+
+
     }
 
     private void setupViewPager(ViewPager viewPager) {

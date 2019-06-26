@@ -203,7 +203,17 @@ public class HomeFragment extends Fragment implements AddNodeDialog.OnInputSelec
             @Override
             public void onItemClick(Node node) {
             Intent intent = new Intent(getContext(), ViewNodeActivity.class);
-            //intent.putExtra(ViewNodeActivity.EXTRA_ID, node.getId());
+            intent.putExtra(ViewNodeActivity.EXTRA_ID, node.getLocal_ID());
+
+                intent.putExtra(ViewNodeActivity.EXTRA_MAC, node.getMac());
+                intent.putExtra(ViewNodeActivity.EXTRA_LATITUDE, node.getLatitude());
+                intent.putExtra(ViewNodeActivity.EXTRA_LONGITUDE, node.getLongitude());
+                intent.putExtra(ViewNodeActivity.EXTRA_ALTITUDE, node.getAltitude());
+                intent.putExtra(ViewNodeActivity.EXTRA_FIRM_VERS, node.getFirm_vers());
+                intent.putExtra(ViewNodeActivity.EXTRA_HAS_API, node.getHas_api());
+                intent.putExtra(ViewNodeActivity.EXTRA_ORACLE_ID, node.getId());
+                intent.putExtra(ViewNodeActivity.EXTRA_IP, node.getIp());
+                intent.putExtra(ViewNodeActivity.EXTRA_MODEL, node.getModel());
 
             startActivityForResult(intent, EDIT_NODE_REQUEST);
 

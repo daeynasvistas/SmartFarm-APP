@@ -31,7 +31,6 @@ public interface NodeDao {
     @Query("SELECT * FROM node_table WHERE id=0")
     List<Node> getUnsyncLocalNodes();
 
-
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertNodes(List<Node> nodes);
 
