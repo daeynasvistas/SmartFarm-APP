@@ -6,16 +6,10 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.widget.EditText;
-import android.widget.NumberPicker;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +20,7 @@ import pt.ipg.SmartFarmAPP.UI.Fragment.OneFragment;
 
 public class ViewNodeActivity  extends AppCompatActivity {
     public static final String EXTRA_ID ="pt.ipg.SmartFarmAPP.EXTRA_ID";
-    public static Node currentNode;
+    public static Node currentNode; // node aqui (todo colocar private ver 0.7)
 
     // --- todo ---- ENVIAR node em bundle .. ou fazer SELECT aqui do EXTRA_ID VERS. 06
     /* REMOVER  --- passei node directamente ------------------------------
@@ -45,6 +39,7 @@ public class ViewNodeActivity  extends AppCompatActivity {
 
     private TabLayout tabLayout;
     private ViewPager viewPager;
+
 
 
     @Override
@@ -73,21 +68,25 @@ public class ViewNodeActivity  extends AppCompatActivity {
     //    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         setContentView(R.layout.activity_scrool_tab);
-        viewPager = (ViewPager) findViewById(R.id.viewpager);
+        viewPager = findViewById(R.id.viewpager);
         setupViewPager(viewPager);
 
-        tabLayout = (TabLayout) findViewById(R.id.tabs);
+        tabLayout = findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
 
         TextView textNode = findViewById(R.id.text_view_node);
         TextView textModel = findViewById(R.id.text_view_model);
         TextView textModelMore = findViewById(R.id.text_view_model_more);
+        ImageView imageViewSink = findViewById(R.id.imageViewSink);
 
         textNode.setText(currentNode.getModel());
         textModel.setText("MAC: "+currentNode.getMac()+" | Firmware: "+currentNode.getFirm_vers());
         textModelMore.setText(" Altitude: "+currentNode.getAltitude()+" | Lat: "+currentNode.getLatitude()+" | Lng: "+currentNode.getLongitude());
 
-
+        // verificar se é SINK e mostrar icon
+        if (currentNode.getHas_api() == 1){
+            imageViewSink.setVisibility(View.VISIBLE);
+        }else  imageViewSink.setVisibility(View.GONE);
 
     }
 

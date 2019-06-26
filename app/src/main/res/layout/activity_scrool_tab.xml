@@ -18,20 +18,33 @@
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light" /> -->
 
 
-        <TextView
-            android:id="@+id/text_view_node"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
-            android:layout_margin="5dp"
-            android:layout_toStartOf="@id/text_view_node_id"
-            android:layout_toLeftOf="@id/text_view_node_id"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:text="Node"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            android:textColor="@color/colorNavText" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/text_view_node"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_margin="5dp"
+                android:layout_toStartOf="@id/text_view_node_id"
+                android:layout_toLeftOf="@id/text_view_node_id"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="Node"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:textColor="@color/colorNavText" />
+
+            <ImageView
+                android:id="@+id/imageViewSink"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:visibility="visible"
+                app:srcCompat="@drawable/ic_router_white_24dp" />
+        </LinearLayout>
 
         <TextView
             android:id="@+id/text_view_model"
