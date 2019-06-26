@@ -26,8 +26,10 @@ import pt.ipg.SmartFarmAPP.UI.Fragment.OneFragment;
 
 public class ViewNodeActivity  extends AppCompatActivity {
     public static final String EXTRA_ID ="pt.ipg.SmartFarmAPP.EXTRA_ID";
+    public static Node currentNode;
 
     // --- todo ---- ENVIAR node em bundle .. ou fazer SELECT aqui do EXTRA_ID VERS. 06
+    /* REMOVER  --- passei node directamente ------------------------------
     public static final String EXTRA_MAC ="pt.ipg.SmartFarmAPP.EXTRA_MAC";
     public static final String EXTRA_LATITUDE ="pt.ipg.SmartFarmAPP.EXTRA_LATITUDE";
     public static final String EXTRA_LONGITUDE ="pt.ipg.SmartFarmAPP.EXTRA_LONGITUDE";
@@ -37,38 +39,35 @@ public class ViewNodeActivity  extends AppCompatActivity {
     public static final String EXTRA_ORACLE_ID ="pt.ipg.SmartFarmAPP.EXTRA_ORACLE_ID";
     public static final String EXTRA_IP ="pt.ipg.SmartFarmAPP.EXTRA_IP";
     public static final String EXTRA_MODEL ="pt.ipg.SmartFarmAPP.EXTRA_MODEL";
+    //REMOVER  --- passei node directamente ------------------------------
+    */
 
 
-    private Toolbar toolbar;
     private TabLayout tabLayout;
     private ViewPager viewPager;
-    private Node currentNode;
 
-    //private TextView textModel;
-    //private TextView textMac;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scrool_tab);
 
-
+/* REMOVER  --- passei node directamente ------------------------------
         int local_id =      getIntent().getIntExtra(EXTRA_ID, 0);
 
         String mac =        getIntent().getStringExtra(EXTRA_MAC);
-        double latitude =   getIntent().getIntExtra(EXTRA_LATITUDE, 0);
-        double longitude =  getIntent().getDoubleExtra(EXTRA_LONGITUDE, 0);
-        double altitude =   getIntent().getDoubleExtra(EXTRA_ALTITUDE, 0);
+        float latitude =   getIntent().getFloatExtra(EXTRA_LATITUDE, 0);
+        float longitude =  getIntent().getFloatExtra(EXTRA_LONGITUDE, 0);
+        int altitude =   getIntent().getIntExtra(EXTRA_ALTITUDE, 0);
         String firmVers =   getIntent().getStringExtra(EXTRA_FIRM_VERS);
         int has_API =       getIntent().getIntExtra(EXTRA_HAS_API, 0);
         String ip =         getIntent().getStringExtra(EXTRA_IP);
         String model =      getIntent().getStringExtra(EXTRA_MODEL);
 
-
-
-
-
-        // REVER tool bar custom!!! ----------------------------------------- todo rever toolbar ver 0.6
+//REMOVER  --- passei node directamente ------------------------------
+*/
+ //  private Toolbar toolbar;
+    // REVER tool bar custom!!! ----------------------------------------- todo rever toolbar ver 0.6
     //    toolbar = (Toolbar) findViewById(R.id.toolbar);
     //    setSupportActionBar(toolbar);
     //    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -80,14 +79,13 @@ public class ViewNodeActivity  extends AppCompatActivity {
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
 
-
         TextView textNode = findViewById(R.id.text_view_node);
         TextView textModel = findViewById(R.id.text_view_model);
         TextView textModelMore = findViewById(R.id.text_view_model_more);
 
-        textNode.setText(model);
-        textModel.setText("User: "+model+" | MAC: "+mac+" | Firmware: "+mac);
-        textModelMore.setText(" Altitude: "+mac+" | Lat: "+mac+" | Lng: "+mac);
+        textNode.setText(currentNode.getModel());
+        textModel.setText("MAC: "+currentNode.getMac()+" | Firmware: "+currentNode.getFirm_vers());
+        textModelMore.setText(" Altitude: "+currentNode.getAltitude()+" | Lat: "+currentNode.getLatitude()+" | Lng: "+currentNode.getLongitude());
 
 
 
@@ -98,7 +96,7 @@ public class ViewNodeActivity  extends AppCompatActivity {
         adapter.addFrag(new OneFragment(), "Temperatura");
         adapter.addFrag(new OneFragment(), "Humidade Ar");
         adapter.addFrag(new OneFragment(), "Pressão Atm");
-        adapter.addFrag(new OneFragment(), "Pressão Atm");
+        adapter.addFrag(new OneFragment(), "Luminosidade");
         adapter.addFrag(new OneFragment(), "CO2");
         adapter.addFrag(new OneFragment(), "Qualidade Ar");
         adapter.addFrag(new OneFragment(), "Humidade solo");
