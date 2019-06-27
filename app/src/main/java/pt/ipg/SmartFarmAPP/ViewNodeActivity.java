@@ -106,29 +106,54 @@ public class ViewNodeActivity  extends AppCompatActivity {
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
 
-        Bundle bundle = new Bundle();
-        bundle.putString(EXTRA_ID, currentNode.getMac());   //------------------------------------------------  ToDO --- ALTERAR ridículo esta cena
+          Fragment fragment_temp = new TempFragment();
+        ((TempFragment) fragment_temp).setLimit_ROW(100);
+        ((TempFragment) fragment_temp).setMac_ID(currentNode.getMac());
+        ((TempFragment) fragment_temp).setSensor_ID(1);
 
-
-        Fragment fragment_temp = new TempFragment();
         Fragment fragment_hum = new TempFragment();
-        Fragment fragment_atm = new TempFragment();
-        Fragment fragment_lux = new TempFragment();
-        Fragment fragment_co2 = new TempFragment();
-        Fragment fragment_tvoc = new TempFragment();
-        Fragment fragment_soil = new TempFragment();
-        Fragment fragment_som = new TempFragment();
-        Fragment fragment_fogo = new TempFragment();
+        ((TempFragment) fragment_hum).setLimit_ROW(100);
+        ((TempFragment) fragment_hum).setMac_ID(currentNode.getMac());
+        ((TempFragment) fragment_hum).setSensor_ID(2);
 
-        fragment_temp.setArguments(bundle);
-        fragment_hum.setArguments(bundle);
-        fragment_atm.setArguments(bundle);
-        fragment_lux.setArguments(bundle);
-        fragment_co2.setArguments(bundle);
-        fragment_tvoc.setArguments(bundle);
-        fragment_soil.setArguments(bundle);
-        fragment_som.setArguments(bundle);
-        fragment_fogo.setArguments(bundle);
+        Fragment fragment_atm = new TempFragment();
+        ((TempFragment) fragment_atm).setLimit_ROW(100);
+        ((TempFragment) fragment_atm).setMac_ID(currentNode.getMac());
+        ((TempFragment) fragment_atm).setSensor_ID(3);
+
+        Fragment fragment_co2 = new TempFragment();
+        ((TempFragment) fragment_co2).setLimit_ROW(100);
+        ((TempFragment) fragment_co2).setMac_ID(currentNode.getMac());
+        ((TempFragment) fragment_co2).setSensor_ID(4);
+
+        Fragment fragment_tvoc = new TempFragment();
+        ((TempFragment) fragment_tvoc).setLimit_ROW(100);
+        ((TempFragment) fragment_tvoc).setMac_ID(currentNode.getMac());
+        ((TempFragment) fragment_tvoc).setSensor_ID(5);
+
+
+        Fragment fragment_soil = new TempFragment();
+        ((TempFragment) fragment_soil).setLimit_ROW(100);
+        ((TempFragment) fragment_soil).setMac_ID(currentNode.getMac());
+        ((TempFragment) fragment_soil).setSensor_ID(6);
+
+        Fragment fragment_lux = new TempFragment();
+        ((TempFragment) fragment_lux).setLimit_ROW(100);
+        ((TempFragment) fragment_lux).setMac_ID(currentNode.getMac());
+        ((TempFragment) fragment_lux).setSensor_ID(7);
+
+        Fragment fragment_fogo = new TempFragment();
+        ((TempFragment) fragment_fogo).setLimit_ROW(100);
+        ((TempFragment) fragment_fogo).setMac_ID(currentNode.getMac());
+        ((TempFragment) fragment_fogo).setSensor_ID(8);
+
+        Fragment fragment_som = new TempFragment();
+        ((TempFragment) fragment_som).setLimit_ROW(100);
+        ((TempFragment) fragment_som).setMac_ID(currentNode.getMac());
+        ((TempFragment) fragment_som).setSensor_ID(9);
+
+
+
 
 
         adapter.addFrag(fragment_temp, "Temperatura");

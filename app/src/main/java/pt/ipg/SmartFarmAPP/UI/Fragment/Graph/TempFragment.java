@@ -30,15 +30,34 @@ import pt.ipg.SmartFarmAPP.ViewModel.SensorDataViewModel;
 import static android.view.View.GONE;
 
 public class TempFragment extends Fragment{
+    private String mac_ID;
+    private int sensor_ID;
+    private int limit_ROW;
+
+    public void setMac_ID(String mac_ID) {
+        this.mac_ID = mac_ID;
+    }
+
+    public void setSensor_ID(int sensor_ID) {
+        this.sensor_ID = sensor_ID;
+    }
+
+    public void setLimit_ROW(int limit_ROW) {
+        this.limit_ROW = limit_ROW;
+    }
+
+
+
+
 
     private ProgressBar progressbar;
     private LineChart mChart;
-    public static final String EXTRA_ID = "pt.ipg.SmartFarmAPP.EXTRA_ID"; // para o SELECT só este node
-
 
     public TempFragment() {
         // construtor vazio
     }
+
+
 
 
     @Override
@@ -50,14 +69,16 @@ public class TempFragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_one, container, false);
-        String mac_ID = getArguments().getString(EXTRA_ID);
+       // String mac_ID = getArguments().getString(EXTRA_ID);
 
         progressbar = view.findViewById(R.id.progressbar);
 
         mChart = view.findViewById(R.id.chart1);
         mChart.getXAxis().setTextSize(0);
 
-        setData(20, mac_ID);  ///-----------------------------------------------------------------TodO alterar ver 0.6
+        setData(limit_ROW, mac_ID);  ///-----------------------------------------------------------------TodO alterar ver 0.6
+
+
         Description des = mChart.getDescription();
         des.setText("Últimas 24 horas");
         // des.setEnabled(false);
@@ -87,7 +108,7 @@ public class TempFragment extends Fragment{
 
 
         final SensorDataViewModel sensorDataViewModel = ViewModelProviders.of(getActivity()).get(SensorDataViewModel.class);
-        sensorDataViewModel.getAllSelectedSensorData(1,100, mac_ID).observe(getActivity(), new Observer<List<SensorData>>() {
+        sensorDataViewModel.getAllSelectedSensorData(sensor_ID,limit_ROW, mac_ID).observe(getActivity(), new Observer<List<SensorData>>() {
             @Override
             public void onChanged(@Nullable List<SensorData> sensorData) {
                 // tenho aqui todos os valores sensor
