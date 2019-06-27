@@ -1,5 +1,6 @@
 package pt.ipg.SmartFarmAPP;
 
+import android.arch.lifecycle.LiveData;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -15,11 +16,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import pt.ipg.SmartFarmAPP.Entity.Node;
-import pt.ipg.SmartFarmAPP.UI.Fragment.OneFragment;
+import pt.ipg.SmartFarmAPP.Entity.Repository;
+import pt.ipg.SmartFarmAPP.Entity.SensorData;
+import pt.ipg.SmartFarmAPP.UI.Fragment.Graph.TempFragment;
 
 
 public class ViewNodeActivity  extends AppCompatActivity {
-    public static final String EXTRA_ID ="pt.ipg.SmartFarmAPP.EXTRA_ID";
+
+    public static final String EXTRA_ID = "pt.ipg.SmartFarmAPP.EXTRA_ID"; // para o SELECT só este node
+
+
     public static Node currentNode; // node aqui (todo colocar private ver 0.7)
 
     // --- todo ---- ENVIAR node em bundle .. ou fazer SELECT aqui do EXTRA_ID VERS. 06
@@ -39,13 +45,17 @@ public class ViewNodeActivity  extends AppCompatActivity {
 
     private TabLayout tabLayout;
     private ViewPager viewPager;
+    private String  mac_id;
 
+    private Repository repository;
+    private LiveData<List<SensorData>> allSensorData;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scrool_tab);
+       // mac_id =      getIntent().getStringExtra(EXTRA_ID); // o id local do node a mostrar!!!
 
 /* REMOVER  --- passei node directamente ------------------------------
         int local_id =      getIntent().getIntExtra(EXTRA_ID, 0);
@@ -88,20 +98,48 @@ public class ViewNodeActivity  extends AppCompatActivity {
             imageViewSink.setVisibility(View.VISIBLE);
         }else  imageViewSink.setVisibility(View.GONE);
 
+
+
     }
+
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFrag(new OneFragment(), "Temperatura");
-        adapter.addFrag(new OneFragment(), "Humidade Ar");
-        adapter.addFrag(new OneFragment(), "Pressão Atm");
-        adapter.addFrag(new OneFragment(), "Luminosidade");
-        adapter.addFrag(new OneFragment(), "CO2");
-        adapter.addFrag(new OneFragment(), "Qualidade Ar");
-        adapter.addFrag(new OneFragment(), "Humidade solo");
-        adapter.addFrag(new OneFragment(), "Som");
-        adapter.addFrag(new OneFragment(), "Fogo");
 
+        Bundle bundle = new Bundle();
+        bundle.putString(EXTRA_ID, currentNode.getMac());   //------------------------------------------------  ToDO --- ALTERAR ridículo esta cena
+
+
+        Fragment fragment_temp = new TempFragment();
+        Fragment fragment_hum = new TempFragment();
+        Fragment fragment_atm = new TempFragment();
+        Fragment fragment_lux = new TempFragment();
+        Fragment fragment_co2 = new TempFragment();
+        Fragment fragment_tvoc = new TempFragment();
+        Fragment fragment_soil = new TempFragment();
+        Fragment fragment_som = new TempFragment();
+        Fragment fragment_fogo = new TempFragment();
+
+        fragment_temp.setArguments(bundle);
+        fragment_hum.setArguments(bundle);
+        fragment_atm.setArguments(bundle);
+        fragment_lux.setArguments(bundle);
+        fragment_co2.setArguments(bundle);
+        fragment_tvoc.setArguments(bundle);
+        fragment_soil.setArguments(bundle);
+        fragment_som.setArguments(bundle);
+        fragment_fogo.setArguments(bundle);
+
+
+        adapter.addFrag(fragment_temp, "Temperatura");
+        adapter.addFrag(fragment_hum, "Humidade Ar");
+        adapter.addFrag(fragment_atm, "Pressão Atm");
+        adapter.addFrag(fragment_lux, "Luminosidade");
+        adapter.addFrag(fragment_co2, "CO2");
+        adapter.addFrag(fragment_tvoc, "Qualidade Ar");
+        adapter.addFrag(fragment_soil, "Humidade solo");
+        adapter.addFrag(fragment_som, "Som");
+        adapter.addFrag(fragment_fogo, "Fogo");
 
         viewPager.setAdapter(adapter);
     }

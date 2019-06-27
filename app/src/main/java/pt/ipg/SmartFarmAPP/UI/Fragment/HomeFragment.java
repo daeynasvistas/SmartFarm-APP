@@ -121,7 +121,9 @@ public class HomeFragment extends Fragment implements AddNodeDialog.OnInputSelec
         final NodeAdapter nodeAdapter = new NodeAdapter();
         recyclerView.setAdapter(nodeAdapter);
 
-        ProgressBar progressbar = (ProgressBar) view.findViewById(R.id.progressbar);
+        ProgressBar progressbar = view.findViewById(R.id.progressbar);
+
+
 
         final NodeViewModel nodeViewModel = ViewModelProviders.of(getActivity()).get(NodeViewModel.class);
         nodeViewModel.getAllNodes().observe(getActivity(), new Observer<List<Node>>() {
@@ -130,6 +132,11 @@ public class HomeFragment extends Fragment implements AddNodeDialog.OnInputSelec
                 nodeAdapter.setNodes(nodes);
             }
         });
+
+
+
+
+
 
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,
                 ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
@@ -204,7 +211,7 @@ public class HomeFragment extends Fragment implements AddNodeDialog.OnInputSelec
             @Override
             public void onItemClick(Node node) {
             Intent intent = new Intent(getContext(), ViewNodeActivity.class);
-            intent.putExtra(ViewNodeActivity.EXTRA_ID, node.getLocal_ID());
+            intent.putExtra(ViewNodeActivity.EXTRA_ID, node.getMac());
 
             ViewNodeActivity.currentNode = node; //Enviar directamento o Node
 

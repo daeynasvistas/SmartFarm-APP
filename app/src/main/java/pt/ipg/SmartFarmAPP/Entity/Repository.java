@@ -11,19 +11,24 @@ import pt.ipg.SmartFarmAPP.Database.AppDatabase;
 public class Repository {
 
     private NodeDao nodeDao;
-    private LiveData<List<Node>> allNodes;
     private SensorDataDao sensorDataDao;
-    private LiveData<List<SensorData>> allSensorDatas;
+
+    private LiveData<List<Node>> allNodes;
+    private LiveData<List<SensorData>> allSensorData;
+    private List<SensorData> allSelectedSensorData;
+
 
     private static Application application;
 
     public Repository(Application application) {
         AppDatabase database = AppDatabase.getInstance(application);
-        nodeDao = database.nodeDao();
-        allNodes = nodeDao.getAllNodes();
 
+        nodeDao = database.nodeDao();
         sensorDataDao = database.sensorDataDao();
-        allSensorDatas = sensorDataDao.getAllSensorData();
+
+        allNodes = nodeDao.getAllNodes();
+        allSensorData = sensorDataDao.getAllSensorData();
+
     }
 
     public static synchronized Repository newInstance(){
@@ -51,6 +56,7 @@ public class Repository {
     public LiveData<List<Node>> getAllNodes() {
         return allNodes;
     }
+
 
 
     /// -------------------------------------- ASYNC NODES -------------------------------------
@@ -118,10 +124,13 @@ public class Repository {
         new InsertSensorDataAsyncTask(sensorDataDao).execute(sensorData);
     }
 
-    public LiveData<List<SensorData>> getAllSensorDatas() {
-        return allSensorDatas;
+    public LiveData<List<SensorData>> getAllSensorData() {
+        return allSensorData;
     }
 
+    public LiveData<List<SensorData>> getAllSelectedSensorData(int sensor, int limit, String node_ID) {
+        return sensorDataDao.getAllSensorDatasSpecific(sensor, limit, node_ID);
+    }
 
     /// -------------------------------------- ASYNC SENSOR DATA -------------------------------------
     private static class InsertSensorDataAsyncTask extends AsyncTask<SensorData, Void, Void> {

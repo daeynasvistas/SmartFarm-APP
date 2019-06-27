@@ -2,9 +2,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="pt.ipg.SmartFarmAPP.UI.Fragment.OneFragment">
+    tools:context="pt.ipg.SmartFarmAPP.UI.Fragment.Graph.TempFragment">
 
 
+    <TextView
+        android:id="@+id/textViewNodeID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:visibility="invisible" />
 
     <ProgressBar
         android:id="@+id/progressbar"

@@ -26,9 +26,11 @@ public interface SensorDataDao {
     @Query("DELETE FROM sensorData_table")
     void deleteAllSensorData();
 
-    @Query("SELECT * FROM sensorData_table ORDER BY id ASC")
+    @Query("SELECT * FROM sensorData_table ORDER BY date_of_value DESC")
     LiveData<List<SensorData>> getAllSensorData();  // Observe Dados !!! com LiveData
 
 
+    @Query("SELECT * FROM sensorData_table WHERE id= :sensor AND mac LIKE :node_ID ORDER BY date_of_value DESC LIMIT :limit") // -- select cada sensor individualmente e enviar dados com limit
+    LiveData<List<SensorData>> getAllSensorDatasSpecific(int sensor, int limit, String node_ID);  //
 
 }

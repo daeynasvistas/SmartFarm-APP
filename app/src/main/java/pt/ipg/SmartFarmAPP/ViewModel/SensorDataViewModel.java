@@ -7,7 +7,7 @@ import android.support.annotation.NonNull;
 
 import java.util.List;
 
-import pt.ipg.SmartFarmAPP.Entity.Node;
+
 import pt.ipg.SmartFarmAPP.Entity.Repository;
 import pt.ipg.SmartFarmAPP.Entity.SensorData;
 
@@ -16,10 +16,11 @@ public class SensorDataViewModel extends AndroidViewModel {
     private Repository repository;
     private LiveData<List<SensorData>> allSensorData;
 
+
     public SensorDataViewModel(@NonNull Application application) {
         super(application);
         repository = new Repository(application);
-        allSensorData = repository.getAllSensorDatas();
+        allSensorData = repository.getAllSensorData();
     }
 
     public void insert(SensorData sensorData) { repository.insert(sensorData);  }
@@ -28,6 +29,11 @@ public class SensorDataViewModel extends AndroidViewModel {
     public LiveData<List<SensorData>> getAllSensorData() {
         return allSensorData;
     }
+
+    public LiveData<List<SensorData>> getAllSelectedSensorData(int sensor, int limit, String node_ID) {
+        return repository.getAllSelectedSensorData(sensor, limit, node_ID);
+    }
+
 
 
 

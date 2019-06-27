@@ -22,7 +22,7 @@ public class SensorData {
     private float longitude;
     private float latitude;
     private String mac;
-    private int nodeID;
+    private int nodeid;
 
 
 
@@ -31,7 +31,7 @@ public class SensorData {
     }
 
 
-    public SensorData(int id, int date_of_value, double value, String type, String name, String code, String unit, String description, float longitude, float latitude, String mac, int nodeID) {
+    public SensorData(int id, int date_of_value, double value, String type, String name, String code, String unit, String description, float longitude, float latitude, String mac, int nodeid) {
         this.id = id;
         this.date_of_value = date_of_value;
         this.value = value;
@@ -43,7 +43,7 @@ public class SensorData {
         this.longitude = longitude;
         this.latitude = latitude;
         this.mac = mac;
-        this.nodeID = nodeID;
+        this.nodeid = nodeid;
     }
 
     // porque não temos no construtor
@@ -99,8 +99,8 @@ public class SensorData {
         return mac;
     }
 
-    public int getNodeID() {
-        return nodeID;
+    public int getNodeid() {
+        return nodeid;
     }
 }
 
