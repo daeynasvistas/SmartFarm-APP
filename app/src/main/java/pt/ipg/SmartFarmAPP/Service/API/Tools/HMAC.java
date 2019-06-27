@@ -27,10 +27,10 @@ import java.util.concurrent.TimeUnit;
 
 public class HMAC {
 
-   private String secret = "Mjg2OTY3QTI4ODE1QjgzRTYyMDZGNzcwNjlGMzMzRkU4NDBFQUVCRDU0ODlCODBFNzQ5ODQ5NkYxODk2RTk0RA=="; // GERAR DEPOIS!!!
+   private String secret = "z0nVOnp8HknQxDq5fDgX5rWgClbeNCt+OUMfEi1dd1kb9+uOwYgxVppP/VwQV9JQH6JuPU8q8CTHtO0Oy2Ey6g=="; // GERAR DEPOIS!!!
    private String key = "RTlCRjMzMjBDQjNFNDc0QjNBNTEzNkVCODIyMTQwM0RBMjVFNzAyNQ=="; // GERAR DEPOIS!!!
 
-    
+
    public String getNonce(){
      String nonce = String.valueOf(TimeUnit.MILLISECONDS.toMicros(System.currentTimeMillis()));
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {

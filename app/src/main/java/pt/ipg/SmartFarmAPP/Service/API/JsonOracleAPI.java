@@ -1,8 +1,10 @@
 package pt.ipg.SmartFarmAPP.Service.API;
 
+
 import java.util.List;
 
 import pt.ipg.SmartFarmAPP.Entity.Node;
+import pt.ipg.SmartFarmAPP.Entity.SensorData;
 import pt.ipg.SmartFarmAPP.Model.NodeModel;
 import pt.ipg.SmartFarmAPP.Model.Value;
 import retrofit2.Call;
@@ -68,7 +70,8 @@ public interface JsonOracleAPI {
                         @Field("IP") String ip,
                         @Field("LATITUDE") double latitude,
                         @Field("LONGITUDE") double longitude,
-                        @Field("ALTITUDE") int altitude
+                        @Field("ALTITUDE") int altitude,
+                        @Field("HAS_API") String has_api
                         );
 
 
@@ -80,7 +83,21 @@ public interface JsonOracleAPI {
     })
     @DELETE("nodes/{nodeID}")
     Call<Void> deleteNode(@Path("nodeID") int nodeID);
+
+
+
+    //-----------------------  VALORES dos SENSORES ---------------------------------
+    // -------  CRUD retrofit  ------------------------------------------------------------------------
+    // ------------------------------------------------ READ NODES ------------------------------------
+    @Headers({
+            "API_key:RTlCRjMzMjBDQjNFNDc0QjNBNTEzNkVCODIyMTQwM0RBMjVFNzAyNQ==",
+            "API_sign:z0nVOnp8HknQxDq5fDgX5rWgClbeNCt+OUMfEi1dd1kb9+uOwYgxVppP/VwQV9JQH6JuPU8q8CTHtO0Oy2Ey6g==",
+            "API_nonce:1561289582855000"
+    })
+    @GET("data/{timestamp}")
+    Call<SensorData.MySensorDataValues> getSensorData(@Path("timestamp") int timeStamp);
 }
+
 
 /*
     private int id;

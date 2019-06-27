@@ -45,7 +45,7 @@ public class SyncJobIntent extends JobIntentService {
 
             case "Sync Oracle - POST":
                 //POST
-                mAPIService.postNode(nodeModel,"0.1",nodeMac,"000.000.000.000", 0.000000f, -0.000000f, 0)
+                mAPIService.postNode(nodeModel,"0.1",nodeMac,"000.000.000.000", 0.000000f, -0.000000f, 0, "0")
                         .enqueue(new Callback<Node>() {
                             public void onResponse(Call<Node> call, Response<Node> response) {
                                 if(response.isSuccessful()) {

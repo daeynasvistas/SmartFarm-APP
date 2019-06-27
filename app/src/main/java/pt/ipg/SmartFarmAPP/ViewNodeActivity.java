@@ -84,7 +84,7 @@ public class ViewNodeActivity  extends AppCompatActivity {
         textModelMore.setText(" Altitude: "+currentNode.getAltitude()+" | Lat: "+currentNode.getLatitude()+" | Lng: "+currentNode.getLongitude());
 
         // verificar se é SINK e mostrar icon
-        if (currentNode.getHas_api() == 1){
+        if (currentNode.getHas_api().equals("1")){
             imageViewSink.setVisibility(View.VISIBLE);
         }else  imageViewSink.setVisibility(View.GONE);
 

@@ -8,24 +8,30 @@ import java.util.List;
 
 import pt.ipg.SmartFarmAPP.Database.AppDatabase;
 
-public class NodeRepository {
+public class Repository {
 
     private NodeDao nodeDao;
     private LiveData<List<Node>> allNodes;
+    private SensorDataDao sensorDataDao;
+    private LiveData<List<SensorData>> allSensorDatas;
+
     private static Application application;
 
-    public NodeRepository(Application application) {
+    public Repository(Application application) {
         AppDatabase database = AppDatabase.getInstance(application);
         nodeDao = database.nodeDao();
         allNodes = nodeDao.getAllNodes();
+
+        sensorDataDao = database.sensorDataDao();
+        allSensorDatas = sensorDataDao.getAllSensorData();
     }
 
-    public static synchronized NodeRepository newInstance(){
-        NodeRepository nodeRepository = new NodeRepository(application);
-        return nodeRepository;
+    public static synchronized Repository newInstance(){
+        Repository repository = new Repository(application);
+        return repository;
     }
 
-    /// -------------------------------------- CRUD -------------------------------------
+    /// -------------------------------------- CRUD NODES-------------------------------------
     public void insert(Node node) {
         new InsertNodeAsyncTask(nodeDao).execute(node);
     }
@@ -47,7 +53,7 @@ public class NodeRepository {
     }
 
 
-    /// -------------------------------------- ASYNC  -------------------------------------
+    /// -------------------------------------- ASYNC NODES -------------------------------------
     private static class InsertNodeAsyncTask extends AsyncTask<Node, Void, Void> {
         private NodeDao nodeDao;
 
@@ -104,5 +110,31 @@ public class NodeRepository {
         }
     }
 
+
+
+
+    /// -------------------------------------- INSERT e GET SENSOR DATA-------------------------------------
+    public void insert(SensorData sensorData) {
+        new InsertSensorDataAsyncTask(sensorDataDao).execute(sensorData);
+    }
+    public LiveData<List<SensorData>> getAllSensorDatas() {
+        return allSensorDatas;
+    }
+
+
+    /// -------------------------------------- ASYNC SENSOR DATA -------------------------------------
+    private static class InsertSensorDataAsyncTask extends AsyncTask<SensorData, Void, Void> {
+        private SensorDataDao sensorDataDao;
+
+        private InsertSensorDataAsyncTask(SensorDataDao sensorDataDao) {
+            this.sensorDataDao = sensorDataDao;
+        }
+
+        @Override
+        protected Void doInBackground(SensorData... sensorData) {
+            sensorDataDao.insert(sensorData[0]);
+            return null;
+        }
+    }
 
 }

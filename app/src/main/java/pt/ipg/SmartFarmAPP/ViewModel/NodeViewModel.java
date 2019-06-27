@@ -8,16 +8,16 @@ import android.support.annotation.NonNull;
 import java.util.List;
 
 import pt.ipg.SmartFarmAPP.Entity.Node;
-import pt.ipg.SmartFarmAPP.Entity.NodeRepository;
+import pt.ipg.SmartFarmAPP.Entity.Repository;
 
 public class NodeViewModel extends AndroidViewModel {
 
-    private NodeRepository repository;
+    private Repository repository;
     private LiveData<List<Node>> allNodes;
 
     public NodeViewModel(@NonNull Application application) {
         super(application);
-        repository = new NodeRepository(application);
+        repository = new Repository(application);
         allNodes = repository.getAllNodes();
 
     }

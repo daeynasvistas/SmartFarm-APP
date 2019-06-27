@@ -14,7 +14,9 @@ import java.util.List;
 import okhttp3.OkHttpClient;
 import pt.ipg.SmartFarmAPP.Entity.Node;
 import pt.ipg.SmartFarmAPP.Entity.NodeDao;
-import pt.ipg.SmartFarmAPP.Entity.NodeRepository;
+import pt.ipg.SmartFarmAPP.Entity.Repository;
+import pt.ipg.SmartFarmAPP.Entity.SensorData;
+import pt.ipg.SmartFarmAPP.Entity.SensorDataDao;
 import pt.ipg.SmartFarmAPP.Service.API.JsonOracleAPI;
 import pt.ipg.SmartFarmAPP.Service.API.API;
 import retrofit2.Call;
@@ -22,11 +24,12 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-@Database(entities = {Node.class}, version = 1, exportSchema = false)
+@Database(entities = {Node.class, SensorData.class}, version = 2, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
 
     private static AppDatabase instance;
     public abstract NodeDao nodeDao();
+    public abstract SensorDataDao sensorDataDao();
 
     public static synchronized AppDatabase getInstance(Context context) {
         if (instance == null) {
@@ -49,9 +52,12 @@ public abstract class AppDatabase extends RoomDatabase {
 
     private static class PopulateDbAsyncTask extends AsyncTask<Void, Void, Void> {
         private NodeDao nodeDao;
+        private SensorDataDao sensorDataDao;
 
         private PopulateDbAsyncTask(AppDatabase db) {
+            // vers 2 -- com dados dos sensores
             nodeDao = db.nodeDao();
+            sensorDataDao = db.sensorDataDao();
         }
 
         @Override
@@ -61,15 +67,16 @@ public abstract class AppDatabase extends RoomDatabase {
                 Log.d("ORACLE", "--- DOWNLOAD JSON ---");
                 OkHttpClient okHttpClient = API.UnsafeOkHttpClient.getUnsafeOkHttpClient();
                 // problema com IPG certificado .. não utilizar produção!!
+
+                //------------------------------------------------ DOWNLOAD dos NODES -------
                 Retrofit retrofit = new Retrofit.Builder()
                         .baseUrl("https://bd.ipg.pt:5500/ords/bda_1007249/APIv3/")
                         .client(okHttpClient)
                         .addConverterFactory(GsonConverterFactory.create())
                         .build();
-
                 JsonOracleAPI jsonOracleAPI = retrofit.create(JsonOracleAPI.class);
-
                 Call<Node.MyNodes> call = jsonOracleAPI.getNodes();
+
                 call.enqueue(new retrofit2.Callback<Node.MyNodes>() {
 
                     @Override
@@ -81,11 +88,11 @@ public abstract class AppDatabase extends RoomDatabase {
                         List<Node> nodes = response.body().items;
                         // taskExecutor.execute(new OracleDbToRoomDataUpdateTask.RoomUpdateTask(nodes));
                         // singleton  .. em teoria só há uma instance .. mesmo que com novo builder
-                        NodeRepository nodeRepository = NodeRepository.newInstance();
+                        Repository repository = Repository.newInstance();
 
-                        nodeRepository.deleteAllNodes(); // APAGAR TUDO  <---------------------------------------- REVER 0.5
+                        repository.deleteAllNodes(); // APAGAR TUDO  <---------------------------------------- REVER 0.5
                         for (Node node : nodes) {
-                            nodeRepository.insert(node);
+                            repository.insert(node);
                         }
                         // database updated!!!!!
                         // cancelar JOB
@@ -98,10 +105,52 @@ public abstract class AppDatabase extends RoomDatabase {
 
                     @Override
                     public void onFailure(Call<Node.MyNodes> call, Throwable t) {
-                        Log.d("ORACLE", " Montes problemas ");
+                        Log.d("ORACLE", " Montes problemas com nodes");
                     }
 
                 });
+
+
+                //------------------------------------------------ DOWNLOAD dos VALORES SENSORES -------
+
+                Retrofit retrofit_Data = new Retrofit.Builder()
+                        .baseUrl("https://bd.ipg.pt:5500/ords/bda_1007249/APIv3/")
+                        .client(okHttpClient)
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .build();
+                jsonOracleAPI = retrofit_Data.create(JsonOracleAPI.class);
+                Call<SensorData.MySensorDataValues> callData = jsonOracleAPI.getSensorData(1530048258); // 2018
+
+                callData.enqueue(new retrofit2.Callback<SensorData.MySensorDataValues>() {
+
+
+                    @Override
+                    public void onResponse(Call<SensorData.MySensorDataValues> call, Response<SensorData.MySensorDataValues> response) {
+                        if (!response.isSuccessful()) {
+                            return;
+                        }
+                        // já tenho update AQUI !!!
+                        List<SensorData> sensorDatas = response.body().items;
+                        Repository repository = Repository.newInstance();
+                        // atualizar database com novos sensor data
+                        for (SensorData sensorData : sensorDatas) {
+                            repository.insert(sensorData);
+                        }
+                }
+
+                    @Override
+                    public void onFailure(Call<SensorData.MySensorDataValues> call, Throwable t) {
+                        Log.d("ORACLE", " Montes problemas com valores sensores");
+                    }
+                });
+
+
+
+
+
+
+
+
 
 
             } catch (Exception e) {

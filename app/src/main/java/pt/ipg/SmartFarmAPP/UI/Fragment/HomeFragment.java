@@ -57,7 +57,7 @@ public class HomeFragment extends Fragment implements AddNodeDialog.OnInputSelec
         // Add Local
         NodeViewModel nodeViewModel = ViewModelProviders.of(getActivity()).get(NodeViewModel.class);
 
-        Node newNode = new Node("GET@email_do_API_key.com",modelo,"0.1",mac, 0.000000f, 0.000000f,0,0,"000.000.000.000");
+        Node newNode = new Node("GET@email_do_API_key.com",modelo,"0.1",mac, 0.000000f, 0.000000f,0,"0","000.000.000.000");
         nodeViewModel.insert(newNode);
 
        // Toast.makeText(getActivity(), "Node inserido LOCALMENTE", Toast.LENGTH_SHORT).show();

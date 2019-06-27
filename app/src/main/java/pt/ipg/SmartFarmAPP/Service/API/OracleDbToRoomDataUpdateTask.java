@@ -13,7 +13,7 @@ import java.util.concurrent.Executor;
 
 import okhttp3.OkHttpClient;
 import pt.ipg.SmartFarmAPP.Entity.Node;
-import pt.ipg.SmartFarmAPP.Entity.NodeRepository;
+import pt.ipg.SmartFarmAPP.Entity.Repository;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -88,11 +88,11 @@ public class OracleDbToRoomDataUpdateTask  extends Fragment {
 
         private void insertLatestNodesIntoLocalDb(List<Node> nodes, Context ctx){
             // singleton  .. em teoria só há uma instance .. mesmo que com novo builder
-            NodeRepository nodeRepository = NodeRepository.newInstance();
+            Repository repository = Repository.newInstance();
 
-            nodeRepository.deleteAllNodes();
+            repository.deleteAllNodes();
             for (Node node : nodes) {
-                nodeRepository.insert(node);
+                repository.insert(node);
             }
 
             /* REMOVER método directamente na BD melhor sempre repositório

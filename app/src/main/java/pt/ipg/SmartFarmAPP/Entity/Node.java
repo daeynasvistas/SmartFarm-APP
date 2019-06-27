@@ -20,7 +20,7 @@ public class Node {
     private float longitude;
     private float latitude;
     private int altitude;
-    private int has_api;
+    private String has_api;
     private String ip;
 
 
@@ -33,7 +33,7 @@ public class Node {
 
     // construtor ADD local
     @Ignore
-    public Node(String person, String model, String firm_vers, String mac, float longitude, float latitude, int altitude, int has_api, String ip) {
+    public Node(String person, String model, String firm_vers, String mac, float longitude, float latitude, int altitude, String has_api, String ip) {
         this.person = person;
         this.model = model;
         this.firm_vers = firm_vers;
@@ -46,7 +46,7 @@ public class Node {
     }
 
     // construtor
-    public Node(int local_ID,int id, String person, String model, String firm_vers, String mac, float longitude, float latitude, int altitude, int has_api, String ip) {
+    public Node(int local_ID,int id, String person, String model, String firm_vers, String mac, float longitude, float latitude, int altitude, String has_api, String ip) {
         this.local_ID = local_ID;
         this.id = id;
         this.person = person;
@@ -100,7 +100,7 @@ public class Node {
         return altitude;
     }
 
-    public int getHas_api() {
+    public String getHas_api() {
         return has_api;
     }
 
