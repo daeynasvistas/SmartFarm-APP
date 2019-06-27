@@ -1,7 +1,10 @@
 package pt.ipg.SmartFarmAPP.UI.Fragment;
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,7 +20,9 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import pt.ipg.SmartFarmAPP.Entity.Node;
 import pt.ipg.SmartFarmAPP.R;
 import pt.ipg.SmartFarmAPP.ViewModel.NodeViewModel;
 
@@ -30,7 +35,7 @@ public class OneFragment extends Fragment{
     private LineChart mChart;
 
     public OneFragment() {
-        // Required empty public constructor
+        // construtor vazio
     }
 
     @Override
@@ -61,7 +66,18 @@ public class OneFragment extends Fragment{
         return view;
     }
 
+
     private void setData(int count, float range) {
+
+        final NodeViewModel nodeViewModel = ViewModelProviders.of(getActivity()).get(NodeViewModel.class);
+        nodeViewModel.getAllNodes().observe(getActivity(), new Observer<List<Node>>() {
+            @Override
+            public void onChanged(@Nullable List<Node> nodes) {
+      // tenho aqui todos os valores sensor
+
+
+            }
+        });
 
         ArrayList<Entry> values1 = new ArrayList<>();
         for (int i=0; i < count; i++) {

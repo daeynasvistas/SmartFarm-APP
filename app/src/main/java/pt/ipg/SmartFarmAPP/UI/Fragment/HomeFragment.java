@@ -117,6 +117,7 @@ public class HomeFragment extends Fragment implements AddNodeDialog.OnInputSelec
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setHasFixedSize(true);
+
         final NodeAdapter nodeAdapter = new NodeAdapter();
         recyclerView.setAdapter(nodeAdapter);
 
