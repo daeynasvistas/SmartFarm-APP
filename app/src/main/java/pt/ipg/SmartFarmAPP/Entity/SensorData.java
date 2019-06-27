@@ -15,31 +15,35 @@ public class SensorData {
     private int date_of_value;
     private double value;
     private String type;
-    private String ait_temperature;
     private String name;
     private String code;
     private String unit;
     private String description;
     private float longitude;
     private float latitude;
+    private String mac;
+    private int nodeID;
+
+
 
     public class MySensorDataValues {
         public List<SensorData> items;
     }
 
 
-    public SensorData(int id, int date_of_value, double value, String type, String ait_temperature, String name, String code, String unit, String description, float longitude, float latitude) {
+    public SensorData(int id, int date_of_value, double value, String type, String name, String code, String unit, String description, float longitude, float latitude, String mac, int nodeID) {
         this.id = id;
         this.date_of_value = date_of_value;
         this.value = value;
         this.type = type;
-        this.ait_temperature = ait_temperature;
         this.name = name;
         this.code = code;
         this.unit = unit;
         this.description = description;
         this.longitude = longitude;
         this.latitude = latitude;
+        this.mac = mac;
+        this.nodeID = nodeID;
     }
 
     // porque não temos no construtor
@@ -67,10 +71,6 @@ public class SensorData {
         return type;
     }
 
-    public String getAit_temperature() {
-        return ait_temperature;
-    }
-
     public String getName() {
         return name;
     }
@@ -93,6 +93,14 @@ public class SensorData {
 
     public float getLatitude() {
         return latitude;
+    }
+
+    public String getMac() {
+        return mac;
+    }
+
+    public int getNodeID() {
+        return nodeID;
     }
 }
 

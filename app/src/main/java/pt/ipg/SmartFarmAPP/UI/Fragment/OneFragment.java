@@ -23,8 +23,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import pt.ipg.SmartFarmAPP.Entity.Node;
+import pt.ipg.SmartFarmAPP.Entity.SensorData;
 import pt.ipg.SmartFarmAPP.R;
 import pt.ipg.SmartFarmAPP.ViewModel.NodeViewModel;
+import pt.ipg.SmartFarmAPP.ViewModel.SensorDataViewModel;
 
 import static android.view.View.GONE;
 
@@ -67,17 +69,18 @@ public class OneFragment extends Fragment{
     }
 
 
-    private void setData(int count, float range) {
+    private void setData(final int count, final float range) {
 
-        final NodeViewModel nodeViewModel = ViewModelProviders.of(getActivity()).get(NodeViewModel.class);
-        nodeViewModel.getAllNodes().observe(getActivity(), new Observer<List<Node>>() {
+        final SensorDataViewModel sensorDataViewModel = ViewModelProviders.of(getActivity()).get(SensorDataViewModel.class);
+        sensorDataViewModel.getAllSensorData().observe(getActivity(), new Observer<List<SensorData>>() {
             @Override
-            public void onChanged(@Nullable List<Node> nodes) {
-      // tenho aqui todos os valores sensor
+            public void onChanged(@Nullable List<SensorData> sensorData) {
+            // tenho aqui todos os valores sensor
 
 
             }
         });
+
 
         ArrayList<Entry> values1 = new ArrayList<>();
         for (int i=0; i < count; i++) {

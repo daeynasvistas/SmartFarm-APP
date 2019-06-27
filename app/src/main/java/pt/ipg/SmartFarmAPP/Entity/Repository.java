@@ -117,6 +117,7 @@ public class Repository {
     public void insert(SensorData sensorData) {
         new InsertSensorDataAsyncTask(sensorDataDao).execute(sensorData);
     }
+
     public LiveData<List<SensorData>> getAllSensorDatas() {
         return allSensorDatas;
     }

@@ -120,7 +120,7 @@ public class MainActivity extends AppCompatActivity  {
                 .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
                 .setPersisted(true)
                 //.setPeriodic(15 * 60 * 1000)
-                .setPeriodic(15 * 60 * 1000)
+                .setPeriodic(15  * 1000)
                 .build();
 
         JobScheduler jobScheduler = (JobScheduler)getSystemService(JOB_SCHEDULER_SERVICE);
