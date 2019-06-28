@@ -10,6 +10,7 @@ import android.widget.Switch;
 import pt.ipg.SmartFarmAPP.Entity.Node;
 import pt.ipg.SmartFarmAPP.Service.API.API;
 import pt.ipg.SmartFarmAPP.Service.API.JsonOracleAPI;
+import pt.ipg.SmartFarmAPP.Service.API.Tools.HMAC;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -40,12 +41,18 @@ public class SyncJobIntent extends JobIntentService {
         // cenas ..... e mais cenas ...
         mAPIService = API.getAPIService();
 
+        //-------------------------------------------------------------ToDo  REVER ver 0.8
+        HMAC hmac = new HMAC();
+        String nonce = hmac.getNonce();
+        String key = hmac.getKey();
+        String sign = hmac.getSign(nonce, hmac.getSecret());
         // ------------------------------- CRUD -------------------------
         switch(input) {
 
+
             case "Sync Oracle - POST":
                 //POST
-                mAPIService.postNode(nodeModel,"0.1",nodeMac,"000.000.000.000", 0.000000f, -0.000000f, 0, "0")
+                mAPIService.postNode(nodeModel,"0.1",nodeMac,"000.000.000.000", 0.000000f, -0.000000f, 0, "0", key, sign, nonce)
                         .enqueue(new Callback<Node>() {
                             public void onResponse(Call<Node> call, Response<Node> response) {
                                 if(response.isSuccessful()) {

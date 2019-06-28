@@ -12,6 +12,7 @@ import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
@@ -56,11 +57,11 @@ public interface JsonOracleAPI {
     Call<Node.MyNodes> getNodes();
 
     // ------------------------------------------------ CREATE NODE ------------------------------------
-    @Headers({
-            "API_key:RTlCRjMzMjBDQjNFNDc0QjNBNTEzNkVCODIyMTQwM0RBMjVFNzAyNQ==",
-            "API_sign:z0nVOnp8HknQxDq5fDgX5rWgClbeNCt+OUMfEi1dd1kb9+uOwYgxVppP/VwQV9JQH6JuPU8q8CTHtO0Oy2Ey6g==",
-            "API_nonce:1561289582855000"
-    })
+   // @Headers({
+   //         "API_key:RTlCRjMzMjBDQjNFNDc0QjNBNTEzNkVCODIyMTQwM0RBMjVFNzAyNQ==",
+   //         "API_sign:z0nVOnp8HknQxDq5fDgX5rWgClbeNCt+OUMfEi1dd1kb9+uOwYgxVppP/VwQV9JQH6JuPU8q8CTHtO0Oy2Ey6g==",
+   //         "API_nonce:1561289582855000"
+   // })
     @POST("nodes/")
     @FormUrlEncoded
     Call<Node> postNode(//@Field("IOT_PERSON_ID") int person_id,
@@ -71,7 +72,11 @@ public interface JsonOracleAPI {
                         @Field("LATITUDE") double latitude,
                         @Field("LONGITUDE") double longitude,
                         @Field("ALTITUDE") int altitude,
-                        @Field("HAS_API") String has_api
+                        @Field("HAS_API") String has_api,
+
+                        @Header("API_key") String api_key,
+                        @Header("API_sign") String api_sign,
+                        @Header("API_nonce") String api_nonce
                         );
 
 
