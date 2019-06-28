@@ -56,12 +56,13 @@ public interface JsonOracleAPI {
     @GET("nodes/")
     Call<Node.MyNodes> getNodes();
 
+
+
+
+
+
+
     // ------------------------------------------------ CREATE NODE ------------------------------------
-   // @Headers({
-   //         "API_key:RTlCRjMzMjBDQjNFNDc0QjNBNTEzNkVCODIyMTQwM0RBMjVFNzAyNQ==",
-   //         "API_sign:z0nVOnp8HknQxDq5fDgX5rWgClbeNCt+OUMfEi1dd1kb9+uOwYgxVppP/VwQV9JQH6JuPU8q8CTHtO0Oy2Ey6g==",
-   //         "API_nonce:1561289582855000"
-   // })
     @POST("nodes/")
     @FormUrlEncoded
     Call<Node> postNode(//@Field("IOT_PERSON_ID") int person_id,
@@ -81,13 +82,15 @@ public interface JsonOracleAPI {
 
 
     // ------------------------------------------------ DELETE NODE ------------------------------------
-    @Headers({
-            "API_key:RTlCRjMzMjBDQjNFNDc0QjNBNTEzNkVCODIyMTQwM0RBMjVFNzAyNQ==",
-            "API_sign:z0nVOnp8HknQxDq5fDgX5rWgClbeNCt+OUMfEi1dd1kb9+uOwYgxVppP/VwQV9JQH6JuPU8q8CTHtO0Oy2Ey6g==",
-            "API_nonce:1561289582855000"
-    })
     @DELETE("nodes/{nodeID}")
-    Call<Void> deleteNode(@Path("nodeID") int nodeID);
+    Call<Void> deleteNode(@Path("nodeID") int nodeID,
+
+                          @Header("API_key") String api_key,
+                          @Header("API_sign") String api_sign,
+                          @Header("API_nonce") String api_nonce
+    );
+
+
 
 
 

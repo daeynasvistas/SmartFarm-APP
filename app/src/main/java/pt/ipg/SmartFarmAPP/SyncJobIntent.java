@@ -72,7 +72,7 @@ public class SyncJobIntent extends JobIntentService {
 
             case "Sync Oracle - DELETE":
                 // DELETE
-                mAPIService.deleteNode(nodeID)
+                mAPIService.deleteNode(nodeID, key, sign, nonce)
                         .enqueue(new Callback<Void>() {
                             @Override
                             public void onResponse(Call<Void> call, Response<Void> response) {
