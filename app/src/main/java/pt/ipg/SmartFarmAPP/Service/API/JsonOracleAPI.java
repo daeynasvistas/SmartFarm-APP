@@ -97,13 +97,19 @@ public interface JsonOracleAPI {
     //-----------------------  VALORES dos SENSORES ---------------------------------
     // -------  CRUD retrofit  ------------------------------------------------------------------------
     // ------------------------------------------------ READ NODES ------------------------------------
-    @Headers({
-            "API_key:RTlCRjMzMjBDQjNFNDc0QjNBNTEzNkVCODIyMTQwM0RBMjVFNzAyNQ==",
-            "API_sign:z0nVOnp8HknQxDq5fDgX5rWgClbeNCt+OUMfEi1dd1kb9+uOwYgxVppP/VwQV9JQH6JuPU8q8CTHtO0Oy2Ey6g==",
-            "API_nonce:1561289582855000"
-    })
+   // @Headers({
+   //         "API_key:RTlCRjMzMjBDQjNFNDc0QjNBNTEzNkVCODIyMTQwM0RBMjVFNzAyNQ==",
+   //         "API_sign:z0nVOnp8HknQxDq5fDgX5rWgClbeNCt+OUMfEi1dd1kb9+uOwYgxVppP/VwQV9JQH6JuPU8q8CTHtO0Oy2Ey6g==",
+   //         "API_nonce:1561289582855000"
+   // })
     @GET("data/{timestamp}")
-    Call<SensorData.MySensorDataValues> getSensorData(@Path("timestamp") int timeStamp);
+    Call<SensorData.MySensorDataValues> getSensorData(@Path("timestamp") int timeStamp,
+
+                                                      @Header("API_key") String api_key,
+                                                      @Header("API_sign") String api_sign,
+                                                      @Header("API_nonce") String api_nonce
+    );
+
 }
 
 
