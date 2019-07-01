@@ -14,22 +14,27 @@ import java.util.List;
 import okhttp3.OkHttpClient;
 import pt.ipg.SmartFarmAPP.Entity.Node;
 import pt.ipg.SmartFarmAPP.Entity.NodeDao;
+import pt.ipg.SmartFarmAPP.Entity.Picture;
+import pt.ipg.SmartFarmAPP.Entity.PictureDao;
 import pt.ipg.SmartFarmAPP.Entity.Repository;
 import pt.ipg.SmartFarmAPP.Entity.SensorData;
 import pt.ipg.SmartFarmAPP.Entity.SensorDataDao;
 import pt.ipg.SmartFarmAPP.Service.API.JsonOracleAPI;
 import pt.ipg.SmartFarmAPP.Service.API.API;
+import pt.ipg.SmartFarmAPP.Service.API.Tools.HMAC;
 import retrofit2.Call;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-@Database(entities = {Node.class, SensorData.class}, version = 2, exportSchema = false)
+@Database(entities = {Node.class, SensorData.class, Picture.class}, version = 3, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
 
     private static AppDatabase instance;
     public abstract NodeDao nodeDao();
     public abstract SensorDataDao sensorDataDao();
+    public abstract PictureDao pictureDao();
+
 
     public static synchronized AppDatabase getInstance(Context context) {
         if (instance == null) {
@@ -64,6 +69,13 @@ public abstract class AppDatabase extends RoomDatabase {
         protected Void doInBackground(Void... voids) {
 
             try {
+
+                HMAC hmac = new HMAC();
+                String nonce = hmac.getNonce();
+                String key = hmac.getKey();
+                String sign = hmac.getSign(nonce, hmac.getSecret());
+
+
                 Log.d("ORACLE", "--- DOWNLOAD JSON ---");
                 OkHttpClient okHttpClient = API.UnsafeOkHttpClient.getUnsafeOkHttpClient();
                 // problema com IPG certificado .. não utilizar produção!!
@@ -119,7 +131,7 @@ public abstract class AppDatabase extends RoomDatabase {
                         .addConverterFactory(GsonConverterFactory.create())
                         .build();
                 jsonOracleAPI = retrofit_Data.create(JsonOracleAPI.class);
-                Call<SensorData.MySensorDataValues> callData = jsonOracleAPI.getSensorData(1530048258); // 2018
+                Call<SensorData.MySensorDataValues> callData = jsonOracleAPI.getSensorData(1530048258, key, sign, nonce); // 2018
 
                 callData.enqueue(new retrofit2.Callback<SensorData.MySensorDataValues>() {
 

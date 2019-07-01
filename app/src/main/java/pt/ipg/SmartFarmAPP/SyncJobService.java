@@ -11,8 +11,10 @@ import okhttp3.OkHttpClient;
 import pt.ipg.SmartFarmAPP.Entity.Node;
 import pt.ipg.SmartFarmAPP.Entity.Repository;
 import pt.ipg.SmartFarmAPP.Entity.SensorData;
+import pt.ipg.SmartFarmAPP.Service.API.Constantes;
 import pt.ipg.SmartFarmAPP.Service.API.JsonOracleAPI;
 import pt.ipg.SmartFarmAPP.Service.API.API;
+import pt.ipg.SmartFarmAPP.Service.API.Tools.HMAC;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -23,7 +25,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class SyncJobService extends JobService {
     private static final String TAG = "JobService";
     private boolean jobCancelled = false;
-    public static final String URL = "https://bd.ipg.pt:5500/ords/bda_1007249/APIv3/";
+    public static final String URL = Constantes.oracleURL;
 
     public static final String SHARED_PREFS = "sharePrefs";
     public static final String LAST_DATE_UPDATE_SENSOR_VALUES = "LastDate";
@@ -41,9 +43,18 @@ public class SyncJobService extends JobService {
 
 
     private void doSyncOracleBackgroundWork(final JobParameters params) {
+
+
         new Thread(new Runnable() {
             @Override
             public void run() {
+                HMAC hmac = new HMAC();
+
+                String nonce = hmac.getNonce();
+                String key = hmac.getKey();
+                String sign = hmac.getSign(nonce, hmac.getSecret());
+
+
                 if(jobCancelled){return; }
 
                 try {
@@ -107,7 +118,7 @@ public class SyncJobService extends JobService {
                     SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
                     timestamp = sharedPreferences.getInt(LAST_DATE_UPDATE_SENSOR_VALUES, 1561545996);
 
-                    Call<SensorData.MySensorDataValues> callData = jsonOracleAPI.getSensorData(timestamp);
+                    Call<SensorData.MySensorDataValues> callData = jsonOracleAPI.getSensorData(timestamp, key, sign, nonce);
 
                     callData.enqueue(new retrofit2.Callback<SensorData.MySensorDataValues>() {
 

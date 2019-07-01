@@ -17,13 +17,14 @@ import pt.ipg.SmartFarmAPP.ViewModel.SharedViewModel;
 
 
 /**
- * Created by Daey
+ *
  */
 
 public class ProfileFragment extends Fragment {
     private SharedViewModel viewModel;
     private EditText editText;
 
+    /*
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -52,4 +53,6 @@ public class ProfileFragment extends Fragment {
             }
         });
     }
+
+    */
 }
