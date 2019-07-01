@@ -1,7 +1,10 @@
 package pt.ipg.SmartFarmAPP.Entity;
 
+import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
+
+import java.sql.Blob;
 
 @Entity(tableName = "picture_table")
 public class Picture {
@@ -12,6 +15,7 @@ public class Picture {
     private String doenca;
     private String description;
     private int date;
+    @ColumnInfo(typeAffinity = ColumnInfo.BLOB)
     byte[] image;
     private float longitude;
     private float latitude;
