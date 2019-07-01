@@ -10,6 +10,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import pt.ipg.SmartFarmAPP.Entity.Node;
 import pt.ipg.SmartFarmAPP.Entity.Picture;
 import pt.ipg.SmartFarmAPP.R;
 
@@ -18,6 +19,7 @@ public class PictureAdapter extends RecyclerView.Adapter<PictureAdapter.PictureH
 
     private List<Picture> pictures = new ArrayList<>();
     private List<Picture> fullPictures = new ArrayList<>(pictures);
+    private PictureAdapter.onItemClickListener listener;
 
 
     @NonNull
@@ -25,7 +27,6 @@ public class PictureAdapter extends RecyclerView.Adapter<PictureAdapter.PictureH
     public PictureHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View itemView = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.picture_item, viewGroup, false);
-
         return new PictureHolder(itemView);
     }
 
@@ -34,9 +35,25 @@ public class PictureAdapter extends RecyclerView.Adapter<PictureAdapter.PictureH
 
     }
 
+
+    // para editar no onclick
+    public interface onItemClickListener{
+        void onItemClick(Picture picture);
+    }
+    public void setOnItemClickListener(PictureAdapter.onItemClickListener listener){
+        this.listener = listener;
+    }
+
+
+
     @Override
     public int getItemCount() {
-        return 0;
+        return pictures.size();
+    }
+
+    public void setNodes(List<Picture> pictures) {
+        this.pictures = pictures;
+        notifyDataSetChanged();
     }
 
 
