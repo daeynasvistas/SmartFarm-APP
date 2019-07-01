@@ -12,10 +12,13 @@ public class Repository {
 
     private NodeDao nodeDao;
     private SensorDataDao sensorDataDao;
+    private PictureDao pictureDao;
 
     private LiveData<List<Node>> allNodes;
     private LiveData<List<SensorData>> allSensorData;
     private List<SensorData> allSelectedSensorData;
+
+    private LiveData<List<Picture>> allPictures;
 
 
     private static Application application;
@@ -25,9 +28,11 @@ public class Repository {
 
         nodeDao = database.nodeDao();
         sensorDataDao = database.sensorDataDao();
+        pictureDao = database.pictureDao();
 
         allNodes = nodeDao.getAllNodes();
         allSensorData = sensorDataDao.getAllSensorData();
+        allPictures = pictureDao.getAllPictures();
 
     }
 
@@ -35,6 +40,10 @@ public class Repository {
         Repository repository = new Repository(application);
         return repository;
     }
+
+
+
+
 
     /// -------------------------------------- CRUD NODES-------------------------------------
     public void insert(Node node) {
@@ -146,5 +155,99 @@ public class Repository {
             return null;
         }
     }
+
+
+
+
+
+
+
+
+
+    //------------------------------------ PICTURE --------------
+
+    /// -------------------------------------- CRUD NODES-------------------------------------
+    public void insert(Picture picture) {
+        new InsertPictureAsyncTask(pictureDao).execute(picture);
+    }
+
+    public void update(Picture picture) {
+        new UpdatePictureAsyncTask(pictureDao).execute(picture);
+    }
+
+    public void delete(Picture picture) {
+        new DeletePictureAsyncTask(pictureDao).execute(picture);
+    }
+
+    public void deleteAllPictures() {
+        new DeleteAllPicturesAsyncTask(pictureDao).execute();
+    }
+
+    public LiveData<List<Picture>> getAllPictures() {
+        return allPictures;
+    }
+
+
+
+    /// -------------------------------------- ASYNC PICTURES -------------------------------------
+    private static class InsertPictureAsyncTask extends AsyncTask<Picture, Void, Void> {
+        private PictureDao pictureDao;
+
+        private InsertPictureAsyncTask(PictureDao nodeDao) {
+            this.pictureDao = nodeDao;
+        }
+
+        @Override
+        protected Void doInBackground(Picture... pictures) {
+            pictureDao.insert(pictures[0]);
+            return null;
+        }
+    }
+
+    private static class UpdatePictureAsyncTask extends AsyncTask<Picture, Void, Void> {
+        private PictureDao pictureDao;
+
+        private UpdatePictureAsyncTask(PictureDao nodeDao) {
+            this.pictureDao = pictureDao;
+        }
+
+        @Override
+        protected Void doInBackground(Picture... pictures) {
+            pictureDao.update(pictures[0]);
+            return null;
+        }
+    }
+
+    private static class DeletePictureAsyncTask extends AsyncTask<Picture, Void, Void> {
+        private PictureDao pictureDao;
+
+        private DeletePictureAsyncTask(PictureDao pictureDao) {
+            this.pictureDao = pictureDao;
+        }
+
+        @Override
+        protected Void doInBackground(Picture... picture) {
+            pictureDao.delete(picture[0]);
+            return null;
+        }
+    }
+
+    private static class DeleteAllPicturesAsyncTask extends AsyncTask<Void, Void, Void> {
+        private PictureDao pictureDao;
+
+        private DeleteAllPicturesAsyncTask(PictureDao pictureDao) {
+            this.pictureDao = pictureDao;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            pictureDao.deleteAllPictures();
+            return null;
+        }
+    }
+
+
+
+
 
 }
