@@ -5,19 +5,24 @@
 ### ToDo
 - [x] Room Database
 - [x] Repository
-- [ ] LoginView
+- [x] LoginView (HMAC with no login)
 - [ ] SettingView
 - [ ] User Profile
-- [ ] MainView
-- [ ] ApiService
+- [x] MainView
+- [x] ApiService
 - [ ] RegisterView
-- [ ] Get ALL from API
-- [ ] Sync all values with API
+- [x] Get ALL from API
+- [x] Sync all values with API
 - [ ] Location working
 - [ ] Internationalization (I18N) - Português(Original language), french, english, spanish
+- [ ] Picture
+- [ ] AutoML result
 
 
 
+## Vers. O.O5 (DataBase Nodes+Sensor Values)
+![Screenshot_20190628-143359](https://user-images.githubusercontent.com/2634610/60449184-f8e1a480-9c1e-11e9-9f8f-df13ff3a3eb4.png)
+![Screenshot_20190626-132214](https://user-images.githubusercontent.com/2634610/60449187-fa12d180-9c1e-11e9-8f72-30dbae90f9ba.png)
 
 ## Vers. O.O1 (Template)
 ![Screenshot_20190602-182852](https://user-images.githubusercontent.com/2634610/58764911-d8adbf80-8564-11e9-8381-6e175939c0e1.png)
