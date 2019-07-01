@@ -1,8 +1,12 @@
 package pt.ipg.SmartFarmAPP.UI.Fragment;
 
+import android.app.Activity;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -27,8 +31,13 @@ import static android.content.ContentValues.TAG;
 import static android.view.View.GONE;
 
 public class PictureFragment extends Fragment {
+    public static final int REQUEST_CODE = 3000;
     private SharedViewModel viewModel;
     private PictureViewModel pictureViewModel;
+
+    Bitmap bitMap;
+
+
 
 
     @Nullable
@@ -36,6 +45,7 @@ public class PictureFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_profile, null);
+        bitMap = null;
         // mais nodes
         FloatingActionButton fab = view.findViewById(R.id.fabAddPicture);//Find fab Id
         // ------------------  MAIS uma Picture ---------------------------------------
@@ -46,8 +56,15 @@ public class PictureFragment extends Fragment {
                 Toast.makeText(getActivity(), "Montes de cenas!", Toast.LENGTH_SHORT).show();
                 Log.d(TAG, "onClick: opening dialog");
 
-
+                // receber picture aqui
+                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                if (intent.resolveActivity(getActivity().getPackageManager())!=null){
+                    startActivityForResult(intent, REQUEST_CODE);
+                }
             }
+
+
+
         });
 
         // Content in view
@@ -75,5 +92,17 @@ public class PictureFragment extends Fragment {
         progressbar.setVisibility(GONE);
 
         return view;
+    }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode){
+            case REQUEST_CODE:
+                    bitMap = (Bitmap) data.getExtras().get("data");
+                    break;
+        }
+
     }
 }

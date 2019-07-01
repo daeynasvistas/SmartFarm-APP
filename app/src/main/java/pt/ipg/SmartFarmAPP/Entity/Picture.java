@@ -15,11 +15,12 @@ public class Picture {
     private String doenca;
     private String description;
     private int date;
-    @ColumnInfo(typeAffinity = ColumnInfo.BLOB)
-    byte[] image;
     private float longitude;
     private float latitude;
     private int altitude;
+
+    @ColumnInfo(typeAffinity = ColumnInfo.BLOB)
+    byte[] image;
 
     public Picture(int local_ID, int id, String doenca, String description, int date, byte[] image, float longitude, float latitude, int altitude) {
         this.local_ID = local_ID;
