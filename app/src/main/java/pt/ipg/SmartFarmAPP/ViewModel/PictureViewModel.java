@@ -7,37 +7,37 @@ import android.support.annotation.NonNull;
 
 import java.util.List;
 
-import pt.ipg.SmartFarmAPP.Entity.Node;
+import pt.ipg.SmartFarmAPP.Entity.Picture;
 import pt.ipg.SmartFarmAPP.Entity.Repository;
 
 public class PictureViewModel extends AndroidViewModel {
 
 
     private Repository repository;
-    private LiveData<List<Node>> allNodes;
+    private LiveData<List<Picture>> allPictures;
 
     public PictureViewModel(@NonNull Application application) {
         super(application);
         repository = new Repository(application);
-        allNodes = repository.getAllNodes();
-
-    }
-    public void insert(Node node) { repository.insert(node);  }
-
-    public void update(Node node) {
-        repository.update(node);
+        allPictures = repository.getAllPictures();
     }
 
-    public void delete(Node node) {
-        repository.delete(node);
+    public void insert(Picture picture) { repository.insert(picture);  }
+
+    public void update(Picture picture) {
+        repository.update(picture);
     }
 
-    public void deleteAllNodes() {
-        repository.deleteAllNodes();
+    public void delete(Picture picture) {
+        repository.delete(picture);
     }
 
-    public LiveData<List<Node>> getAllNodes() {
-        return allNodes;
+    public void deleteAllPictures() {
+        repository.deleteAllPictures();
+    }
+
+    public LiveData<List<Picture>> getAllPictures() {
+        return allPictures;
     }
 
 

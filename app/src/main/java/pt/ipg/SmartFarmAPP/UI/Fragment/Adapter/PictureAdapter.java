@@ -2,26 +2,35 @@ package pt.ipg.SmartFarmAPP.UI.Fragment.Adapter;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+
 import java.util.ArrayList;
 import java.util.List;
-import pt.ipg.SmartFarmAPP.Entity.Node;
+
+import pt.ipg.SmartFarmAPP.Entity.Picture;
+import pt.ipg.SmartFarmAPP.R;
 
 
-public class PictureAdapter extends RecyclerView.Adapter<NodeAdapter.NodeHolder> {
+public class PictureAdapter extends RecyclerView.Adapter<PictureAdapter.PictureHolder> {
 
-private List<Node> nodes = new ArrayList<>();
-private List<Node> fullNodes = new ArrayList<>(nodes);
-private NodeAdapter.onItemClickListener listener;
+    private List<Picture> pictures = new ArrayList<>();
+    private List<Picture> fullPictures = new ArrayList<>(pictures);
+
 
     @NonNull
     @Override
-    public NodeAdapter.NodeHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        return null;
+    public PictureHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+        View itemView = LayoutInflater.from(viewGroup.getContext())
+                .inflate(R.layout.picture_item, viewGroup, false);
+
+        return new PictureHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull NodeAdapter.NodeHolder nodeHolder, int i) {
+    public void onBindViewHolder(@NonNull PictureHolder pictureHolder, int i) {
 
     }
 
@@ -32,4 +41,20 @@ private NodeAdapter.onItemClickListener listener;
 
 
 
+    class PictureHolder extends RecyclerView.ViewHolder {
+        private TextView textViewNodes;
+        private TextView textViewModel;
+        private TextView textViewModelMore;
+        private TextView textViewId;
+
+        public PictureHolder(@NonNull View itemView) {
+            super(itemView);
+            textViewNodes = itemView.findViewById(R.id.text_view_node);
+            textViewModel = itemView.findViewById(R.id.text_view_model);
+            textViewModelMore = itemView.findViewById(R.id.text_view_model_more);
+            textViewId = itemView.findViewById(R.id.text_view_node_id);
+        }
+
+
+    }
 }

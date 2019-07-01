@@ -13,7 +13,7 @@
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:listitem="@layout/node_item"
+        tools:listitem="@layout/picture_item"
         android:paddingBottom="80dp"
         android:clipToPadding="false" />
 
@@ -31,7 +31,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@drawable/ic_add_circle_black_48dp" />
+        app:srcCompat="@drawable/ic_add_a_photo_white_24dp" />
 
 
 </android.support.design.widget.CoordinatorLayout>
