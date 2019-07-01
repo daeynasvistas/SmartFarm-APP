@@ -2,6 +2,7 @@ package pt.ipg.SmartFarmAPP.UI.Fragment;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -16,13 +17,22 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.Description;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import pt.ipg.SmartFarmAPP.Entity.Node;
 import pt.ipg.SmartFarmAPP.Entity.Picture;
 import pt.ipg.SmartFarmAPP.R;
+import pt.ipg.SmartFarmAPP.Service.API.API;
 import pt.ipg.SmartFarmAPP.UI.Fragment.Adapter.NodeAdapter;
 import pt.ipg.SmartFarmAPP.UI.Fragment.Adapter.PictureAdapter;
 import pt.ipg.SmartFarmAPP.UI.Fragment.Dialog.AddNodeDialog;
@@ -40,52 +50,48 @@ import static android.view.View.GONE;
 
 public class ProfileFragment extends Fragment {
     private SharedViewModel viewModel;
-    private PictureViewModel pictureViewModel;
+    private EditText editText;
+    private NodeViewModel nodeViewModel;
 
+    private ProgressBar progressbar;
+    private RecyclerView recyclerView;
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_configurations, container, false);
 
-        View view = inflater.inflate(R.layout.fragment_profile, null);
-        // mais nodes
-        FloatingActionButton fab = view.findViewById(R.id.fabAddPicture);//Find fab Id
-        // ------------------  MAIS uma Picture ---------------------------------------
-        fab.setOnClickListener(new View.OnClickListener() {
+        /*
+        editText = v.findViewById(R.id.edit_text);
+        Button button = v.findViewById(R.id.button_ok);
+        button.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                // faz cenas
-                Toast.makeText(getActivity(), "Montes de cenas!", Toast.LENGTH_SHORT).show();
-                Log.d(TAG, "onClick: opening dialog");
-
-
+            public void onClick(View v) {
+                viewModel.setText(editText.getText());
             }
         });
+        */
 
-        // Content in view
-        RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setHasFixedSize(true);
+        nodeViewModel = ViewModelProviders.of(this).get(NodeViewModel.class);
+        TextView text = view.findViewById(R.id.text_view_result_API);//Find textview Id
+        progressbar = view.findViewById(R.id.progressbar);
 
-        final PictureAdapter pictureAdapter = new PictureAdapter();
-        recyclerView.setAdapter(pictureAdapter);
+        API.getOracleHMAC_API(text, progressbar);
 
-        ProgressBar progressbar = view.findViewById(R.id.progressbar);
+        return view;//return view
 
-        final PictureViewModel pictureViewModel = ViewModelProviders.of(getActivity()).get(PictureViewModel.class);
-        pictureViewModel.getAllPictures().observe(getActivity(), new Observer<List<Picture>>() {
-
-            @Override
-            public void onChanged(@Nullable List<Picture> pictures) {
-             //
-                //cenas aqui onchange
-            }
-
-        });
-
-
-        progressbar.setVisibility(GONE);
-
-        return view;
     }
+/*
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        viewModel = ViewModelProviders.of(getActivity()).get(SharedViewModel.class);
+        viewModel.getText().observe(getViewLifecycleOwner(), new Observer<CharSequence>() {
+            @Override
+            public void onChanged(@Nullable CharSequence charSequence) {
+                editText.setText(charSequence);
+            }
+        });
+    }
+    */
 }

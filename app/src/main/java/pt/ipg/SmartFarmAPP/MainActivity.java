@@ -29,6 +29,7 @@ import pt.ipg.SmartFarmAPP.UI.Fragment.Adapter.NodeAdapter;
 import pt.ipg.SmartFarmAPP.UI.Fragment.DashboardFragment;
 import pt.ipg.SmartFarmAPP.UI.Fragment.HomeFragment;
 import pt.ipg.SmartFarmAPP.UI.Fragment.ConfigurationsFragment;
+import pt.ipg.SmartFarmAPP.UI.Fragment.PictureFragment;
 import pt.ipg.SmartFarmAPP.UI.Fragment.ProfileFragment;
 
 
@@ -93,8 +94,11 @@ public class MainActivity extends AppCompatActivity  {
                         case R.id.navigation_dashboard:
                             selectedFragment = new DashboardFragment();
                             break;
-                        case R.id.navigation_notifications:
-                            selectedFragment = new ConfigurationsFragment();
+                //        case R.id.navigation_notifications:
+                //            selectedFragment = new ConfigurationsFragment();
+                //            break;
+                        case R.id.navigation_picture:
+                            selectedFragment = new PictureFragment();
                             break;
                         case R.id.navigation_profile:
                             selectedFragment = new ProfileFragment();

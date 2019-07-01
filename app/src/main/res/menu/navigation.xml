@@ -11,10 +11,15 @@
         android:icon="@drawable/ic_dashboard_black_24dp"
         android:title="@string/title_dashboard" />
 
-    <item
+  <!--  <item
         android:id="@+id/navigation_notifications"
         android:icon="@drawable/ic_extension_black_24dp"
         android:title="@string/title_notifications" />
+-->
+    <item
+        android:id="@+id/navigation_picture"
+        android:icon="@drawable/ic_photo_library_black_24dp"
+        android:title="@string/title_picture" />
 
     <item
         android:id="@+id/navigation_profile"
