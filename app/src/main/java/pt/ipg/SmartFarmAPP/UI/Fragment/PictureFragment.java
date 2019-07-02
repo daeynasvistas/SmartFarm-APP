@@ -139,7 +139,7 @@ public class PictureFragment extends Fragment {
         }).attachToRecyclerView(recyclerView);
         // FIM --- Content in view
 
-        
+
         // --- editar item AQUI com anonymous class!!
         pictureAdapter.setOnItemClickListener(new PictureAdapter.onItemClickListener() {
             @Override
