@@ -85,8 +85,8 @@ public class ViewNodeActivity  extends AppCompatActivity {
         tabLayout.setupWithViewPager(viewPager);
 
         TextView textNode = findViewById(R.id.text_view_node);
-        TextView textModel = findViewById(R.id.text_view_model);
-        TextView textModelMore = findViewById(R.id.text_view_model_more);
+        TextView textModel = findViewById(R.id.text_view_picture_description);
+        TextView textModelMore = findViewById(R.id.text_view_picturel_more);
         ImageView imageViewSink = findViewById(R.id.imageViewSink);
 
         textNode.setText(currentNode.getModel());

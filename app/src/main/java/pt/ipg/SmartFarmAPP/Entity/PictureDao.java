@@ -24,11 +24,9 @@ public interface PictureDao {
     @Query("DELETE FROM picture_table")
     void deleteAllPictures();
 
-    @Query("SELECT * FROM picture_table ORDER BY id ASC")
+    @Query("SELECT * FROM picture_table ORDER BY Local_ID DESC")
     LiveData<List<Picture>> getAllPictures();  // Observe Dados !!! com LiveData
 
-    @Query("SELECT * FROM picture_table WHERE id=0")
-    List<Picture> getUnsyncLocalPictures();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertPictures(List<Picture> picture);

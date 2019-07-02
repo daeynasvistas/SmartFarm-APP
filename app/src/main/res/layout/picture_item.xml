@@ -15,10 +15,12 @@
 
         <ImageView
             android:id="@+id/imageView"
-            android:layout_width="378dp"
-            android:layout_height="263dp"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
             android:layout_below="@id/imageView"
-            tools:srcCompat="@tools:sample/backgrounds/scenic[13]" />
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            tools:srcCompat="@tools:sample/avatars[5]" />
 
         <TextView
             android:id="@+id/text_view_picture_id"
@@ -31,7 +33,7 @@
             android:layout_alignParentRight="true" />
 
         <TextView
-            android:id="@+id/text_view_picture"
+            android:id="@+id/text_view_picture_doenca"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
@@ -40,25 +42,25 @@
             android:layout_below="@id/imageView"
             android:maxLines="1"
 
-            android:text="Node"
+            android:text="Nome da Doença"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:layout_alignParentLeft="true"
             android:layout_toLeftOf="@id/text_view_picture_id" />
 
 
         <TextView
-            android:id="@+id/text_view_model"
+            android:id="@+id/text_view_picture_description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/text_view_picture"
-            android:text="Model" />
+            android:layout_below="@id/text_view_picture_doenca"
+            android:text="Descrição ..." />
 
         <TextView
-            android:id="@+id/text_view_model_more"
+            android:id="@+id/text_view_picturel_more"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/text_view_model"
-            android:text="Model" />
+            android:layout_below="@id/text_view_picture_description"
+            android:text="Mais informações" />
 
     </RelativeLayout>
 

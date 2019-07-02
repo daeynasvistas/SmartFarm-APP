@@ -3,14 +3,12 @@ package pt.ipg.SmartFarmAPP.UI.Fragment.Adapter;
 import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -97,8 +95,8 @@ public class NodeAdapter extends RecyclerView.Adapter<NodeAdapter.NodeHolder> im
         public NodeHolder(@NonNull View itemView) {
             super(itemView);
             textViewNodes = itemView.findViewById(R.id.text_view_node);
-            textViewModel = itemView.findViewById(R.id.text_view_model);
-            textViewModelMore = itemView.findViewById(R.id.text_view_model_more);
+            textViewModel = itemView.findViewById(R.id.text_view_picture_description);
+            textViewModelMore = itemView.findViewById(R.id.text_view_picturel_more);
             textViewId    = itemView.findViewById(R.id.text_view_node_id);
 
             itemView.setOnClickListener(new View.OnClickListener() {
