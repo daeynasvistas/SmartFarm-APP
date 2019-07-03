@@ -10,6 +10,8 @@
 - [ ] User Profile
 - [x] MainView
 - [x] ApiService
+- [x] JobIntent
+- [x] ServiceIntent (se internet)
 - [ ] RegisterView
 - [x] Get ALL from API
 - [x] Sync all values with API
