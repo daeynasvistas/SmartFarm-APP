@@ -1,17 +1,21 @@
 package pt.ipg.SmartFarmAPP.UI.Fragment;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.location.Location;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -23,10 +27,18 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.tasks.OnSuccessListener;
+
 import java.util.List;
+import java.util.concurrent.Executor;
 
 import pt.ipg.SmartFarmAPP.Entity.Node;
 import pt.ipg.SmartFarmAPP.Entity.Picture;
+import pt.ipg.SmartFarmAPP.MainActivity;
 import pt.ipg.SmartFarmAPP.R;
 import pt.ipg.SmartFarmAPP.Service.API.Tools.DataConverter;
 import pt.ipg.SmartFarmAPP.UI.Fragment.Adapter.NodeAdapter;
@@ -73,6 +85,8 @@ public class PictureFragment extends Fragment {
 
 
         });
+
+        initLocation();  //--- saber a minhaPos para foto
 
         // Content in view
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
@@ -157,6 +171,58 @@ public class PictureFragment extends Fragment {
         progressbar.setVisibility(GONE);
         return view;
     }
+
+
+
+
+
+
+
+
+
+    private StringBuilder builder;
+    private FusedLocationProviderClient location;
+    private FusedLocationProviderClient mFusedLocationClient;
+
+    private LatLng minhaPos;
+    private GoogleApiClient googleApiClient;
+    private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
+    private static final long UPDATE_INTERVAL = 5000, FASTEST_INTERVAL = 5000; // = 5 seconds
+    public static final int REQUEST_CODE_LOCATION = 5000;
+
+    private void initLocation() {
+
+        builder = new StringBuilder();
+        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(),
+                Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_COARSE_LOCATION,
+                    Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE_LOCATION);
+        } else {
+
+            mFusedLocationClient = LocationServices.getFusedLocationProviderClient(getActivity());
+
+            // getLocationUpdates();
+            mFusedLocationClient.getLastLocation()
+                    .addOnSuccessListener(getActivity(), new OnSuccessListener<Location>() {
+                        @Override
+                        public void onSuccess(Location location) {
+                            if (location != null) {
+                                // ... tenho aqui pos
+                                minhaPos = new LatLng( location.getLongitude(),location.getLatitude());
+                                Toast.makeText(getContext(), "Pos: "+minhaPos.latitude+" , "+minhaPos.longitude, Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    });
+
+        }
+
+    }
+
+
+
 
 
 

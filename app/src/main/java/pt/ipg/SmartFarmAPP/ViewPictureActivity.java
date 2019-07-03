@@ -1,10 +1,18 @@
 package pt.ipg.SmartFarmAPP;
 
+import android.Manifest;
 import android.app.Activity;
+import android.arch.lifecycle.Observer;
 import android.content.Context;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.ColorRes;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -12,7 +20,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Toast;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -20,36 +34,37 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnSuccessListener;
 
 import pt.ipg.SmartFarmAPP.Entity.Picture;
 import pt.ipg.SmartFarmAPP.Service.API.Tools.MapsTools;
 
-public class ViewPictureActivity extends AppCompatActivity {
+
+public class ViewPictureActivity
+        extends
+        AppCompatActivity{
+
+
     public static final int EDIT_PICTURE_REQUEST = 3000;
-
     public static final String EXTRA_LOCAL_ID = "pt.ipg.SmartFarmAPP.EXTRA_LOCAL_ID"; // para o SELECT só este node
-    public static Picture currentPicture; // picture aqui (todo colocar private ver 0.7)
 
+    public static Picture currentPicture; // picture aqui (todo colocar private ver 0.7)
     private GoogleMap mMap;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // remover dinamicamente ANTES de lá colocar content
-        // aqui https://stackoverflow.com/questions/25863676/android-activity-without-actionbar
-     //  getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
-     //   getSupportActionBar().hide();
-
-
         setContentView(R.layout.activity_sow_node);
         initToolbar();
-
-
         initMapFragment();
 
+    //   initLocation();
+        // Permissions ok, we get last location
 
     }
+
+
 
     private void initMapFragment() {
         // aqui: https://developers.google.com/maps/documentation/android-sdk/intro
@@ -74,6 +89,7 @@ public class ViewPictureActivity extends AppCompatActivity {
     }
 
 
+    // aqui https://stackoverflow.com/questions/28979276/how-to-change-the-color-of-status-bar-in-android
     public static void setSystemBarColor(Activity act, @ColorRes int color) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = act.getWindow();
@@ -131,7 +147,6 @@ public class ViewPictureActivity extends AppCompatActivity {
 
         googleMap.addMarker(markerOptions);
     }
-
 
 
 
