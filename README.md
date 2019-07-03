@@ -15,10 +15,14 @@
 - [x] Sync all values with API
 - [ ] Location working
 - [ ] Internationalization (I18N) - Português(Original language), french, english, spanish
-- [ ] Picture
+- [x] Picture
 - [ ] AutoML result
+- [ ] Localização doenças em mapa
 
 
+
+## Vers. O.O6 (Imagens na BaseDados+Camera)
+![Screenshot_20190703-113004](https://user-images.githubusercontent.com/2634610/60584842-2ac14b00-9d86-11e9-84e1-98168ec57bbd.png)
 
 ## Vers. O.O5 (DataBase Nodes+Sensor Values)
 ![Screenshot_20190628-143359](https://user-images.githubusercontent.com/2634610/60449184-f8e1a480-9c1e-11e9-9f8f-df13ff3a3eb4.png)
