@@ -20,6 +20,8 @@
 - [ ] Localização doenças em mapa
 
 
+## Vers. O.O65 (Mostra imagem e POS)
+![Screenshot_20190703-140821](https://user-images.githubusercontent.com/2634610/60594217-59e2b700-9d9c-11e9-9652-40658ccc5730.png)
 
 ## Vers. O.O6 (Imagens na BaseDados+Camera)
 ![Screenshot_20190703-113004](https://user-images.githubusercontent.com/2634610/60584919-5e9c7080-9d86-11e9-81b2-285e58247f06.png)
