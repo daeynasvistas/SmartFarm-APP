@@ -170,7 +170,9 @@ public class PictureFragment extends Fragment {
                 // Add Local
 
                 byte[] bytesImage = DataConverter.convertImage2ByteArray(bitMap);
-                Picture picture = new Picture("Sync","sync",15212545, bytesImage, 45.000f,7.255f,1000);
+                Long tsNow = DataConverter.getNowTimestamp();
+                /// ------------------------------------------------------------------------------- ToDo alterar lat lng para a minha POS no momento da foto ver 0.8
+                Picture picture = new Picture("Sync","sync", tsNow, bytesImage, 40.540996f,-7.282595f,1000);
                 pictureViewModel.insert(picture);
 
 

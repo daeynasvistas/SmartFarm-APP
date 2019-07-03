@@ -4,8 +4,6 @@ import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 
-import java.sql.Blob;
-
 @Entity(tableName = "picture_table")
 public class Picture {
     @PrimaryKey(autoGenerate = true)
@@ -13,7 +11,7 @@ public class Picture {
 
     private String doenca;
     private String description;
-    private int date;
+    private Long date;
     private float longitude;
     private float latitude;
     private int altitude;
@@ -21,7 +19,7 @@ public class Picture {
     @ColumnInfo(typeAffinity = ColumnInfo.BLOB)
     byte[] image;
 
-    public Picture(String doenca, String description, int date, byte[] image, float longitude, float latitude, int altitude) {
+    public Picture(String doenca, String description, Long date, byte[] image, float longitude, float latitude, int altitude) {
 
         this.doenca = doenca;
         this.description = description;
@@ -53,7 +51,7 @@ public class Picture {
         return image;
     }
 
-    public int getDate() {
+    public Long getDate() {
         return date;
     }
 

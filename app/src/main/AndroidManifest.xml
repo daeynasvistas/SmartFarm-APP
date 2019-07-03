@@ -40,7 +40,8 @@
             android:name=".ViewNodeActivity"
             android:parentActivityName=".MainActivity" />
 
-        <activity
+
+        <activity android:theme="@style/NoActionBar"
             android:name=".ViewPictureActivity"
             android:parentActivityName=".MainActivity" />
 

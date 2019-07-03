@@ -27,7 +27,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-@Database(entities = {Node.class, SensorData.class, Picture.class}, version = 5, exportSchema = false)
+@Database(entities = {Node.class, SensorData.class, Picture.class}, version = 6, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
 
     private static AppDatabase instance;

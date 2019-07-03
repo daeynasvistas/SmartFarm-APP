@@ -16,4 +16,15 @@ public class DataConverter {
     public static Bitmap convertByteArray2Bitmap (byte[] array){
         return BitmapFactory.decodeByteArray(array, 0, array.length);
     }
+
+
+
+    /// retornar timestamp
+    public static Long getNowTimestamp(){
+        Long tsLong = System.currentTimeMillis()/1000;
+        String ts = tsLong.toString(); // <<----------------- (( debug))
+        return tsLong;
+    }
+
+
 }
