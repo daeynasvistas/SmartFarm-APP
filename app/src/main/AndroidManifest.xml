@@ -2,13 +2,16 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="pt.ipg.SmartFarmAPP">
 
-    
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <uses-feature android:name="android.hardware.camera" android:required="true" />
 
+    <!-- Location .. vers0.5 utilizar o mobile e não google play service-->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -17,6 +20,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
+
+
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name">
@@ -31,6 +40,9 @@
             android:name=".ViewNodeActivity"
             android:parentActivityName=".MainActivity" />
 
+        <activity
+            android:name=".ViewPictureActivity"
+            android:parentActivityName=".MainActivity" />
 
         <service
             android:name=".SyncJobIntent"

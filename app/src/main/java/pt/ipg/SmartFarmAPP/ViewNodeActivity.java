@@ -77,7 +77,7 @@ public class ViewNodeActivity  extends AppCompatActivity {
     //    setSupportActionBar(toolbar);
     //    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        setContentView(R.layout.activity_scrool_tab);
+       // setContentView(R.layout.activity_scrool_tab);
         viewPager = findViewById(R.id.viewpager);
         setupViewPager(viewPager);
 

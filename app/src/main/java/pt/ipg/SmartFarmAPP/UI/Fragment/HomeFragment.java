@@ -82,13 +82,6 @@ public class HomeFragment extends Fragment implements AddNodeDialog.OnInputSelec
 
        SyncJobIntent.enqueueWork(getContext(), serviceIntent);
 
-
-
-
-
-
-
-
     }
 
 

@@ -35,9 +35,11 @@ import pt.ipg.SmartFarmAPP.ViewModel.NodeViewModel;
 import pt.ipg.SmartFarmAPP.ViewModel.PictureViewModel;
 import pt.ipg.SmartFarmAPP.ViewModel.SharedViewModel;
 import pt.ipg.SmartFarmAPP.ViewNodeActivity;
+import pt.ipg.SmartFarmAPP.ViewPictureActivity;
 
 import static android.content.ContentValues.TAG;
 import static android.view.View.GONE;
+import static pt.ipg.SmartFarmAPP.ViewPictureActivity.EDIT_PICTURE_REQUEST;
 
 public class PictureFragment extends Fragment {
     public static final int CAMERA_INTENT = 3000;
@@ -144,19 +146,18 @@ public class PictureFragment extends Fragment {
         pictureAdapter.setOnItemClickListener(new PictureAdapter.onItemClickListener() {
             @Override
             public void onItemClick(Picture picture) {
-            //   Intent intent = new Intent(getContext(), ViewPictureActivity.class);
-            //    intent.putExtra(ViewNodeActivity.EXTRA_ID, picture.getMac());
+                  Intent intent = new Intent(getContext(), ViewPictureActivity.class);
+                  intent.putExtra(ViewPictureActivity.EXTRA_LOCAL_ID, picture.getLocal_ID());
 
-            //    ViewNodeActivity.currentPicture = picture; //Enviar directamento o Node
-            //    startActivityForResult(intent, EDIT_NODE_REQUEST);
-
+                  ViewPictureActivity.currentPicture = picture; //Enviar directamento a picture
+                  startActivityForResult(intent, EDIT_PICTURE_REQUEST);
             }
         });
 
         progressbar.setVisibility(GONE);
-
         return view;
     }
+
 
 
     @Override

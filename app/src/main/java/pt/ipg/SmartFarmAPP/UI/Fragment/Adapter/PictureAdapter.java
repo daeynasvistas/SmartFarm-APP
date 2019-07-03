@@ -96,8 +96,20 @@ public class PictureAdapter extends RecyclerView.Adapter<PictureAdapter.PictureH
             textViewDescription = itemView.findViewById(R.id.text_view_picture_description);
             textViewMaisInfo = itemView.findViewById(R.id.text_view_picturel_more);
             textViewId = itemView.findViewById(R.id.text_view_picture_id);
-        }
 
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition();
+                    if (listener != null && position != RecyclerView.NO_POSITION) {
+                        listener.onItemClick(pictures.get(position));
+                    }
+                }
+            });
+
+
+
+        }
 
     }
 }
