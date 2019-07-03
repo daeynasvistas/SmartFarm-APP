@@ -22,7 +22,7 @@
 
 
 ## Vers. O.O6 (Imagens na BaseDados+Camera)
-![Screenshot_20190703-113004](https://user-images.githubusercontent.com/2634610/60584842-2ac14b00-9d86-11e9-84e1-98168ec57bbd.png)
+![Screenshot_20190703-113004](https://user-images.githubusercontent.com/2634610/60584919-5e9c7080-9d86-11e9-81b2-285e58247f06.png)
 
 ## Vers. O.O5 (DataBase Nodes+Sensor Values)
 ![Screenshot_20190628-143359](https://user-images.githubusercontent.com/2634610/60449184-f8e1a480-9c1e-11e9-9f8f-df13ff3a3eb4.png)
