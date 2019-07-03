@@ -17,7 +17,7 @@
 - [ ] Internationalization (I18N) - Português(Original language), french, english, spanish
 - [x] Picture
 - [ ] AutoML result
-- [ ] Localização doenças em mapa
+- [X] Localização doenças em mapa
 
 
 ## Vers. O.O65 (Mostra imagem e POS)
