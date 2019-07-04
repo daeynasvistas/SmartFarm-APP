@@ -9,16 +9,19 @@
 - [ ] SettingView
 - [ ] User Profile
 - [x] MainView
+- [x] PictureView
+- [x] NodesView
+- [x] SensoresView
 - [x] ApiService
 - [x] JobIntent
 - [x] ServiceIntent (se internet)
-- [ ] RegisterView
+- [x] RegisterView
 - [x] Get ALL from API
 - [x] Sync all values with API
-- [ ] Location working
+- [x] Location working
 - [ ] Internationalization (I18N) - Português(Original language), french, english, spanish
 - [x] Picture
-- [ ] AutoML result
+- [x] AutoML result (Subst google API in this vers)
 - [X] Localização doenças em mapa
 
 
