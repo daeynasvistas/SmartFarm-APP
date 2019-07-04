@@ -78,8 +78,18 @@ public class ViewPictureActivity   extends   AppCompatActivity{
 
         ImageView imageViewThumb = findViewById(R.id.imageViewThumb);
         imageViewThumb.setImageBitmap(DataConverter.convertByteArray2Bitmap( currentPicture.getImage()));
+
+
+
+        TextView nome = findViewById(R.id.textViewNomeDoenca);
+        TextView desc = findViewById(R.id.textViewDetalhes);
+        TextView maisinfo = findViewById(R.id.textViewDesc);
+        TextView date = findViewById(R.id.textViewDate);
+
+        nome.setText(currentPicture.getDoenca());
+        desc.setText(currentPicture.getDescription());
+        date.setText(DataConverter.getDate(currentPicture.getDate()));
     //   initLocation();
-        // Permissions ok, we get last location
 
 
 

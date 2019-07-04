@@ -41,7 +41,8 @@ public class PictureAdapter extends RecyclerView.Adapter<PictureAdapter.PictureH
         // convert array em bmp para mostrar
         holder.imageView.setImageBitmap(DataConverter.convertByteArray2Bitmap(currentPicture.getImage()));
         holder.textViewDescription.setText("Descrição: "+currentPicture.getDescription());
-        holder.textViewMaisInfo.setText("Altitude: "+currentPicture.getAltitude()+" ("+currentPicture.getLatitude()+", "+currentPicture.getLongitude() + ")  Data: "+ DataConverter.getDate(currentPicture.getDate()) );
+        holder.textViewMaisInfo.setText("("+currentPicture.getLatitude()+", "+currentPicture.getLongitude() + ")  Data: "+ DataConverter.getDate(currentPicture.getDate()) );
+//Altitude: "+currentPicture.getAltitude()+"
 
         if(currentPicture.getLocal_ID()!=0){
             holder.textViewId.setText(String.valueOf(currentPicture.getLocal_ID()));

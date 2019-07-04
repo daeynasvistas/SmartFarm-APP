@@ -47,20 +47,22 @@
             android:layout_alignParentLeft="true"
             android:layout_toLeftOf="@id/text_view_picture_id" />
 
+        <TextView
+            android:id="@+id/text_view_picturel_more"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/text_view_picture_id"
+            android:text="Mais informações" />
 
         <TextView
             android:id="@+id/text_view_picture_description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/text_view_picture_doenca"
-            android:text="Descrição ..." />
+            android:layout_below="@id/text_view_picturel_more"
+            android:text="Descrição ..."
+            android:textSize="12sp" />
 
-        <TextView
-            android:id="@+id/text_view_picturel_more"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/text_view_picture_description"
-            android:text="Mais informações" />
+
 
     </RelativeLayout>
 
