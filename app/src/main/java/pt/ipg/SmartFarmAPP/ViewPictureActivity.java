@@ -20,6 +20,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -36,13 +38,24 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.IOException;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 import pt.ipg.SmartFarmAPP.Entity.Picture;
+import pt.ipg.SmartFarmAPP.Service.API.Tools.DataConverter;
 import pt.ipg.SmartFarmAPP.Service.API.Tools.MapsTools;
 
 
-public class ViewPictureActivity
-        extends
-        AppCompatActivity{
+public class ViewPictureActivity   extends   AppCompatActivity{
 
 
     public static final int EDIT_PICTURE_REQUEST = 3000;
@@ -59,8 +72,16 @@ public class ViewPictureActivity
         initToolbar();
         initMapFragment();
 
+
+        ImageView imageView = findViewById(R.id.imageViewPlant);
+        imageView.setImageBitmap(DataConverter.convertByteArray2Bitmap( currentPicture.getImage()));
+
+        ImageView imageViewThumb = findViewById(R.id.imageViewThumb);
+        imageViewThumb.setImageBitmap(DataConverter.convertByteArray2Bitmap( currentPicture.getImage()));
     //   initLocation();
         // Permissions ok, we get last location
+
+
 
     }
 
@@ -117,7 +138,7 @@ public class ViewPictureActivity
         double longitude_picture = currentPicture.getLongitude(); //Double.parseDouble("-7.282595");
 
         CameraUpdate center = CameraUpdateFactory.newLatLng(new com.google.android.gms.maps.model.LatLng( longitude_picture,latitude_picture ));
-        CameraUpdate zoom = CameraUpdateFactory.zoomTo(10.2f);
+        CameraUpdate zoom = CameraUpdateFactory.zoomTo(15.2f);
 
         mMap.moveCamera(center);
         mMap.animateCamera(zoom);
@@ -147,6 +168,9 @@ public class ViewPictureActivity
 
         googleMap.addMarker(markerOptions);
     }
+
+
+
 
 
 

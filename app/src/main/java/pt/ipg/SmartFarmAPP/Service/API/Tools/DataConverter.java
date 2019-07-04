@@ -2,8 +2,11 @@ package pt.ipg.SmartFarmAPP.Service.API.Tools;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.text.format.DateFormat;
 
 import java.io.ByteArrayOutputStream;
+import java.util.Calendar;
+import java.util.Locale;
 
 public class DataConverter {
 
@@ -24,6 +27,13 @@ public class DataConverter {
         Long tsLong = System.currentTimeMillis()/1000;
         String ts = tsLong.toString(); // <<----------------- (( debug))
         return tsLong;
+    }
+
+    public static String getDate(long time) {
+        Calendar cal = Calendar.getInstance(Locale.getDefault());
+        cal.setTimeInMillis(time * 1000);
+        String date = DateFormat.format("dd-MM-yyyy", cal).toString();
+        return date;
     }
 
 
