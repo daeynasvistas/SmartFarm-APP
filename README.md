@@ -27,6 +27,10 @@
 - [X] Localização doenças em mapa
 
 
+## Vers. O.O7 (Google AI)
+![Screenshot_20190704-153202](https://user-images.githubusercontent.com/2634610/60674141-5a994d00-9e71-11e9-9717-4f5648c9552b.png)
+![Screenshot_20190704-153224](https://user-images.githubusercontent.com/2634610/60674147-608f2e00-9e71-11e9-8f4a-72b8cdb15bfd.png)
+
 ## Vers. O.O65 (Mostra imagem e POS)
 ![Screenshot_20190703-140821](https://user-images.githubusercontent.com/2634610/60594217-59e2b700-9d9c-11e9-9652-40658ccc5730.png)
 
