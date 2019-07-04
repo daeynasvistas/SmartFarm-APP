@@ -4,6 +4,8 @@
 
 ### ToDo
 - [x] Room Database
+- [x] HMAC sign every request
+- [x] Google AI
 - [x] Repository
 - [x] LoginView (HMAC with no login)
 - [ ] SettingView
