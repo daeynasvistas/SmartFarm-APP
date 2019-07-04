@@ -45,3 +45,7 @@
 
 ## Architecture
 ![arch_f](https://user-images.githubusercontent.com/2634610/53636185-3570a580-3c17-11e9-8000-3d8d2916fae0.PNG)
+
+
+## Objective
+![bda_archit](https://user-images.githubusercontent.com/2634610/54847053-415efd00-4cd5-11e9-93f2-e43b31660adf.png)
